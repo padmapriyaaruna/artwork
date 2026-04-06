@@ -1,0 +1,2043 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Order xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OrderStatus>Released</OrderStatus>
+  <SubStatus />
+  <ArtworkRequired>True</ArtworkRequired>
+  <ArtworkStatus>Approved</ArtworkStatus>
+  <Site>hm.bgpconnect.com</Site>
+  <OrderID>B0831193</OrderID>
+  <OrderLink>https://hm.bgpconnect.com/Order?orderId=831193</OrderLink>
+  <CustomerID>1828</CustomerID>
+  <CustomerName>H&amp;M</CustomerName>
+  <CustomerEmail>krish.sreedharan@britanniapackaging.com</CustomerEmail>
+  <CreatedDate>23-02-2026 09:54</CreatedDate>
+  <CustomerRef>Test23022026</CustomerRef>
+  <RequiredDate>26-02-2026</RequiredDate>
+  <OrderedFromLocationID>11</OrderedFromLocationID>
+  <OrderedFromLocation>TEST BRITANNIA SITE</OrderedFromLocation>
+  <InvoiceLocation>
+    <LocationID>2351</LocationID>
+    <LocationName>test</LocationName>
+    <AddressLine1>srteet 1</AddressLine1>
+    <AddressLine2 />
+    <AddressLine3 />
+    <City />
+    <PostCode />
+    <isoCountryCode>IN</isoCountryCode>
+  </InvoiceLocation>
+  <DeliveryLocation>
+    <LocationID>2351</LocationID>
+    <LocationName>test</LocationName>
+    <AddressLine1>srteet 1</AddressLine1>
+    <AddressLine2 />
+    <AddressLine3 />
+    <City />
+    <PostCode />
+    <isoCountryCode>IN</isoCountryCode>
+  </DeliveryLocation>
+  <OrderItems>
+    <OrderItem>
+      <OrderItemID>1263946</OrderItemID>
+      <PurchaseOrder>
+        <Reference />
+      </PurchaseOrder>
+      <Asset Id="15300">
+        <Name>HM30105</Name>
+        <Description>HM30105 CARE LABEL 35MM</Description>
+        <Codes>
+          <Code Name="BPC" Value="HM30105" />
+        </Codes>
+        <ProductTypes>
+          <ProductType Domain="Retailer">Wash Care Label</ProductType>
+          <ProductType Domain="Britannia">Printed Fabric Label</ProductType>
+        </ProductTypes>
+      </Asset>
+      <Item>
+        <ItemID>9389431</ItemID>
+        <VariantName>01-Childrens tops, single size-0010</VariantName>
+        <Quantity>100</Quantity>
+        <SizeChartItem Id="15428997" Value="01-Childrens tops, single size-0010" SizeChartName="01-Childrens tops, single size">
+          <Size Name="EUR" Value="44" />
+          <Size Name="US" Value="&lt;0-1M" />
+          <Size Name="CA" Value="&lt;0-1M" />
+          <Size Name="CN" Value="45/40" />
+          <Size Name="MX" Value="&lt;0-1M" />
+          <Size Name="AUS" Value="&lt;0-1M" />
+          <Size Name="UK" Value="&lt;0-1M" />
+          <Size Name="BR" Value="&lt;0-1M" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Additional Wash Instructions" QuestionID="15428985" Question="Additional Care Information">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52634</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="AL">MOS HEKUROSNI MBI SHTYPJET</AnswerValue>
+                    <AnswerValue Name="AZ">QRAVÜRANIN ÜZƏRİNƏ ÜTÜ VURMAYIN</AnswerValue>
+                    <AnswerValue Name="CAT"> NO PLANXEU LA IMPRESSIÓ</AnswerValue>
+                    <AnswerValue Name="CZ">NEŽEHLETE POTISK</AnswerValue>
+                    <AnswerValue Name="DE">NICHT ÜBER DEN DRUCK BÜGELN</AnswerValue>
+                    <AnswerValue Name="EE">ÄRA TRIIGI TRÜKIKOHTI</AnswerValue>
+                    <AnswerValue Name="ES">NO PLANCHAR EL MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="FI">ÄLÄ SILITÄ PAINOKUVAA</AnswerValue>
+                    <AnswerValue Name="FR">NE PAS REPASSER LE MOTIF IMPRIMÉ</AnswerValue>
+                    <AnswerValue Name="HR">NE GLAČATI PRINT</AnswerValue>
+                    <AnswerValue Name="HU">NE VASALJON A NYOMTATOTT MINTÁN</AnswerValue>
+                    <AnswerValue Name="ID">JANGAN MENYETRIKA PADA CETAKAN</AnswerValue>
+                    <AnswerValue Name="IT">NON STIRARE SUL MOTIVO STAMPATO</AnswerValue>
+                    <AnswerValue Name="LT">NELYGINTI APLIKACIJŲ</AnswerValue>
+                    <AnswerValue Name="LV">NEGLUDINIET APDRUKU</AnswerValue>
+                    <AnswerValue Name="NL">NIET OVER DE PRINT STRIJKEN</AnswerValue>
+                    <AnswerValue Name="PL">NIE PRASOWAĆ PO NADRUKU</AnswerValue>
+                    <AnswerValue Name="PT">NÃO PASSAR A FERRO O MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="RO">NU CĂLCAŢI PE IMPRIMEU</AnswerValue>
+                    <AnswerValue Name="RS">NE PEGLATI PRINT</AnswerValue>
+                    <AnswerValue Name="SE">STRYK EJ PÅ TRYCKET</AnswerValue>
+                    <AnswerValue Name="SI">NE LIKAJTE PO POTISKU</AnswerValue>
+                    <AnswerValue Name="SK">NEŽEHLITE CEZ POTLAČ</AnswerValue>
+                    <AnswerValue Name="TR">BASKI ÜZERİNDEN ÜTÜLEMEYİN</AnswerValue>
+                    <AnswerValue Name="US">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="UZ">PRINTNI DAZMOLLAMANG</AnswerValue>
+                    <AnswerValue Name="VN">KHÔNG ỦI LÊN HỌA TIẾT</AnswerValue>
+                    <AnswerValue Name="BG">НЕ ГЛАДЕТЕ ЩАМПАТА</AnswerValue>
+                    <AnswerValue Name="CHS">请不要在图案上熨烫</AnswerValue>
+                    <AnswerValue Name="GE">ნუ დააუთოებთ ნაბეჭდზე</AnswerValue>
+                    <AnswerValue Name="GR">MH ΣIΔEPΩNETE ΠANΩ ΣTH ΣTAMΠA</AnswerValue>
+                    <AnswerValue Name="JP">プリント部分にはアイロンをかけないでくださいト部分に</AnswerValue>
+                    <AnswerValue Name="KH">មិនត្រូវអ៊ុតនៅលើកន្លែងបោះពុម្ព</AnswerValue>
+                    <AnswerValue Name="KR">프린트 부분은 다림질 하지 마세요</AnswerValue>
+                    <AnswerValue Name="KZ">БАСПАНЫ ҮТІКТЕМЕҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА НЕ СЕ ПЕГЛА ВРЗ АПЛИКАЦИЈАТА</AnswerValue>
+                    <AnswerValue Name="RU">НЕ ГЛАДИТЬ ПО РИСУНКУ</AnswerValue>
+                    <AnswerValue Name="TH">ห้ามรีดลายพิมพ์</AnswerValue>
+                    <AnswerValue Name="CHT">請勿熨燙圖案部位</AnswerValue>
+                    <AnswerValue Name="UA">НЕ ПРАСУВАТИ ПРИНТ</AnswerValue>
+                    <AnswerValue Name="IX">אין לגהץ על ההדפס</AnswerValue>
+                    <AnswerValue Name="ar">الرجاء عدم كي المطبوع</AnswerValue>
+                    <AnswerValue Name="MX">No planchar el motivo estampado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52524</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="AL">PËRDORNI NJË ÇANTË LAVANDERIE</AnswerValue>
+                    <AnswerValue Name="AZ">CAMAŞIR TORBASINDAN İSTİFADƏ EDİN</AnswerValue>
+                    <AnswerValue Name="CAT">UTILITZEU UNA BOSSA DE RENTAT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE V SÁČKU PRO ŠETRNÉ PRANÍ</AnswerValue>
+                    <AnswerValue Name="DE">WÄSCHEBEUTEL VERWENDEN</AnswerValue>
+                    <AnswerValue Name="EE">KASUTA PESUKOTTI</AnswerValue>
+                    <AnswerValue Name="ES">UTILIZAR BOLSA DE LAVADO</AnswerValue>
+                    <AnswerValue Name="FI">KÄYTÄ PESUPUSSIA</AnswerValue>
+                    <AnswerValue Name="FR">UTILISER UN FILET DE LAVAGE</AnswerValue>
+                    <AnswerValue Name="HR">KORISTITI VREĆU ZA PRANJE RUBLJA</AnswerValue>
+                    <AnswerValue Name="HU">HASZNÁLJON MOSÓHÁLÓT</AnswerValue>
+                    <AnswerValue Name="ID">GUNAKAN TAS CUCIAN</AnswerValue>
+                    <AnswerValue Name="IT">USARE UN SACCHETTO DA BUCATO</AnswerValue>
+                    <AnswerValue Name="LT">NAUDOTI SKALBIMO MAIŠELĮ</AnswerValue>
+                    <AnswerValue Name="LV">IZMANTOJIET VEĻAS MAISU</AnswerValue>
+                    <AnswerValue Name="NL">GEBRUIK WASZAKJE</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ W SIATECZCE DO PRANIA</AnswerValue>
+                    <AnswerValue Name="PT">UTILIZAR SACO PARA LAVAGEM</AnswerValue>
+                    <AnswerValue Name="RO">FOLOSIŢI UN SAC PENTRU RUFE</AnswerValue>
+                    <AnswerValue Name="RS">KORISTITI VREĆICU ZA PRANJE VEŠA</AnswerValue>
+                    <AnswerValue Name="SE">ANVÄND TVÄTTPÅSE</AnswerValue>
+                    <AnswerValue Name="SI">UPORABITE VREČKO ZA PRANJE PERILA</AnswerValue>
+                    <AnswerValue Name="SK">POUŽITE VRECKO NA PRANIE BIELIZNE</AnswerValue>
+                    <AnswerValue Name="TR">ÇAMAŞIR TORBASI KULLANIN</AnswerValue>
+                    <AnswerValue Name="US">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="UZ">KIR YUVISH SUMKASIDAN FOYDALANING</AnswerValue>
+                    <AnswerValue Name="VN">DÙNG TÚI GIẶT</AnswerValue>
+                    <AnswerValue Name="BG">ИЗПОЛЗВАЙТЕ ТОРБА ЗА ПРАНЕ</AnswerValue>
+                    <AnswerValue Name="CHS">请使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="GE">გამოიყენეთ სარეცხის ბადე</AnswerValue>
+                    <AnswerValue Name="GR">ΧΡΗΣΙΜΟΠΟΙΗΣΤΕ ΘΗΚΗ ΠΛΥΣΙΜΑΤΟΣ</AnswerValue>
+                    <AnswerValue Name="JP">洗濯ネットに入れて洗ってください</AnswerValue>
+                    <AnswerValue Name="KH">ប្រើថង់សម្រាប់បោកគក់</AnswerValue>
+                    <AnswerValue Name="KR">세탁망을 사용하세요</AnswerValue>
+                    <AnswerValue Name="KZ">КІР ҚАБЫН ПАЙДАЛАНЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ КОРИСТИ ВРЕЌА ЗА ПЕРЕЊЕ</AnswerValue>
+                    <AnswerValue Name="RU">ИСПОЛЬЗУЙТЕ МЕШОК ДЛЯ БЕЛЬЯ</AnswerValue>
+                    <AnswerValue Name="TH">ใช้ถุงซักผ้า</AnswerValue>
+                    <AnswerValue Name="CHT">請使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ У МІШКУ ДЛЯ ПРАННЯ</AnswerValue>
+                    <AnswerValue Name="IX">להשתמש בשקית כביסה</AnswerValue>
+                    <AnswerValue Name="ar">استعمل كيس الغسيل</AnswerValue>
+                    <AnswerValue Name="MX">Utilizar bolsa de lavado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52526</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="AL">RIFORMËSONI KUR ËSHTË E NJOMË</AnswerValue>
+                    <AnswerValue Name="AZ">NƏM OLDUQDA FORMASINI DƏYİŞDİRİN</AnswerValue>
+                    <AnswerValue Name="CAT">DONEU-LI FORMA HUMIT</AnswerValue>
+                    <AnswerValue Name="CZ">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="DE">FEUCHT IN FORM ZIEHEN</AnswerValue>
+                    <AnswerValue Name="EE">VORMI MÄRJALT</AnswerValue>
+                    <AnswerValue Name="ES">CONFORMAR EN ESTADO HÚMEDO</AnswerValue>
+                    <AnswerValue Name="FI">MUOTOILLAAN KOSTEANA</AnswerValue>
+                    <AnswerValue Name="FR">REMETTRE EN FORME À L’ÉTAT HUMIDE</AnswerValue>
+                    <AnswerValue Name="HR">OBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="HU">NEDVESEN FORMÁZZA ÚJRA</AnswerValue>
+                    <AnswerValue Name="ID">BENTUK KEMBALI SAAT LEMBAP</AnswerValue>
+                    <AnswerValue Name="IT">DARE FORMA QUANDO ANCORA UMIDO</AnswerValue>
+                    <AnswerValue Name="LT">SUFORMUOTI KOL DRĖGNAS</AnswerValue>
+                    <AnswerValue Name="LV">IZVEIDOJIET FORMU, KAMĒR MITRS</AnswerValue>
+                    <AnswerValue Name="NL">IN VOCHTIGE TOESTAND IN VORM BRENGEN</AnswerValue>
+                    <AnswerValue Name="PL">FORMOWAĆ W STANIE MOKRYM</AnswerValue>
+                    <AnswerValue Name="PT">DAR FORMA ENQUANTO HÚMIDO</AnswerValue>
+                    <AnswerValue Name="RO">REMODELAŢI CÂND ESTE UMED</AnswerValue>
+                    <AnswerValue Name="RS">PREOBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="SE">FORMAS I FUKTIGT TILLSTÅND</AnswerValue>
+                    <AnswerValue Name="SI">NARAVNAJTE OBLIKO V VLAŽNEM STANJU</AnswerValue>
+                    <AnswerValue Name="SK">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="TR">NEMLİYKEN DÜZELTİN</AnswerValue>
+                    <AnswerValue Name="US">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="UZ">NAM HOLATDA QAYTA SHAKLLANTIRING</AnswerValue>
+                    <AnswerValue Name="VN">CHỈNH DÁNG KHI CÒN ẨM</AnswerValue>
+                    <AnswerValue Name="BG">ВЪРНЕТЕ ФОРМАТА, ДОКАТО Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="CHS">请在湿状态时恢复原状</AnswerValue>
+                    <AnswerValue Name="GE">გაასწორეთ ფორმა, სანამ ნესტიანია</AnswerValue>
+                    <AnswerValue Name="GR">ΕΠΑΝΑΦΕΡΤΕ ΤΟ ΣΤΟ ΣΧΗΜΑ ΤΟΥ ΕΝΟΣΩ ΕΙΝΑΙ ΑΚΟΜΑ ΝΩΠΟ</AnswerValue>
+                    <AnswerValue Name="JP">湿った状態で形を整えてください</AnswerValue>
+                    <AnswerValue Name="KH">ធ្វើរូបរាងឡើងវិញនៅពេលសើម</AnswerValue>
+                    <AnswerValue Name="KR">젖어있을때 모양을 잡아주세요</AnswerValue>
+                    <AnswerValue Name="KZ">ДЫМҚЫЛ КҮЙДЕ БАСТАПҚЫ ПІШІНІН КЕЛТІРІҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ИСПРАВИ ДОДЕКА Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="RU">РАСПРАВЛЯТЬ ВО ВЛАЖНОМ СОСТОЯНИИ</AnswerValue>
+                    <AnswerValue Name="TH">จัดทรงให้เรียบร้อยขณะที่ผ้าเปียกชื้น</AnswerValue>
+                    <AnswerValue Name="CHT">請於未乾時塑型</AnswerValue>
+                    <AnswerValue Name="UA">НАДАТИ ФОРМУ У ВОЛОГОМУ СТАНІ</AnswerValue>
+                    <AnswerValue Name="IX">לסדר בעודו לח</AnswerValue>
+                    <AnswerValue Name="ar">يجب أن تفرد القطعة لتأخذ شكلها وهي رطبة قبل أن تجف</AnswerValue>
+                    <AnswerValue Name="MX">Conformar en estado húmedo</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52528</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="AL">LANI VEÇ E VEÇ</AnswerValue>
+                    <AnswerValue Name="AZ">AYRILIQDA YUYUN.</AnswerValue>
+                    <AnswerValue Name="CAT">RENTEU-HO SEPARADAMENT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE ODDĚLENĚ</AnswerValue>
+                    <AnswerValue Name="DE">SEPARAT WASCHEN</AnswerValue>
+                    <AnswerValue Name="EE">PESE ERALDI</AnswerValue>
+                    <AnswerValue Name="ES">LAVAR POR SEPARADO</AnswerValue>
+                    <AnswerValue Name="FI">PESTÄVÄ ERILLÄÄN</AnswerValue>
+                    <AnswerValue Name="FR">LAVER SÉPARÉMENT</AnswerValue>
+                    <AnswerValue Name="HR">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLÖN MOSANDÓ</AnswerValue>
+                    <AnswerValue Name="ID">CUCI TERPISAH</AnswerValue>
+                    <AnswerValue Name="IT">LAVARE SEPARATAMENTE</AnswerValue>
+                    <AnswerValue Name="LT">SKALBTI ATSKIRAI NUO KITŲ DRABUŽIŲ</AnswerValue>
+                    <AnswerValue Name="LV">MAZGĀJIET ATSEVIŠĶI</AnswerValue>
+                    <AnswerValue Name="NL">APART WASSEN</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ OSOBNO</AnswerValue>
+                    <AnswerValue Name="PT">LAVAR SEPARADAMENTE</AnswerValue>
+                    <AnswerValue Name="RO">SPĂLAŢI SEPARAT</AnswerValue>
+                    <AnswerValue Name="RS">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="SE">TVÄTTAS SEPARAT</AnswerValue>
+                    <AnswerValue Name="SI">PERITE LOČENO</AnswerValue>
+                    <AnswerValue Name="SK">PERTE ODDELENE</AnswerValue>
+                    <AnswerValue Name="TR">AYRI YIKAYIN</AnswerValue>
+                    <AnswerValue Name="US">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="UZ">ALOHIDA YUVING.</AnswerValue>
+                    <AnswerValue Name="VN">GIẶT RIÊNG</AnswerValue>
+                    <AnswerValue Name="BG">ПЕРЕТЕ ОТДЕЛНО</AnswerValue>
+                    <AnswerValue Name="CHS">分开洗涤</AnswerValue>
+                    <AnswerValue Name="GE">გარეცხეთ ცალკე</AnswerValue>
+                    <AnswerValue Name="GR">ΠΛΥΣΙΜΟ ΧΩΡΙΣΤΑ</AnswerValue>
+                    <AnswerValue Name="JP">別洗いしてください</AnswerValue>
+                    <AnswerValue Name="KH">បោកគក់ដាច់ដោយឡែកពីគេ</AnswerValue>
+                    <AnswerValue Name="KR">다른세탁물과분리해서세탁하세요</AnswerValue>
+                    <AnswerValue Name="KZ">БӨЛЕК ЖУЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ПЕРЕ ОДДЕЛНО</AnswerValue>
+                    <AnswerValue Name="RU">СТИРАТЬ ОТДЕЛЬНО</AnswerValue>
+                    <AnswerValue Name="TH">ซักแยก</AnswerValue>
+                    <AnswerValue Name="CHT">分開洗滌</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ ОКРЕМО</AnswerValue>
+                    <AnswerValue Name="IX">לכבס בנפרד</AnswerValue>
+                    <AnswerValue Name="ar">يغسل منفرداً</AnswerValue>
+                    <AnswerValue Name="MX">Lavar por separado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15428987" Question="Country of Origin">
+            <Answer>
+              <AnswerID>29338</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MADE IN INDIA</AnswerValue>
+                <AnswerValue Name="GB">Made in India</AnswerValue>
+                <AnswerValue Name="ES">Hecho en India</AnswerValue>
+                <AnswerValue Name="FR">Fabriqué en Inde</AnswerValue>
+                <AnswerValue Name="ES Name">INDIA</AnswerValue>
+                <AnswerValue Name="IX">תוצרת הודו</AnswerValue>
+                <AnswerValue Name="PT">FABRICADO NA ÍNDIA</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Fibre Content" LookupListType="Fibre Content Header" QuestionID="15428988" Question="FIBRE HEADER" AnswerValue="SHELL" Code="Fibre Content" Name="Fibre Content">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE HEADER">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">SHELL</AnswerValue>
+                    <AnswerValue Name="GB">SHELL</AnswerValue>
+                    <AnswerValue Name="AL">SHTRESA E JASHTME</AnswerValue>
+                    <AnswerValue Name="AZ">BALIQQULAĞI</AnswerValue>
+                    <AnswerValue Name="CAT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="CZ">VRCHOVÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="DE">OBERMATERIAL</AnswerValue>
+                    <AnswerValue Name="EE">ÜMBRIS</AnswerValue>
+                    <AnswerValue Name="ES">CAPA EXTERIOR</AnswerValue>
+                    <AnswerValue Name="FI">PÄÄLLISKANGAS</AnswerValue>
+                    <AnswerValue Name="FR">EXTERIEUR</AnswerValue>
+                    <AnswerValue Name="HR">LICE</AnswerValue>
+                    <AnswerValue Name="IT">TESSUTO ESTERNO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLSŐ</AnswerValue>
+                    <AnswerValue Name="ID">KAIN UTAMA</AnswerValue>
+                    <AnswerValue Name="NL">EXTERN MATERIAAL</AnswerValue>
+                    <AnswerValue Name="LT">APVALKALAS</AnswerValue>
+                    <AnswerValue Name="LV">ĀRĒJĀ DAĻA</AnswerValue>
+                    <AnswerValue Name="PL">TKANINA WIERZCHNIA</AnswerValue>
+                    <AnswerValue Name="PT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="SE">YTTERTYG</AnswerValue>
+                    <AnswerValue Name="RS">SPOLJNI SLOJ</AnswerValue>
+                    <AnswerValue Name="SI">ZUNANJE BLAGO</AnswerValue>
+                    <AnswerValue Name="SK">VRCHNÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="RO">TESATURA</AnswerValue>
+                    <AnswerValue Name="UZ">CHIG'ANOQ</AnswerValue>
+                    <AnswerValue Name="TR">ANA KUMAŞ</AnswerValue>
+                    <AnswerValue Name="US">SHELL</AnswerValue>
+                    <AnswerValue Name="VN">LỚP NGOÀI</AnswerValue>
+                    <AnswerValue Name="BG">ВЪНШНА ЧАСТ</AnswerValue>
+                    <AnswerValue Name="CHS">面料</AnswerValue>
+                    <AnswerValue Name="GR">ΕΞΩΤΕΡΙΚΟ ΥΦΑΣΜΑ</AnswerValue>
+                    <AnswerValue Name="JP">表地</AnswerValue>
+                    <AnswerValue Name="GE">გარსი</AnswerValue>
+                    <AnswerValue Name="KH">ស្រទាប់ខាងក្រៅ</AnswerValue>
+                    <AnswerValue Name="KZ">ҚАБЫҚ</AnswerValue>
+                    <AnswerValue Name="MK">НАДВОРЕШЕН ДЕЛ</AnswerValue>
+                    <AnswerValue Name="KR">겉감</AnswerValue>
+                    <AnswerValue Name="RU">ВЕРХНИЙ СЛОЙ</AnswerValue>
+                    <AnswerValue Name="TH">เสื้อผ้าชั้นนอกสุด</AnswerValue>
+                    <AnswerValue Name="CHT">面料</AnswerValue>
+                    <AnswerValue Name="UA">ВЕРХНІЙ ШАР</AnswerValue>
+                    <AnswerValue Name="ar">الطبقة الخارجية</AnswerValue>
+                    <AnswerValue Name="IX" />
+                    <AnswerValue Name="MX" />
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="SHELL">
+                    <Translation Language="En" Value="SHELL" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">45</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="45">
+                    <Translation Language="En" Value="45" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52534</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">COTTON</AnswerValue>
+                    <AnswerValue Name="GB">COTTON</AnswerValue>
+                    <AnswerValue Name="AL">PAMBUK</AnswerValue>
+                    <AnswerValue Name="AZ">PAMBIIQ</AnswerValue>
+                    <AnswerValue Name="CAT">COTÓ</AnswerValue>
+                    <AnswerValue Name="CZ">BAVLNA</AnswerValue>
+                    <AnswerValue Name="DE">BAUMWOLLE</AnswerValue>
+                    <AnswerValue Name="EE">PUUVILL</AnswerValue>
+                    <AnswerValue Name="ES">ALGODÓN</AnswerValue>
+                    <AnswerValue Name="FI">PUUVILLAA</AnswerValue>
+                    <AnswerValue Name="FR">COTON</AnswerValue>
+                    <AnswerValue Name="HR">PAMUK</AnswerValue>
+                    <AnswerValue Name="HU">PAMUT</AnswerValue>
+                    <AnswerValue Name="ID">KATUN</AnswerValue>
+                    <AnswerValue Name="IT">COTONE</AnswerValue>
+                    <AnswerValue Name="LT">MEDVILNĖ</AnswerValue>
+                    <AnswerValue Name="LV">KOKVILINA</AnswerValue>
+                    <AnswerValue Name="NL">KATOEN</AnswerValue>
+                    <AnswerValue Name="PL">BAWEŁNA</AnswerValue>
+                    <AnswerValue Name="PT">ALGODÃO</AnswerValue>
+                    <AnswerValue Name="RO">BUMBAC</AnswerValue>
+                    <AnswerValue Name="RS">PAMUK</AnswerValue>
+                    <AnswerValue Name="SE">BOMULL</AnswerValue>
+                    <AnswerValue Name="SI">BOMBAŽ</AnswerValue>
+                    <AnswerValue Name="SK">BAVLNA</AnswerValue>
+                    <AnswerValue Name="TR">PAMUK</AnswerValue>
+                    <AnswerValue Name="US">COTTON</AnswerValue>
+                    <AnswerValue Name="UZ">PAXTA</AnswerValue>
+                    <AnswerValue Name="VN">VẢI BÔNG</AnswerValue>
+                    <AnswerValue Name="BG">ПАМУК</AnswerValue>
+                    <AnswerValue Name="CHS">棉</AnswerValue>
+                    <AnswerValue Name="GE">კოტონოი</AnswerValue>
+                    <AnswerValue Name="GR">ΒΑΜΒΑΚΙ</AnswerValue>
+                    <AnswerValue Name="JP">コットンッ</AnswerValue>
+                    <AnswerValue Name="KH">កប្បាស</AnswerValue>
+                    <AnswerValue Name="KR">면</AnswerValue>
+                    <AnswerValue Name="KZ">МАҚТА</AnswerValue>
+                    <AnswerValue Name="MK">ПАМУК</AnswerValue>
+                    <AnswerValue Name="RU">ХЛОПОК</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าฝ้าย</AnswerValue>
+                    <AnswerValue Name="CHT">棉</AnswerValue>
+                    <AnswerValue Name="UA">БАВОВНА</AnswerValue>
+                    <AnswerValue Name="ar">‫قطن‬</AnswerValue>
+                    <AnswerValue Name="IX">‫כותנה‬</AnswerValue>
+                    <AnswerValue Name="MX">algodón</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="COTTON" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">40</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="40">
+                    <Translation Language="En" Value="40" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52535</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">LINEN</AnswerValue>
+                    <AnswerValue Name="GB">LINEN</AnswerValue>
+                    <AnswerValue Name="AL">LIRI</AnswerValue>
+                    <AnswerValue Name="AZ">KƏTAN</AnswerValue>
+                    <AnswerValue Name="CAT">LLI</AnswerValue>
+                    <AnswerValue Name="CZ">LEN</AnswerValue>
+                    <AnswerValue Name="DE">LEINEN</AnswerValue>
+                    <AnswerValue Name="EE">LINA</AnswerValue>
+                    <AnswerValue Name="ES">LINO</AnswerValue>
+                    <AnswerValue Name="FI">PELLAVAA</AnswerValue>
+                    <AnswerValue Name="FR">LIN</AnswerValue>
+                    <AnswerValue Name="HR">LAN</AnswerValue>
+                    <AnswerValue Name="HU">VÁSZON</AnswerValue>
+                    <AnswerValue Name="ID">LINEN</AnswerValue>
+                    <AnswerValue Name="IT">LINO</AnswerValue>
+                    <AnswerValue Name="LT">LINAS</AnswerValue>
+                    <AnswerValue Name="LV">LINS</AnswerValue>
+                    <AnswerValue Name="NL">LINNEN</AnswerValue>
+                    <AnswerValue Name="PL">LEN</AnswerValue>
+                    <AnswerValue Name="PT">LINHO</AnswerValue>
+                    <AnswerValue Name="RO">IN</AnswerValue>
+                    <AnswerValue Name="RS">LAN</AnswerValue>
+                    <AnswerValue Name="SE">LIN</AnswerValue>
+                    <AnswerValue Name="SI">LAN</AnswerValue>
+                    <AnswerValue Name="SK">ĽAN</AnswerValue>
+                    <AnswerValue Name="TR">KETEN</AnswerValue>
+                    <AnswerValue Name="US">LINEN</AnswerValue>
+                    <AnswerValue Name="UZ">ZIG'IR</AnswerValue>
+                    <AnswerValue Name="VN">VẢI LANH</AnswerValue>
+                    <AnswerValue Name="BG">ЛЕН</AnswerValue>
+                    <AnswerValue Name="CHS">亚麻</AnswerValue>
+                    <AnswerValue Name="GE">სელი</AnswerValue>
+                    <AnswerValue Name="GR">ΛΙΝΟ</AnswerValue>
+                    <AnswerValue Name="JP">麻</AnswerValue>
+                    <AnswerValue Name="KH">លីនែន</AnswerValue>
+                    <AnswerValue Name="KR">마</AnswerValue>
+                    <AnswerValue Name="KZ">КЕНЕП</AnswerValue>
+                    <AnswerValue Name="MK">ЛЕНЕНО ПЛАТЛНО</AnswerValue>
+                    <AnswerValue Name="RU">ЛЕН</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าลินิน</AnswerValue>
+                    <AnswerValue Name="CHT">亞麻</AnswerValue>
+                    <AnswerValue Name="UA">ЛЬОН</AnswerValue>
+                    <AnswerValue Name="ar">‫كتان‬</AnswerValue>
+                    <AnswerValue Name="IX">‫פישתן‬</AnswerValue>
+                    <AnswerValue Name="MX">lino</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="LINEN" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">15</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="15">
+                    <Translation Language="En" Value="15" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52536</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">ELASTANE</AnswerValue>
+                    <AnswerValue Name="GB">ELASTANE</AnswerValue>
+                    <AnswerValue Name="AL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="AZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="CAT">ELASTÀ</AnswerValue>
+                    <AnswerValue Name="CZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="DE">ELASTHAN</AnswerValue>
+                    <AnswerValue Name="EE">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="ES">ELASTANO</AnswerValue>
+                    <AnswerValue Name="FI">ELASTAANIA</AnswerValue>
+                    <AnswerValue Name="FR">ELASTHANNE</AnswerValue>
+                    <AnswerValue Name="HR">ELASTANSKO VLAKNO</AnswerValue>
+                    <AnswerValue Name="HU">ELASZTÁN</AnswerValue>
+                    <AnswerValue Name="ID">ELASTANE</AnswerValue>
+                    <AnswerValue Name="IT">ELASTAN</AnswerValue>
+                    <AnswerValue Name="LT">ELASTANAS</AnswerValue>
+                    <AnswerValue Name="LV">ELASTĀNS</AnswerValue>
+                    <AnswerValue Name="NL">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="PL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="PT">ELASTANO</AnswerValue>
+                    <AnswerValue Name="RO">ELASTAN</AnswerValue>
+                    <AnswerValue Name="RS">ELASTIN</AnswerValue>
+                    <AnswerValue Name="SE">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SI">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SK">ELASTAN</AnswerValue>
+                    <AnswerValue Name="TR">ELASTAN</AnswerValue>
+                    <AnswerValue Name="US">SPANDEX</AnswerValue>
+                    <AnswerValue Name="UZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="VN">ELASTAN</AnswerValue>
+                    <AnswerValue Name="BG">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="CHS">氨纶</AnswerValue>
+                    <AnswerValue Name="GE">ელასტინი</AnswerValue>
+                    <AnswerValue Name="GR">ΕΛΑΣΤΑΝΗ</AnswerValue>
+                    <AnswerValue Name="JP">ポリウレタン</AnswerValue>
+                    <AnswerValue Name="KH">អេឡាស្ទែន</AnswerValue>
+                    <AnswerValue Name="KR">폴리우레탄</AnswerValue>
+                    <AnswerValue Name="KZ">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="MK">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="RU">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="TH">อีลาสเทน</AnswerValue>
+                    <AnswerValue Name="CHT">彈性纖維</AnswerValue>
+                    <AnswerValue Name="UA">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="ar">‫الإلستين‬</AnswerValue>
+                    <AnswerValue Name="IX">‫אלסטן‬</AnswerValue>
+                    <AnswerValue Name="MX">elastano</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="ELASTANE" />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428989" Question="Order Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">B12345678</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="B12345678" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428990" Question="Product Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PROD1023</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PROD1023" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428991" Question="Season Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">1</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="1" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428996" Question="Wash care (Wash)">
+            <Answer>
+              <AnswerID>29455</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MACHINE WASH HOT</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">LAVER À LA MACHINE À L’EÀU CHAUDE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU MAKSIMUM 60°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">ซักด้วยนํ้าอุณหภูมิไม่เกิด้วน 60°C</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Temperatura máxima de lavado 60°C Proceso normal Usar detergente</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DE LAVAGEM 60ºC. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428992" Question="Wash care (Bleach)">
+            <Answer>
+              <AnswerID>31925</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">NO BLEACH</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NE PAS JAVELLISER</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">JANGAN DIKELANTANG</AnswerValue>
+                <AnswerValue Name="TH-THAI">ห้ามฟอมกขาว</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">No blanquear</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">NÃO ALVEJAR</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428995" Question="Wash care (Tumble dry)">
+            <Answer>
+              <AnswerID>29464</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">TUMBLE DRY MEDIUM</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">SÉCHER À LA MACHINE CYCLE MOYEN</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">DAPAT DILAKUKAN PENGERINGAN PUTAR SUHU NORMAL</AnswerValue>
+                <AnswerValue Name="TH-THAI">ปั่นหรืออบแห้งด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Es posible el secado en máquina o secadora temperatura normal; temperatura máxima de salida 80°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">POSSÍVEL SECAGEM EM TAMBOR, TEMPERATURA NORMAL, TEMPERATURA DE EXAUSTÃO MÁXIMA 80ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428994" Question="Wash care (Iron)">
+            <Answer>
+              <AnswerID>29469</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MEDIUM IRON</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">REPASSER À TEMPÉRATURE MOYENNE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU SETERIKA MAKSIMUM 150°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">รีดด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Plancha con temperatura máxima de la base de 150°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DA BASE DO FERRO DE 150ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428993" Question="Wash care (Dry clean)">
+            <Answer>
+              <AnswerID>29473</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">DRY CLEAN</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NETTOYAGE À SEC</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">CUCI KERING PROFESIONAL DALAM TETRAKLOROETHANA</AnswerValue>
+                <AnswerValue Name="TH-THAI">การซักแห้ง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Lavado en seco profesional en tetracloroetileno y todos los solventes que se indicant para el simbolo F proceso normal</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">LIMPEZA A SECO PROFISSIONAL COM TETRACLOROETILENO E TODOS OS SOLVENTES LISTADOS PARA O SÍMBOLO F. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Colour" QuestionID="15428986" Question="Tape Color">
+            <Answer>
+              <AnswerID>29843</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Color">BLACK</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428998" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">123</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="123" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9389433</ItemID>
+        <VariantName>01-Childrens tops, single size-0020</VariantName>
+        <Quantity>200</Quantity>
+        <SizeChartItem Id="15428997" Value="01-Childrens tops, single size-0020" SizeChartName="01-Childrens tops, single size">
+          <Size Name="EUR" Value="50" />
+          <Size Name="US" Value="PM" />
+          <Size Name="CA" Value="0-1M" />
+          <Size Name="CN" Value="52/40" />
+          <Size Name="MX" Value="0-1M" />
+          <Size Name="AUS" Value="0-1M" />
+          <Size Name="UK" Value="0-1M" />
+          <Size Name="BR" Value="0-1M" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Additional Wash Instructions" QuestionID="15428985" Question="Additional Care Information">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52634</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="AL">MOS HEKUROSNI MBI SHTYPJET</AnswerValue>
+                    <AnswerValue Name="AZ">QRAVÜRANIN ÜZƏRİNƏ ÜTÜ VURMAYIN</AnswerValue>
+                    <AnswerValue Name="CAT"> NO PLANXEU LA IMPRESSIÓ</AnswerValue>
+                    <AnswerValue Name="CZ">NEŽEHLETE POTISK</AnswerValue>
+                    <AnswerValue Name="DE">NICHT ÜBER DEN DRUCK BÜGELN</AnswerValue>
+                    <AnswerValue Name="EE">ÄRA TRIIGI TRÜKIKOHTI</AnswerValue>
+                    <AnswerValue Name="ES">NO PLANCHAR EL MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="FI">ÄLÄ SILITÄ PAINOKUVAA</AnswerValue>
+                    <AnswerValue Name="FR">NE PAS REPASSER LE MOTIF IMPRIMÉ</AnswerValue>
+                    <AnswerValue Name="HR">NE GLAČATI PRINT</AnswerValue>
+                    <AnswerValue Name="HU">NE VASALJON A NYOMTATOTT MINTÁN</AnswerValue>
+                    <AnswerValue Name="ID">JANGAN MENYETRIKA PADA CETAKAN</AnswerValue>
+                    <AnswerValue Name="IT">NON STIRARE SUL MOTIVO STAMPATO</AnswerValue>
+                    <AnswerValue Name="LT">NELYGINTI APLIKACIJŲ</AnswerValue>
+                    <AnswerValue Name="LV">NEGLUDINIET APDRUKU</AnswerValue>
+                    <AnswerValue Name="NL">NIET OVER DE PRINT STRIJKEN</AnswerValue>
+                    <AnswerValue Name="PL">NIE PRASOWAĆ PO NADRUKU</AnswerValue>
+                    <AnswerValue Name="PT">NÃO PASSAR A FERRO O MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="RO">NU CĂLCAŢI PE IMPRIMEU</AnswerValue>
+                    <AnswerValue Name="RS">NE PEGLATI PRINT</AnswerValue>
+                    <AnswerValue Name="SE">STRYK EJ PÅ TRYCKET</AnswerValue>
+                    <AnswerValue Name="SI">NE LIKAJTE PO POTISKU</AnswerValue>
+                    <AnswerValue Name="SK">NEŽEHLITE CEZ POTLAČ</AnswerValue>
+                    <AnswerValue Name="TR">BASKI ÜZERİNDEN ÜTÜLEMEYİN</AnswerValue>
+                    <AnswerValue Name="US">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="UZ">PRINTNI DAZMOLLAMANG</AnswerValue>
+                    <AnswerValue Name="VN">KHÔNG ỦI LÊN HỌA TIẾT</AnswerValue>
+                    <AnswerValue Name="BG">НЕ ГЛАДЕТЕ ЩАМПАТА</AnswerValue>
+                    <AnswerValue Name="CHS">请不要在图案上熨烫</AnswerValue>
+                    <AnswerValue Name="GE">ნუ დააუთოებთ ნაბეჭდზე</AnswerValue>
+                    <AnswerValue Name="GR">MH ΣIΔEPΩNETE ΠANΩ ΣTH ΣTAMΠA</AnswerValue>
+                    <AnswerValue Name="JP">プリント部分にはアイロンをかけないでくださいト部分に</AnswerValue>
+                    <AnswerValue Name="KH">មិនត្រូវអ៊ុតនៅលើកន្លែងបោះពុម្ព</AnswerValue>
+                    <AnswerValue Name="KR">프린트 부분은 다림질 하지 마세요</AnswerValue>
+                    <AnswerValue Name="KZ">БАСПАНЫ ҮТІКТЕМЕҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА НЕ СЕ ПЕГЛА ВРЗ АПЛИКАЦИЈАТА</AnswerValue>
+                    <AnswerValue Name="RU">НЕ ГЛАДИТЬ ПО РИСУНКУ</AnswerValue>
+                    <AnswerValue Name="TH">ห้ามรีดลายพิมพ์</AnswerValue>
+                    <AnswerValue Name="CHT">請勿熨燙圖案部位</AnswerValue>
+                    <AnswerValue Name="UA">НЕ ПРАСУВАТИ ПРИНТ</AnswerValue>
+                    <AnswerValue Name="IX">אין לגהץ על ההדפס</AnswerValue>
+                    <AnswerValue Name="ar">الرجاء عدم كي المطبوع</AnswerValue>
+                    <AnswerValue Name="MX">No planchar el motivo estampado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52524</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="AL">PËRDORNI NJË ÇANTË LAVANDERIE</AnswerValue>
+                    <AnswerValue Name="AZ">CAMAŞIR TORBASINDAN İSTİFADƏ EDİN</AnswerValue>
+                    <AnswerValue Name="CAT">UTILITZEU UNA BOSSA DE RENTAT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE V SÁČKU PRO ŠETRNÉ PRANÍ</AnswerValue>
+                    <AnswerValue Name="DE">WÄSCHEBEUTEL VERWENDEN</AnswerValue>
+                    <AnswerValue Name="EE">KASUTA PESUKOTTI</AnswerValue>
+                    <AnswerValue Name="ES">UTILIZAR BOLSA DE LAVADO</AnswerValue>
+                    <AnswerValue Name="FI">KÄYTÄ PESUPUSSIA</AnswerValue>
+                    <AnswerValue Name="FR">UTILISER UN FILET DE LAVAGE</AnswerValue>
+                    <AnswerValue Name="HR">KORISTITI VREĆU ZA PRANJE RUBLJA</AnswerValue>
+                    <AnswerValue Name="HU">HASZNÁLJON MOSÓHÁLÓT</AnswerValue>
+                    <AnswerValue Name="ID">GUNAKAN TAS CUCIAN</AnswerValue>
+                    <AnswerValue Name="IT">USARE UN SACCHETTO DA BUCATO</AnswerValue>
+                    <AnswerValue Name="LT">NAUDOTI SKALBIMO MAIŠELĮ</AnswerValue>
+                    <AnswerValue Name="LV">IZMANTOJIET VEĻAS MAISU</AnswerValue>
+                    <AnswerValue Name="NL">GEBRUIK WASZAKJE</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ W SIATECZCE DO PRANIA</AnswerValue>
+                    <AnswerValue Name="PT">UTILIZAR SACO PARA LAVAGEM</AnswerValue>
+                    <AnswerValue Name="RO">FOLOSIŢI UN SAC PENTRU RUFE</AnswerValue>
+                    <AnswerValue Name="RS">KORISTITI VREĆICU ZA PRANJE VEŠA</AnswerValue>
+                    <AnswerValue Name="SE">ANVÄND TVÄTTPÅSE</AnswerValue>
+                    <AnswerValue Name="SI">UPORABITE VREČKO ZA PRANJE PERILA</AnswerValue>
+                    <AnswerValue Name="SK">POUŽITE VRECKO NA PRANIE BIELIZNE</AnswerValue>
+                    <AnswerValue Name="TR">ÇAMAŞIR TORBASI KULLANIN</AnswerValue>
+                    <AnswerValue Name="US">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="UZ">KIR YUVISH SUMKASIDAN FOYDALANING</AnswerValue>
+                    <AnswerValue Name="VN">DÙNG TÚI GIẶT</AnswerValue>
+                    <AnswerValue Name="BG">ИЗПОЛЗВАЙТЕ ТОРБА ЗА ПРАНЕ</AnswerValue>
+                    <AnswerValue Name="CHS">请使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="GE">გამოიყენეთ სარეცხის ბადე</AnswerValue>
+                    <AnswerValue Name="GR">ΧΡΗΣΙΜΟΠΟΙΗΣΤΕ ΘΗΚΗ ΠΛΥΣΙΜΑΤΟΣ</AnswerValue>
+                    <AnswerValue Name="JP">洗濯ネットに入れて洗ってください</AnswerValue>
+                    <AnswerValue Name="KH">ប្រើថង់សម្រាប់បោកគក់</AnswerValue>
+                    <AnswerValue Name="KR">세탁망을 사용하세요</AnswerValue>
+                    <AnswerValue Name="KZ">КІР ҚАБЫН ПАЙДАЛАНЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ КОРИСТИ ВРЕЌА ЗА ПЕРЕЊЕ</AnswerValue>
+                    <AnswerValue Name="RU">ИСПОЛЬЗУЙТЕ МЕШОК ДЛЯ БЕЛЬЯ</AnswerValue>
+                    <AnswerValue Name="TH">ใช้ถุงซักผ้า</AnswerValue>
+                    <AnswerValue Name="CHT">請使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ У МІШКУ ДЛЯ ПРАННЯ</AnswerValue>
+                    <AnswerValue Name="IX">להשתמש בשקית כביסה</AnswerValue>
+                    <AnswerValue Name="ar">استعمل كيس الغسيل</AnswerValue>
+                    <AnswerValue Name="MX">Utilizar bolsa de lavado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52526</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="AL">RIFORMËSONI KUR ËSHTË E NJOMË</AnswerValue>
+                    <AnswerValue Name="AZ">NƏM OLDUQDA FORMASINI DƏYİŞDİRİN</AnswerValue>
+                    <AnswerValue Name="CAT">DONEU-LI FORMA HUMIT</AnswerValue>
+                    <AnswerValue Name="CZ">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="DE">FEUCHT IN FORM ZIEHEN</AnswerValue>
+                    <AnswerValue Name="EE">VORMI MÄRJALT</AnswerValue>
+                    <AnswerValue Name="ES">CONFORMAR EN ESTADO HÚMEDO</AnswerValue>
+                    <AnswerValue Name="FI">MUOTOILLAAN KOSTEANA</AnswerValue>
+                    <AnswerValue Name="FR">REMETTRE EN FORME À L’ÉTAT HUMIDE</AnswerValue>
+                    <AnswerValue Name="HR">OBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="HU">NEDVESEN FORMÁZZA ÚJRA</AnswerValue>
+                    <AnswerValue Name="ID">BENTUK KEMBALI SAAT LEMBAP</AnswerValue>
+                    <AnswerValue Name="IT">DARE FORMA QUANDO ANCORA UMIDO</AnswerValue>
+                    <AnswerValue Name="LT">SUFORMUOTI KOL DRĖGNAS</AnswerValue>
+                    <AnswerValue Name="LV">IZVEIDOJIET FORMU, KAMĒR MITRS</AnswerValue>
+                    <AnswerValue Name="NL">IN VOCHTIGE TOESTAND IN VORM BRENGEN</AnswerValue>
+                    <AnswerValue Name="PL">FORMOWAĆ W STANIE MOKRYM</AnswerValue>
+                    <AnswerValue Name="PT">DAR FORMA ENQUANTO HÚMIDO</AnswerValue>
+                    <AnswerValue Name="RO">REMODELAŢI CÂND ESTE UMED</AnswerValue>
+                    <AnswerValue Name="RS">PREOBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="SE">FORMAS I FUKTIGT TILLSTÅND</AnswerValue>
+                    <AnswerValue Name="SI">NARAVNAJTE OBLIKO V VLAŽNEM STANJU</AnswerValue>
+                    <AnswerValue Name="SK">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="TR">NEMLİYKEN DÜZELTİN</AnswerValue>
+                    <AnswerValue Name="US">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="UZ">NAM HOLATDA QAYTA SHAKLLANTIRING</AnswerValue>
+                    <AnswerValue Name="VN">CHỈNH DÁNG KHI CÒN ẨM</AnswerValue>
+                    <AnswerValue Name="BG">ВЪРНЕТЕ ФОРМАТА, ДОКАТО Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="CHS">请在湿状态时恢复原状</AnswerValue>
+                    <AnswerValue Name="GE">გაასწორეთ ფორმა, სანამ ნესტიანია</AnswerValue>
+                    <AnswerValue Name="GR">ΕΠΑΝΑΦΕΡΤΕ ΤΟ ΣΤΟ ΣΧΗΜΑ ΤΟΥ ΕΝΟΣΩ ΕΙΝΑΙ ΑΚΟΜΑ ΝΩΠΟ</AnswerValue>
+                    <AnswerValue Name="JP">湿った状態で形を整えてください</AnswerValue>
+                    <AnswerValue Name="KH">ធ្វើរូបរាងឡើងវិញនៅពេលសើម</AnswerValue>
+                    <AnswerValue Name="KR">젖어있을때 모양을 잡아주세요</AnswerValue>
+                    <AnswerValue Name="KZ">ДЫМҚЫЛ КҮЙДЕ БАСТАПҚЫ ПІШІНІН КЕЛТІРІҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ИСПРАВИ ДОДЕКА Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="RU">РАСПРАВЛЯТЬ ВО ВЛАЖНОМ СОСТОЯНИИ</AnswerValue>
+                    <AnswerValue Name="TH">จัดทรงให้เรียบร้อยขณะที่ผ้าเปียกชื้น</AnswerValue>
+                    <AnswerValue Name="CHT">請於未乾時塑型</AnswerValue>
+                    <AnswerValue Name="UA">НАДАТИ ФОРМУ У ВОЛОГОМУ СТАНІ</AnswerValue>
+                    <AnswerValue Name="IX">לסדר בעודו לח</AnswerValue>
+                    <AnswerValue Name="ar">يجب أن تفرد القطعة لتأخذ شكلها وهي رطبة قبل أن تجف</AnswerValue>
+                    <AnswerValue Name="MX">Conformar en estado húmedo</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52528</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="AL">LANI VEÇ E VEÇ</AnswerValue>
+                    <AnswerValue Name="AZ">AYRILIQDA YUYUN.</AnswerValue>
+                    <AnswerValue Name="CAT">RENTEU-HO SEPARADAMENT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE ODDĚLENĚ</AnswerValue>
+                    <AnswerValue Name="DE">SEPARAT WASCHEN</AnswerValue>
+                    <AnswerValue Name="EE">PESE ERALDI</AnswerValue>
+                    <AnswerValue Name="ES">LAVAR POR SEPARADO</AnswerValue>
+                    <AnswerValue Name="FI">PESTÄVÄ ERILLÄÄN</AnswerValue>
+                    <AnswerValue Name="FR">LAVER SÉPARÉMENT</AnswerValue>
+                    <AnswerValue Name="HR">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLÖN MOSANDÓ</AnswerValue>
+                    <AnswerValue Name="ID">CUCI TERPISAH</AnswerValue>
+                    <AnswerValue Name="IT">LAVARE SEPARATAMENTE</AnswerValue>
+                    <AnswerValue Name="LT">SKALBTI ATSKIRAI NUO KITŲ DRABUŽIŲ</AnswerValue>
+                    <AnswerValue Name="LV">MAZGĀJIET ATSEVIŠĶI</AnswerValue>
+                    <AnswerValue Name="NL">APART WASSEN</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ OSOBNO</AnswerValue>
+                    <AnswerValue Name="PT">LAVAR SEPARADAMENTE</AnswerValue>
+                    <AnswerValue Name="RO">SPĂLAŢI SEPARAT</AnswerValue>
+                    <AnswerValue Name="RS">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="SE">TVÄTTAS SEPARAT</AnswerValue>
+                    <AnswerValue Name="SI">PERITE LOČENO</AnswerValue>
+                    <AnswerValue Name="SK">PERTE ODDELENE</AnswerValue>
+                    <AnswerValue Name="TR">AYRI YIKAYIN</AnswerValue>
+                    <AnswerValue Name="US">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="UZ">ALOHIDA YUVING.</AnswerValue>
+                    <AnswerValue Name="VN">GIẶT RIÊNG</AnswerValue>
+                    <AnswerValue Name="BG">ПЕРЕТЕ ОТДЕЛНО</AnswerValue>
+                    <AnswerValue Name="CHS">分开洗涤</AnswerValue>
+                    <AnswerValue Name="GE">გარეცხეთ ცალკე</AnswerValue>
+                    <AnswerValue Name="GR">ΠΛΥΣΙΜΟ ΧΩΡΙΣΤΑ</AnswerValue>
+                    <AnswerValue Name="JP">別洗いしてください</AnswerValue>
+                    <AnswerValue Name="KH">បោកគក់ដាច់ដោយឡែកពីគេ</AnswerValue>
+                    <AnswerValue Name="KR">다른세탁물과분리해서세탁하세요</AnswerValue>
+                    <AnswerValue Name="KZ">БӨЛЕК ЖУЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ПЕРЕ ОДДЕЛНО</AnswerValue>
+                    <AnswerValue Name="RU">СТИРАТЬ ОТДЕЛЬНО</AnswerValue>
+                    <AnswerValue Name="TH">ซักแยก</AnswerValue>
+                    <AnswerValue Name="CHT">分開洗滌</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ ОКРЕМО</AnswerValue>
+                    <AnswerValue Name="IX">לכבס בנפרד</AnswerValue>
+                    <AnswerValue Name="ar">يغسل منفرداً</AnswerValue>
+                    <AnswerValue Name="MX">Lavar por separado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15428987" Question="Country of Origin">
+            <Answer>
+              <AnswerID>29338</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MADE IN INDIA</AnswerValue>
+                <AnswerValue Name="GB">Made in India</AnswerValue>
+                <AnswerValue Name="ES">Hecho en India</AnswerValue>
+                <AnswerValue Name="FR">Fabriqué en Inde</AnswerValue>
+                <AnswerValue Name="ES Name">INDIA</AnswerValue>
+                <AnswerValue Name="IX">תוצרת הודו</AnswerValue>
+                <AnswerValue Name="PT">FABRICADO NA ÍNDIA</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Fibre Content" LookupListType="Fibre Content Header" QuestionID="15428988" Question="FIBRE HEADER" AnswerValue="SHELL" Code="Fibre Content" Name="Fibre Content">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE HEADER">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">SHELL</AnswerValue>
+                    <AnswerValue Name="GB">SHELL</AnswerValue>
+                    <AnswerValue Name="AL">SHTRESA E JASHTME</AnswerValue>
+                    <AnswerValue Name="AZ">BALIQQULAĞI</AnswerValue>
+                    <AnswerValue Name="CAT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="CZ">VRCHOVÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="DE">OBERMATERIAL</AnswerValue>
+                    <AnswerValue Name="EE">ÜMBRIS</AnswerValue>
+                    <AnswerValue Name="ES">CAPA EXTERIOR</AnswerValue>
+                    <AnswerValue Name="FI">PÄÄLLISKANGAS</AnswerValue>
+                    <AnswerValue Name="FR">EXTERIEUR</AnswerValue>
+                    <AnswerValue Name="HR">LICE</AnswerValue>
+                    <AnswerValue Name="IT">TESSUTO ESTERNO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLSŐ</AnswerValue>
+                    <AnswerValue Name="ID">KAIN UTAMA</AnswerValue>
+                    <AnswerValue Name="NL">EXTERN MATERIAAL</AnswerValue>
+                    <AnswerValue Name="LT">APVALKALAS</AnswerValue>
+                    <AnswerValue Name="LV">ĀRĒJĀ DAĻA</AnswerValue>
+                    <AnswerValue Name="PL">TKANINA WIERZCHNIA</AnswerValue>
+                    <AnswerValue Name="PT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="SE">YTTERTYG</AnswerValue>
+                    <AnswerValue Name="RS">SPOLJNI SLOJ</AnswerValue>
+                    <AnswerValue Name="SI">ZUNANJE BLAGO</AnswerValue>
+                    <AnswerValue Name="SK">VRCHNÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="RO">TESATURA</AnswerValue>
+                    <AnswerValue Name="UZ">CHIG'ANOQ</AnswerValue>
+                    <AnswerValue Name="TR">ANA KUMAŞ</AnswerValue>
+                    <AnswerValue Name="US">SHELL</AnswerValue>
+                    <AnswerValue Name="VN">LỚP NGOÀI</AnswerValue>
+                    <AnswerValue Name="BG">ВЪНШНА ЧАСТ</AnswerValue>
+                    <AnswerValue Name="CHS">面料</AnswerValue>
+                    <AnswerValue Name="GR">ΕΞΩΤΕΡΙΚΟ ΥΦΑΣΜΑ</AnswerValue>
+                    <AnswerValue Name="JP">表地</AnswerValue>
+                    <AnswerValue Name="GE">გარსი</AnswerValue>
+                    <AnswerValue Name="KH">ស្រទាប់ខាងក្រៅ</AnswerValue>
+                    <AnswerValue Name="KZ">ҚАБЫҚ</AnswerValue>
+                    <AnswerValue Name="MK">НАДВОРЕШЕН ДЕЛ</AnswerValue>
+                    <AnswerValue Name="KR">겉감</AnswerValue>
+                    <AnswerValue Name="RU">ВЕРХНИЙ СЛОЙ</AnswerValue>
+                    <AnswerValue Name="TH">เสื้อผ้าชั้นนอกสุด</AnswerValue>
+                    <AnswerValue Name="CHT">面料</AnswerValue>
+                    <AnswerValue Name="UA">ВЕРХНІЙ ШАР</AnswerValue>
+                    <AnswerValue Name="ar">الطبقة الخارجية</AnswerValue>
+                    <AnswerValue Name="IX" />
+                    <AnswerValue Name="MX" />
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="SHELL">
+                    <Translation Language="En" Value="SHELL" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">45</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="45">
+                    <Translation Language="En" Value="45" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52534</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">COTTON</AnswerValue>
+                    <AnswerValue Name="GB">COTTON</AnswerValue>
+                    <AnswerValue Name="AL">PAMBUK</AnswerValue>
+                    <AnswerValue Name="AZ">PAMBIIQ</AnswerValue>
+                    <AnswerValue Name="CAT">COTÓ</AnswerValue>
+                    <AnswerValue Name="CZ">BAVLNA</AnswerValue>
+                    <AnswerValue Name="DE">BAUMWOLLE</AnswerValue>
+                    <AnswerValue Name="EE">PUUVILL</AnswerValue>
+                    <AnswerValue Name="ES">ALGODÓN</AnswerValue>
+                    <AnswerValue Name="FI">PUUVILLAA</AnswerValue>
+                    <AnswerValue Name="FR">COTON</AnswerValue>
+                    <AnswerValue Name="HR">PAMUK</AnswerValue>
+                    <AnswerValue Name="HU">PAMUT</AnswerValue>
+                    <AnswerValue Name="ID">KATUN</AnswerValue>
+                    <AnswerValue Name="IT">COTONE</AnswerValue>
+                    <AnswerValue Name="LT">MEDVILNĖ</AnswerValue>
+                    <AnswerValue Name="LV">KOKVILINA</AnswerValue>
+                    <AnswerValue Name="NL">KATOEN</AnswerValue>
+                    <AnswerValue Name="PL">BAWEŁNA</AnswerValue>
+                    <AnswerValue Name="PT">ALGODÃO</AnswerValue>
+                    <AnswerValue Name="RO">BUMBAC</AnswerValue>
+                    <AnswerValue Name="RS">PAMUK</AnswerValue>
+                    <AnswerValue Name="SE">BOMULL</AnswerValue>
+                    <AnswerValue Name="SI">BOMBAŽ</AnswerValue>
+                    <AnswerValue Name="SK">BAVLNA</AnswerValue>
+                    <AnswerValue Name="TR">PAMUK</AnswerValue>
+                    <AnswerValue Name="US">COTTON</AnswerValue>
+                    <AnswerValue Name="UZ">PAXTA</AnswerValue>
+                    <AnswerValue Name="VN">VẢI BÔNG</AnswerValue>
+                    <AnswerValue Name="BG">ПАМУК</AnswerValue>
+                    <AnswerValue Name="CHS">棉</AnswerValue>
+                    <AnswerValue Name="GE">კოტონოი</AnswerValue>
+                    <AnswerValue Name="GR">ΒΑΜΒΑΚΙ</AnswerValue>
+                    <AnswerValue Name="JP">コットンッ</AnswerValue>
+                    <AnswerValue Name="KH">កប្បាស</AnswerValue>
+                    <AnswerValue Name="KR">면</AnswerValue>
+                    <AnswerValue Name="KZ">МАҚТА</AnswerValue>
+                    <AnswerValue Name="MK">ПАМУК</AnswerValue>
+                    <AnswerValue Name="RU">ХЛОПОК</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าฝ้าย</AnswerValue>
+                    <AnswerValue Name="CHT">棉</AnswerValue>
+                    <AnswerValue Name="UA">БАВОВНА</AnswerValue>
+                    <AnswerValue Name="ar">‫قطن‬</AnswerValue>
+                    <AnswerValue Name="IX">‫כותנה‬</AnswerValue>
+                    <AnswerValue Name="MX">algodón</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="COTTON" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">40</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="40">
+                    <Translation Language="En" Value="40" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52535</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">LINEN</AnswerValue>
+                    <AnswerValue Name="GB">LINEN</AnswerValue>
+                    <AnswerValue Name="AL">LIRI</AnswerValue>
+                    <AnswerValue Name="AZ">KƏTAN</AnswerValue>
+                    <AnswerValue Name="CAT">LLI</AnswerValue>
+                    <AnswerValue Name="CZ">LEN</AnswerValue>
+                    <AnswerValue Name="DE">LEINEN</AnswerValue>
+                    <AnswerValue Name="EE">LINA</AnswerValue>
+                    <AnswerValue Name="ES">LINO</AnswerValue>
+                    <AnswerValue Name="FI">PELLAVAA</AnswerValue>
+                    <AnswerValue Name="FR">LIN</AnswerValue>
+                    <AnswerValue Name="HR">LAN</AnswerValue>
+                    <AnswerValue Name="HU">VÁSZON</AnswerValue>
+                    <AnswerValue Name="ID">LINEN</AnswerValue>
+                    <AnswerValue Name="IT">LINO</AnswerValue>
+                    <AnswerValue Name="LT">LINAS</AnswerValue>
+                    <AnswerValue Name="LV">LINS</AnswerValue>
+                    <AnswerValue Name="NL">LINNEN</AnswerValue>
+                    <AnswerValue Name="PL">LEN</AnswerValue>
+                    <AnswerValue Name="PT">LINHO</AnswerValue>
+                    <AnswerValue Name="RO">IN</AnswerValue>
+                    <AnswerValue Name="RS">LAN</AnswerValue>
+                    <AnswerValue Name="SE">LIN</AnswerValue>
+                    <AnswerValue Name="SI">LAN</AnswerValue>
+                    <AnswerValue Name="SK">ĽAN</AnswerValue>
+                    <AnswerValue Name="TR">KETEN</AnswerValue>
+                    <AnswerValue Name="US">LINEN</AnswerValue>
+                    <AnswerValue Name="UZ">ZIG'IR</AnswerValue>
+                    <AnswerValue Name="VN">VẢI LANH</AnswerValue>
+                    <AnswerValue Name="BG">ЛЕН</AnswerValue>
+                    <AnswerValue Name="CHS">亚麻</AnswerValue>
+                    <AnswerValue Name="GE">სელი</AnswerValue>
+                    <AnswerValue Name="GR">ΛΙΝΟ</AnswerValue>
+                    <AnswerValue Name="JP">麻</AnswerValue>
+                    <AnswerValue Name="KH">លីនែន</AnswerValue>
+                    <AnswerValue Name="KR">마</AnswerValue>
+                    <AnswerValue Name="KZ">КЕНЕП</AnswerValue>
+                    <AnswerValue Name="MK">ЛЕНЕНО ПЛАТЛНО</AnswerValue>
+                    <AnswerValue Name="RU">ЛЕН</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าลินิน</AnswerValue>
+                    <AnswerValue Name="CHT">亞麻</AnswerValue>
+                    <AnswerValue Name="UA">ЛЬОН</AnswerValue>
+                    <AnswerValue Name="ar">‫كتان‬</AnswerValue>
+                    <AnswerValue Name="IX">‫פישתן‬</AnswerValue>
+                    <AnswerValue Name="MX">lino</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="LINEN" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">15</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="15">
+                    <Translation Language="En" Value="15" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52536</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">ELASTANE</AnswerValue>
+                    <AnswerValue Name="GB">ELASTANE</AnswerValue>
+                    <AnswerValue Name="AL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="AZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="CAT">ELASTÀ</AnswerValue>
+                    <AnswerValue Name="CZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="DE">ELASTHAN</AnswerValue>
+                    <AnswerValue Name="EE">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="ES">ELASTANO</AnswerValue>
+                    <AnswerValue Name="FI">ELASTAANIA</AnswerValue>
+                    <AnswerValue Name="FR">ELASTHANNE</AnswerValue>
+                    <AnswerValue Name="HR">ELASTANSKO VLAKNO</AnswerValue>
+                    <AnswerValue Name="HU">ELASZTÁN</AnswerValue>
+                    <AnswerValue Name="ID">ELASTANE</AnswerValue>
+                    <AnswerValue Name="IT">ELASTAN</AnswerValue>
+                    <AnswerValue Name="LT">ELASTANAS</AnswerValue>
+                    <AnswerValue Name="LV">ELASTĀNS</AnswerValue>
+                    <AnswerValue Name="NL">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="PL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="PT">ELASTANO</AnswerValue>
+                    <AnswerValue Name="RO">ELASTAN</AnswerValue>
+                    <AnswerValue Name="RS">ELASTIN</AnswerValue>
+                    <AnswerValue Name="SE">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SI">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SK">ELASTAN</AnswerValue>
+                    <AnswerValue Name="TR">ELASTAN</AnswerValue>
+                    <AnswerValue Name="US">SPANDEX</AnswerValue>
+                    <AnswerValue Name="UZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="VN">ELASTAN</AnswerValue>
+                    <AnswerValue Name="BG">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="CHS">氨纶</AnswerValue>
+                    <AnswerValue Name="GE">ელასტინი</AnswerValue>
+                    <AnswerValue Name="GR">ΕΛΑΣΤΑΝΗ</AnswerValue>
+                    <AnswerValue Name="JP">ポリウレタン</AnswerValue>
+                    <AnswerValue Name="KH">អេឡាស្ទែន</AnswerValue>
+                    <AnswerValue Name="KR">폴리우레탄</AnswerValue>
+                    <AnswerValue Name="KZ">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="MK">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="RU">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="TH">อีลาสเทน</AnswerValue>
+                    <AnswerValue Name="CHT">彈性纖維</AnswerValue>
+                    <AnswerValue Name="UA">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="ar">‫الإلستين‬</AnswerValue>
+                    <AnswerValue Name="IX">‫אלסטן‬</AnswerValue>
+                    <AnswerValue Name="MX">elastano</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="ELASTANE" />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428989" Question="Order Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">B12345678</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="B12345678" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428990" Question="Product Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PROD1023</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PROD1023" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428991" Question="Season Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">1</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="1" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428996" Question="Wash care (Wash)">
+            <Answer>
+              <AnswerID>29455</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MACHINE WASH HOT</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">LAVER À LA MACHINE À L’EÀU CHAUDE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU MAKSIMUM 60°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">ซักด้วยนํ้าอุณหภูมิไม่เกิด้วน 60°C</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Temperatura máxima de lavado 60°C Proceso normal Usar detergente</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DE LAVAGEM 60ºC. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428992" Question="Wash care (Bleach)">
+            <Answer>
+              <AnswerID>31925</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">NO BLEACH</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NE PAS JAVELLISER</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">JANGAN DIKELANTANG</AnswerValue>
+                <AnswerValue Name="TH-THAI">ห้ามฟอมกขาว</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">No blanquear</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">NÃO ALVEJAR</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428995" Question="Wash care (Tumble dry)">
+            <Answer>
+              <AnswerID>29464</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">TUMBLE DRY MEDIUM</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">SÉCHER À LA MACHINE CYCLE MOYEN</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">DAPAT DILAKUKAN PENGERINGAN PUTAR SUHU NORMAL</AnswerValue>
+                <AnswerValue Name="TH-THAI">ปั่นหรืออบแห้งด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Es posible el secado en máquina o secadora temperatura normal; temperatura máxima de salida 80°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">POSSÍVEL SECAGEM EM TAMBOR, TEMPERATURA NORMAL, TEMPERATURA DE EXAUSTÃO MÁXIMA 80ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428994" Question="Wash care (Iron)">
+            <Answer>
+              <AnswerID>29469</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MEDIUM IRON</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">REPASSER À TEMPÉRATURE MOYENNE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU SETERIKA MAKSIMUM 150°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">รีดด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Plancha con temperatura máxima de la base de 150°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DA BASE DO FERRO DE 150ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428993" Question="Wash care (Dry clean)">
+            <Answer>
+              <AnswerID>29473</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">DRY CLEAN</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NETTOYAGE À SEC</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">CUCI KERING PROFESIONAL DALAM TETRAKLOROETHANA</AnswerValue>
+                <AnswerValue Name="TH-THAI">การซักแห้ง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Lavado en seco profesional en tetracloroetileno y todos los solventes que se indicant para el simbolo F proceso normal</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">LIMPEZA A SECO PROFISSIONAL COM TETRACLOROETILENO E TODOS OS SOLVENTES LISTADOS PARA O SÍMBOLO F. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Colour" QuestionID="15428986" Question="Tape Color">
+            <Answer>
+              <AnswerID>29843</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Color">BLACK</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428998" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">123</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="123" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9389434</ItemID>
+        <VariantName>01-Childrens tops, single size-0030</VariantName>
+        <Quantity>300</Quantity>
+        <SizeChartItem Id="15428997" Value="01-Childrens tops, single size-0030" SizeChartName="01-Childrens tops, single size">
+          <Size Name="EUR" Value="56" />
+          <Size Name="US" Value="NB" />
+          <Size Name="CA" Value="1-2M" />
+          <Size Name="CN" Value="59/40" />
+          <Size Name="MX" Value="1-2M" />
+          <Size Name="AUS" Value="1-2M" />
+          <Size Name="UK" Value="1-2M" />
+          <Size Name="BR" Value="1-2M" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Additional Wash Instructions" QuestionID="15428985" Question="Additional Care Information">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52634</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="AL">MOS HEKUROSNI MBI SHTYPJET</AnswerValue>
+                    <AnswerValue Name="AZ">QRAVÜRANIN ÜZƏRİNƏ ÜTÜ VURMAYIN</AnswerValue>
+                    <AnswerValue Name="CAT"> NO PLANXEU LA IMPRESSIÓ</AnswerValue>
+                    <AnswerValue Name="CZ">NEŽEHLETE POTISK</AnswerValue>
+                    <AnswerValue Name="DE">NICHT ÜBER DEN DRUCK BÜGELN</AnswerValue>
+                    <AnswerValue Name="EE">ÄRA TRIIGI TRÜKIKOHTI</AnswerValue>
+                    <AnswerValue Name="ES">NO PLANCHAR EL MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="FI">ÄLÄ SILITÄ PAINOKUVAA</AnswerValue>
+                    <AnswerValue Name="FR">NE PAS REPASSER LE MOTIF IMPRIMÉ</AnswerValue>
+                    <AnswerValue Name="HR">NE GLAČATI PRINT</AnswerValue>
+                    <AnswerValue Name="HU">NE VASALJON A NYOMTATOTT MINTÁN</AnswerValue>
+                    <AnswerValue Name="ID">JANGAN MENYETRIKA PADA CETAKAN</AnswerValue>
+                    <AnswerValue Name="IT">NON STIRARE SUL MOTIVO STAMPATO</AnswerValue>
+                    <AnswerValue Name="LT">NELYGINTI APLIKACIJŲ</AnswerValue>
+                    <AnswerValue Name="LV">NEGLUDINIET APDRUKU</AnswerValue>
+                    <AnswerValue Name="NL">NIET OVER DE PRINT STRIJKEN</AnswerValue>
+                    <AnswerValue Name="PL">NIE PRASOWAĆ PO NADRUKU</AnswerValue>
+                    <AnswerValue Name="PT">NÃO PASSAR A FERRO O MOTIVO ESTAMPADO</AnswerValue>
+                    <AnswerValue Name="RO">NU CĂLCAŢI PE IMPRIMEU</AnswerValue>
+                    <AnswerValue Name="RS">NE PEGLATI PRINT</AnswerValue>
+                    <AnswerValue Name="SE">STRYK EJ PÅ TRYCKET</AnswerValue>
+                    <AnswerValue Name="SI">NE LIKAJTE PO POTISKU</AnswerValue>
+                    <AnswerValue Name="SK">NEŽEHLITE CEZ POTLAČ</AnswerValue>
+                    <AnswerValue Name="TR">BASKI ÜZERİNDEN ÜTÜLEMEYİN</AnswerValue>
+                    <AnswerValue Name="US">DO NOT IRON ON PRINT</AnswerValue>
+                    <AnswerValue Name="UZ">PRINTNI DAZMOLLAMANG</AnswerValue>
+                    <AnswerValue Name="VN">KHÔNG ỦI LÊN HỌA TIẾT</AnswerValue>
+                    <AnswerValue Name="BG">НЕ ГЛАДЕТЕ ЩАМПАТА</AnswerValue>
+                    <AnswerValue Name="CHS">请不要在图案上熨烫</AnswerValue>
+                    <AnswerValue Name="GE">ნუ დააუთოებთ ნაბეჭდზე</AnswerValue>
+                    <AnswerValue Name="GR">MH ΣIΔEPΩNETE ΠANΩ ΣTH ΣTAMΠA</AnswerValue>
+                    <AnswerValue Name="JP">プリント部分にはアイロンをかけないでくださいト部分に</AnswerValue>
+                    <AnswerValue Name="KH">មិនត្រូវអ៊ុតនៅលើកន្លែងបោះពុម្ព</AnswerValue>
+                    <AnswerValue Name="KR">프린트 부분은 다림질 하지 마세요</AnswerValue>
+                    <AnswerValue Name="KZ">БАСПАНЫ ҮТІКТЕМЕҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА НЕ СЕ ПЕГЛА ВРЗ АПЛИКАЦИЈАТА</AnswerValue>
+                    <AnswerValue Name="RU">НЕ ГЛАДИТЬ ПО РИСУНКУ</AnswerValue>
+                    <AnswerValue Name="TH">ห้ามรีดลายพิมพ์</AnswerValue>
+                    <AnswerValue Name="CHT">請勿熨燙圖案部位</AnswerValue>
+                    <AnswerValue Name="UA">НЕ ПРАСУВАТИ ПРИНТ</AnswerValue>
+                    <AnswerValue Name="IX">אין לגהץ על ההדפס</AnswerValue>
+                    <AnswerValue Name="ar">الرجاء عدم كي المطبوع</AnswerValue>
+                    <AnswerValue Name="MX">No planchar el motivo estampado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52524</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="AL">PËRDORNI NJË ÇANTË LAVANDERIE</AnswerValue>
+                    <AnswerValue Name="AZ">CAMAŞIR TORBASINDAN İSTİFADƏ EDİN</AnswerValue>
+                    <AnswerValue Name="CAT">UTILITZEU UNA BOSSA DE RENTAT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE V SÁČKU PRO ŠETRNÉ PRANÍ</AnswerValue>
+                    <AnswerValue Name="DE">WÄSCHEBEUTEL VERWENDEN</AnswerValue>
+                    <AnswerValue Name="EE">KASUTA PESUKOTTI</AnswerValue>
+                    <AnswerValue Name="ES">UTILIZAR BOLSA DE LAVADO</AnswerValue>
+                    <AnswerValue Name="FI">KÄYTÄ PESUPUSSIA</AnswerValue>
+                    <AnswerValue Name="FR">UTILISER UN FILET DE LAVAGE</AnswerValue>
+                    <AnswerValue Name="HR">KORISTITI VREĆU ZA PRANJE RUBLJA</AnswerValue>
+                    <AnswerValue Name="HU">HASZNÁLJON MOSÓHÁLÓT</AnswerValue>
+                    <AnswerValue Name="ID">GUNAKAN TAS CUCIAN</AnswerValue>
+                    <AnswerValue Name="IT">USARE UN SACCHETTO DA BUCATO</AnswerValue>
+                    <AnswerValue Name="LT">NAUDOTI SKALBIMO MAIŠELĮ</AnswerValue>
+                    <AnswerValue Name="LV">IZMANTOJIET VEĻAS MAISU</AnswerValue>
+                    <AnswerValue Name="NL">GEBRUIK WASZAKJE</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ W SIATECZCE DO PRANIA</AnswerValue>
+                    <AnswerValue Name="PT">UTILIZAR SACO PARA LAVAGEM</AnswerValue>
+                    <AnswerValue Name="RO">FOLOSIŢI UN SAC PENTRU RUFE</AnswerValue>
+                    <AnswerValue Name="RS">KORISTITI VREĆICU ZA PRANJE VEŠA</AnswerValue>
+                    <AnswerValue Name="SE">ANVÄND TVÄTTPÅSE</AnswerValue>
+                    <AnswerValue Name="SI">UPORABITE VREČKO ZA PRANJE PERILA</AnswerValue>
+                    <AnswerValue Name="SK">POUŽITE VRECKO NA PRANIE BIELIZNE</AnswerValue>
+                    <AnswerValue Name="TR">ÇAMAŞIR TORBASI KULLANIN</AnswerValue>
+                    <AnswerValue Name="US">USE A LAUNDRY BAG</AnswerValue>
+                    <AnswerValue Name="UZ">KIR YUVISH SUMKASIDAN FOYDALANING</AnswerValue>
+                    <AnswerValue Name="VN">DÙNG TÚI GIẶT</AnswerValue>
+                    <AnswerValue Name="BG">ИЗПОЛЗВАЙТЕ ТОРБА ЗА ПРАНЕ</AnswerValue>
+                    <AnswerValue Name="CHS">请使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="GE">გამოიყენეთ სარეცხის ბადე</AnswerValue>
+                    <AnswerValue Name="GR">ΧΡΗΣΙΜΟΠΟΙΗΣΤΕ ΘΗΚΗ ΠΛΥΣΙΜΑΤΟΣ</AnswerValue>
+                    <AnswerValue Name="JP">洗濯ネットに入れて洗ってください</AnswerValue>
+                    <AnswerValue Name="KH">ប្រើថង់សម្រាប់បោកគក់</AnswerValue>
+                    <AnswerValue Name="KR">세탁망을 사용하세요</AnswerValue>
+                    <AnswerValue Name="KZ">КІР ҚАБЫН ПАЙДАЛАНЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ КОРИСТИ ВРЕЌА ЗА ПЕРЕЊЕ</AnswerValue>
+                    <AnswerValue Name="RU">ИСПОЛЬЗУЙТЕ МЕШОК ДЛЯ БЕЛЬЯ</AnswerValue>
+                    <AnswerValue Name="TH">ใช้ถุงซักผ้า</AnswerValue>
+                    <AnswerValue Name="CHT">請使用洗衣袋</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ У МІШКУ ДЛЯ ПРАННЯ</AnswerValue>
+                    <AnswerValue Name="IX">להשתמש בשקית כביסה</AnswerValue>
+                    <AnswerValue Name="ar">استعمل كيس الغسيل</AnswerValue>
+                    <AnswerValue Name="MX">Utilizar bolsa de lavado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52526</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="AL">RIFORMËSONI KUR ËSHTË E NJOMË</AnswerValue>
+                    <AnswerValue Name="AZ">NƏM OLDUQDA FORMASINI DƏYİŞDİRİN</AnswerValue>
+                    <AnswerValue Name="CAT">DONEU-LI FORMA HUMIT</AnswerValue>
+                    <AnswerValue Name="CZ">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="DE">FEUCHT IN FORM ZIEHEN</AnswerValue>
+                    <AnswerValue Name="EE">VORMI MÄRJALT</AnswerValue>
+                    <AnswerValue Name="ES">CONFORMAR EN ESTADO HÚMEDO</AnswerValue>
+                    <AnswerValue Name="FI">MUOTOILLAAN KOSTEANA</AnswerValue>
+                    <AnswerValue Name="FR">REMETTRE EN FORME À L’ÉTAT HUMIDE</AnswerValue>
+                    <AnswerValue Name="HR">OBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="HU">NEDVESEN FORMÁZZA ÚJRA</AnswerValue>
+                    <AnswerValue Name="ID">BENTUK KEMBALI SAAT LEMBAP</AnswerValue>
+                    <AnswerValue Name="IT">DARE FORMA QUANDO ANCORA UMIDO</AnswerValue>
+                    <AnswerValue Name="LT">SUFORMUOTI KOL DRĖGNAS</AnswerValue>
+                    <AnswerValue Name="LV">IZVEIDOJIET FORMU, KAMĒR MITRS</AnswerValue>
+                    <AnswerValue Name="NL">IN VOCHTIGE TOESTAND IN VORM BRENGEN</AnswerValue>
+                    <AnswerValue Name="PL">FORMOWAĆ W STANIE MOKRYM</AnswerValue>
+                    <AnswerValue Name="PT">DAR FORMA ENQUANTO HÚMIDO</AnswerValue>
+                    <AnswerValue Name="RO">REMODELAŢI CÂND ESTE UMED</AnswerValue>
+                    <AnswerValue Name="RS">PREOBLIKOVATI DOK JE VLAŽNO</AnswerValue>
+                    <AnswerValue Name="SE">FORMAS I FUKTIGT TILLSTÅND</AnswerValue>
+                    <AnswerValue Name="SI">NARAVNAJTE OBLIKO V VLAŽNEM STANJU</AnswerValue>
+                    <AnswerValue Name="SK">VYTVARUJTE ZA VLHKA</AnswerValue>
+                    <AnswerValue Name="TR">NEMLİYKEN DÜZELTİN</AnswerValue>
+                    <AnswerValue Name="US">RESHAPE WHEN DAMP</AnswerValue>
+                    <AnswerValue Name="UZ">NAM HOLATDA QAYTA SHAKLLANTIRING</AnswerValue>
+                    <AnswerValue Name="VN">CHỈNH DÁNG KHI CÒN ẨM</AnswerValue>
+                    <AnswerValue Name="BG">ВЪРНЕТЕ ФОРМАТА, ДОКАТО Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="CHS">请在湿状态时恢复原状</AnswerValue>
+                    <AnswerValue Name="GE">გაასწორეთ ფორმა, სანამ ნესტიანია</AnswerValue>
+                    <AnswerValue Name="GR">ΕΠΑΝΑΦΕΡΤΕ ΤΟ ΣΤΟ ΣΧΗΜΑ ΤΟΥ ΕΝΟΣΩ ΕΙΝΑΙ ΑΚΟΜΑ ΝΩΠΟ</AnswerValue>
+                    <AnswerValue Name="JP">湿った状態で形を整えてください</AnswerValue>
+                    <AnswerValue Name="KH">ធ្វើរូបរាងឡើងវិញនៅពេលសើម</AnswerValue>
+                    <AnswerValue Name="KR">젖어있을때 모양을 잡아주세요</AnswerValue>
+                    <AnswerValue Name="KZ">ДЫМҚЫЛ КҮЙДЕ БАСТАПҚЫ ПІШІНІН КЕЛТІРІҢІЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ИСПРАВИ ДОДЕКА Е ВЛАЖНО</AnswerValue>
+                    <AnswerValue Name="RU">РАСПРАВЛЯТЬ ВО ВЛАЖНОМ СОСТОЯНИИ</AnswerValue>
+                    <AnswerValue Name="TH">จัดทรงให้เรียบร้อยขณะที่ผ้าเปียกชื้น</AnswerValue>
+                    <AnswerValue Name="CHT">請於未乾時塑型</AnswerValue>
+                    <AnswerValue Name="UA">НАДАТИ ФОРМУ У ВОЛОГОМУ СТАНІ</AnswerValue>
+                    <AnswerValue Name="IX">לסדר בעודו לח</AnswerValue>
+                    <AnswerValue Name="ar">يجب أن تفرد القطعة لتأخذ شكلها وهي رطبة قبل أن تجف</AnswerValue>
+                    <AnswerValue Name="MX">Conformar en estado húmedo</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428985" Question="Additional Care Information">
+                <Answer>
+                  <AnswerID>52528</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="GB">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="AL">LANI VEÇ E VEÇ</AnswerValue>
+                    <AnswerValue Name="AZ">AYRILIQDA YUYUN.</AnswerValue>
+                    <AnswerValue Name="CAT">RENTEU-HO SEPARADAMENT</AnswerValue>
+                    <AnswerValue Name="CZ">PERTE ODDĚLENĚ</AnswerValue>
+                    <AnswerValue Name="DE">SEPARAT WASCHEN</AnswerValue>
+                    <AnswerValue Name="EE">PESE ERALDI</AnswerValue>
+                    <AnswerValue Name="ES">LAVAR POR SEPARADO</AnswerValue>
+                    <AnswerValue Name="FI">PESTÄVÄ ERILLÄÄN</AnswerValue>
+                    <AnswerValue Name="FR">LAVER SÉPARÉMENT</AnswerValue>
+                    <AnswerValue Name="HR">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLÖN MOSANDÓ</AnswerValue>
+                    <AnswerValue Name="ID">CUCI TERPISAH</AnswerValue>
+                    <AnswerValue Name="IT">LAVARE SEPARATAMENTE</AnswerValue>
+                    <AnswerValue Name="LT">SKALBTI ATSKIRAI NUO KITŲ DRABUŽIŲ</AnswerValue>
+                    <AnswerValue Name="LV">MAZGĀJIET ATSEVIŠĶI</AnswerValue>
+                    <AnswerValue Name="NL">APART WASSEN</AnswerValue>
+                    <AnswerValue Name="PL">PRAĆ OSOBNO</AnswerValue>
+                    <AnswerValue Name="PT">LAVAR SEPARADAMENTE</AnswerValue>
+                    <AnswerValue Name="RO">SPĂLAŢI SEPARAT</AnswerValue>
+                    <AnswerValue Name="RS">PRATI ODVOJENO</AnswerValue>
+                    <AnswerValue Name="SE">TVÄTTAS SEPARAT</AnswerValue>
+                    <AnswerValue Name="SI">PERITE LOČENO</AnswerValue>
+                    <AnswerValue Name="SK">PERTE ODDELENE</AnswerValue>
+                    <AnswerValue Name="TR">AYRI YIKAYIN</AnswerValue>
+                    <AnswerValue Name="US">WASH SEPARATELY</AnswerValue>
+                    <AnswerValue Name="UZ">ALOHIDA YUVING.</AnswerValue>
+                    <AnswerValue Name="VN">GIẶT RIÊNG</AnswerValue>
+                    <AnswerValue Name="BG">ПЕРЕТЕ ОТДЕЛНО</AnswerValue>
+                    <AnswerValue Name="CHS">分开洗涤</AnswerValue>
+                    <AnswerValue Name="GE">გარეცხეთ ცალკე</AnswerValue>
+                    <AnswerValue Name="GR">ΠΛΥΣΙΜΟ ΧΩΡΙΣΤΑ</AnswerValue>
+                    <AnswerValue Name="JP">別洗いしてください</AnswerValue>
+                    <AnswerValue Name="KH">បោកគក់ដាច់ដោយឡែកពីគេ</AnswerValue>
+                    <AnswerValue Name="KR">다른세탁물과분리해서세탁하세요</AnswerValue>
+                    <AnswerValue Name="KZ">БӨЛЕК ЖУЫҢЫЗ</AnswerValue>
+                    <AnswerValue Name="MK">ДА СЕ ПЕРЕ ОДДЕЛНО</AnswerValue>
+                    <AnswerValue Name="RU">СТИРАТЬ ОТДЕЛЬНО</AnswerValue>
+                    <AnswerValue Name="TH">ซักแยก</AnswerValue>
+                    <AnswerValue Name="CHT">分開洗滌</AnswerValue>
+                    <AnswerValue Name="UA">ПРАТИ ОКРЕМО</AnswerValue>
+                    <AnswerValue Name="IX">לכבס בנפרד</AnswerValue>
+                    <AnswerValue Name="ar">يغسل منفرداً</AnswerValue>
+                    <AnswerValue Name="MX">Lavar por separado</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15428987" Question="Country of Origin">
+            <Answer>
+              <AnswerID>29338</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MADE IN INDIA</AnswerValue>
+                <AnswerValue Name="GB">Made in India</AnswerValue>
+                <AnswerValue Name="ES">Hecho en India</AnswerValue>
+                <AnswerValue Name="FR">Fabriqué en Inde</AnswerValue>
+                <AnswerValue Name="ES Name">INDIA</AnswerValue>
+                <AnswerValue Name="IX">תוצרת הודו</AnswerValue>
+                <AnswerValue Name="PT">FABRICADO NA ÍNDIA</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Fibre Content" LookupListType="Fibre Content Header" QuestionID="15428988" Question="FIBRE HEADER" AnswerValue="SHELL" Code="Fibre Content" Name="Fibre Content">
+            <MultiPart>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE HEADER">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">SHELL</AnswerValue>
+                    <AnswerValue Name="GB">SHELL</AnswerValue>
+                    <AnswerValue Name="AL">SHTRESA E JASHTME</AnswerValue>
+                    <AnswerValue Name="AZ">BALIQQULAĞI</AnswerValue>
+                    <AnswerValue Name="CAT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="CZ">VRCHOVÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="DE">OBERMATERIAL</AnswerValue>
+                    <AnswerValue Name="EE">ÜMBRIS</AnswerValue>
+                    <AnswerValue Name="ES">CAPA EXTERIOR</AnswerValue>
+                    <AnswerValue Name="FI">PÄÄLLISKANGAS</AnswerValue>
+                    <AnswerValue Name="FR">EXTERIEUR</AnswerValue>
+                    <AnswerValue Name="HR">LICE</AnswerValue>
+                    <AnswerValue Name="IT">TESSUTO ESTERNO</AnswerValue>
+                    <AnswerValue Name="HU">KÜLSŐ</AnswerValue>
+                    <AnswerValue Name="ID">KAIN UTAMA</AnswerValue>
+                    <AnswerValue Name="NL">EXTERN MATERIAAL</AnswerValue>
+                    <AnswerValue Name="LT">APVALKALAS</AnswerValue>
+                    <AnswerValue Name="LV">ĀRĒJĀ DAĻA</AnswerValue>
+                    <AnswerValue Name="PL">TKANINA WIERZCHNIA</AnswerValue>
+                    <AnswerValue Name="PT">EXTERIOR</AnswerValue>
+                    <AnswerValue Name="SE">YTTERTYG</AnswerValue>
+                    <AnswerValue Name="RS">SPOLJNI SLOJ</AnswerValue>
+                    <AnswerValue Name="SI">ZUNANJE BLAGO</AnswerValue>
+                    <AnswerValue Name="SK">VRCHNÝ MATERIÁL</AnswerValue>
+                    <AnswerValue Name="RO">TESATURA</AnswerValue>
+                    <AnswerValue Name="UZ">CHIG'ANOQ</AnswerValue>
+                    <AnswerValue Name="TR">ANA KUMAŞ</AnswerValue>
+                    <AnswerValue Name="US">SHELL</AnswerValue>
+                    <AnswerValue Name="VN">LỚP NGOÀI</AnswerValue>
+                    <AnswerValue Name="BG">ВЪНШНА ЧАСТ</AnswerValue>
+                    <AnswerValue Name="CHS">面料</AnswerValue>
+                    <AnswerValue Name="GR">ΕΞΩΤΕΡΙΚΟ ΥΦΑΣΜΑ</AnswerValue>
+                    <AnswerValue Name="JP">表地</AnswerValue>
+                    <AnswerValue Name="GE">გარსი</AnswerValue>
+                    <AnswerValue Name="KH">ស្រទាប់ខាងក្រៅ</AnswerValue>
+                    <AnswerValue Name="KZ">ҚАБЫҚ</AnswerValue>
+                    <AnswerValue Name="MK">НАДВОРЕШЕН ДЕЛ</AnswerValue>
+                    <AnswerValue Name="KR">겉감</AnswerValue>
+                    <AnswerValue Name="RU">ВЕРХНИЙ СЛОЙ</AnswerValue>
+                    <AnswerValue Name="TH">เสื้อผ้าชั้นนอกสุด</AnswerValue>
+                    <AnswerValue Name="CHT">面料</AnswerValue>
+                    <AnswerValue Name="UA">ВЕРХНІЙ ШАР</AnswerValue>
+                    <AnswerValue Name="ar">الطبقة الخارجية</AnswerValue>
+                    <AnswerValue Name="IX" />
+                    <AnswerValue Name="MX" />
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="SHELL">
+                    <Translation Language="En" Value="SHELL" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">45</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="45">
+                    <Translation Language="En" Value="45" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52534</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">COTTON</AnswerValue>
+                    <AnswerValue Name="GB">COTTON</AnswerValue>
+                    <AnswerValue Name="AL">PAMBUK</AnswerValue>
+                    <AnswerValue Name="AZ">PAMBIIQ</AnswerValue>
+                    <AnswerValue Name="CAT">COTÓ</AnswerValue>
+                    <AnswerValue Name="CZ">BAVLNA</AnswerValue>
+                    <AnswerValue Name="DE">BAUMWOLLE</AnswerValue>
+                    <AnswerValue Name="EE">PUUVILL</AnswerValue>
+                    <AnswerValue Name="ES">ALGODÓN</AnswerValue>
+                    <AnswerValue Name="FI">PUUVILLAA</AnswerValue>
+                    <AnswerValue Name="FR">COTON</AnswerValue>
+                    <AnswerValue Name="HR">PAMUK</AnswerValue>
+                    <AnswerValue Name="HU">PAMUT</AnswerValue>
+                    <AnswerValue Name="ID">KATUN</AnswerValue>
+                    <AnswerValue Name="IT">COTONE</AnswerValue>
+                    <AnswerValue Name="LT">MEDVILNĖ</AnswerValue>
+                    <AnswerValue Name="LV">KOKVILINA</AnswerValue>
+                    <AnswerValue Name="NL">KATOEN</AnswerValue>
+                    <AnswerValue Name="PL">BAWEŁNA</AnswerValue>
+                    <AnswerValue Name="PT">ALGODÃO</AnswerValue>
+                    <AnswerValue Name="RO">BUMBAC</AnswerValue>
+                    <AnswerValue Name="RS">PAMUK</AnswerValue>
+                    <AnswerValue Name="SE">BOMULL</AnswerValue>
+                    <AnswerValue Name="SI">BOMBAŽ</AnswerValue>
+                    <AnswerValue Name="SK">BAVLNA</AnswerValue>
+                    <AnswerValue Name="TR">PAMUK</AnswerValue>
+                    <AnswerValue Name="US">COTTON</AnswerValue>
+                    <AnswerValue Name="UZ">PAXTA</AnswerValue>
+                    <AnswerValue Name="VN">VẢI BÔNG</AnswerValue>
+                    <AnswerValue Name="BG">ПАМУК</AnswerValue>
+                    <AnswerValue Name="CHS">棉</AnswerValue>
+                    <AnswerValue Name="GE">კოტონოი</AnswerValue>
+                    <AnswerValue Name="GR">ΒΑΜΒΑΚΙ</AnswerValue>
+                    <AnswerValue Name="JP">コットンッ</AnswerValue>
+                    <AnswerValue Name="KH">កប្បាស</AnswerValue>
+                    <AnswerValue Name="KR">면</AnswerValue>
+                    <AnswerValue Name="KZ">МАҚТА</AnswerValue>
+                    <AnswerValue Name="MK">ПАМУК</AnswerValue>
+                    <AnswerValue Name="RU">ХЛОПОК</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าฝ้าย</AnswerValue>
+                    <AnswerValue Name="CHT">棉</AnswerValue>
+                    <AnswerValue Name="UA">БАВОВНА</AnswerValue>
+                    <AnswerValue Name="ar">‫قطن‬</AnswerValue>
+                    <AnswerValue Name="IX">‫כותנה‬</AnswerValue>
+                    <AnswerValue Name="MX">algodón</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="COTTON" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">40</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="40">
+                    <Translation Language="En" Value="40" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52535</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">LINEN</AnswerValue>
+                    <AnswerValue Name="GB">LINEN</AnswerValue>
+                    <AnswerValue Name="AL">LIRI</AnswerValue>
+                    <AnswerValue Name="AZ">KƏTAN</AnswerValue>
+                    <AnswerValue Name="CAT">LLI</AnswerValue>
+                    <AnswerValue Name="CZ">LEN</AnswerValue>
+                    <AnswerValue Name="DE">LEINEN</AnswerValue>
+                    <AnswerValue Name="EE">LINA</AnswerValue>
+                    <AnswerValue Name="ES">LINO</AnswerValue>
+                    <AnswerValue Name="FI">PELLAVAA</AnswerValue>
+                    <AnswerValue Name="FR">LIN</AnswerValue>
+                    <AnswerValue Name="HR">LAN</AnswerValue>
+                    <AnswerValue Name="HU">VÁSZON</AnswerValue>
+                    <AnswerValue Name="ID">LINEN</AnswerValue>
+                    <AnswerValue Name="IT">LINO</AnswerValue>
+                    <AnswerValue Name="LT">LINAS</AnswerValue>
+                    <AnswerValue Name="LV">LINS</AnswerValue>
+                    <AnswerValue Name="NL">LINNEN</AnswerValue>
+                    <AnswerValue Name="PL">LEN</AnswerValue>
+                    <AnswerValue Name="PT">LINHO</AnswerValue>
+                    <AnswerValue Name="RO">IN</AnswerValue>
+                    <AnswerValue Name="RS">LAN</AnswerValue>
+                    <AnswerValue Name="SE">LIN</AnswerValue>
+                    <AnswerValue Name="SI">LAN</AnswerValue>
+                    <AnswerValue Name="SK">ĽAN</AnswerValue>
+                    <AnswerValue Name="TR">KETEN</AnswerValue>
+                    <AnswerValue Name="US">LINEN</AnswerValue>
+                    <AnswerValue Name="UZ">ZIG'IR</AnswerValue>
+                    <AnswerValue Name="VN">VẢI LANH</AnswerValue>
+                    <AnswerValue Name="BG">ЛЕН</AnswerValue>
+                    <AnswerValue Name="CHS">亚麻</AnswerValue>
+                    <AnswerValue Name="GE">სელი</AnswerValue>
+                    <AnswerValue Name="GR">ΛΙΝΟ</AnswerValue>
+                    <AnswerValue Name="JP">麻</AnswerValue>
+                    <AnswerValue Name="KH">លីនែន</AnswerValue>
+                    <AnswerValue Name="KR">마</AnswerValue>
+                    <AnswerValue Name="KZ">КЕНЕП</AnswerValue>
+                    <AnswerValue Name="MK">ЛЕНЕНО ПЛАТЛНО</AnswerValue>
+                    <AnswerValue Name="RU">ЛЕН</AnswerValue>
+                    <AnswerValue Name="TH">ผ้าลินิน</AnswerValue>
+                    <AnswerValue Name="CHT">亞麻</AnswerValue>
+                    <AnswerValue Name="UA">ЛЬОН</AnswerValue>
+                    <AnswerValue Name="ar">‫كتان‬</AnswerValue>
+                    <AnswerValue Name="IX">‫פישתן‬</AnswerValue>
+                    <AnswerValue Name="MX">lino</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="LINEN" />
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT %">
+                <Answer>
+                  <AnswerID />
+                  <AnswerValues>
+                    <AnswerValue Name="">15</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix>%</AnswerSuffix>
+                  <AnswerTranslations Value="15">
+                    <Translation Language="En" Value="15" />
+                  </AnswerTranslations>
+                </Answer>
+              </Variable>
+              <Variable Section="Var" QuestionID="15428988" Question="FIBRE CONTENT WORDING" LookupListType="Fibre Type">
+                <Answer>
+                  <AnswerID>52536</AnswerID>
+                  <AnswerValues>
+                    <AnswerValue Name="">ELASTANE</AnswerValue>
+                    <AnswerValue Name="GB">ELASTANE</AnswerValue>
+                    <AnswerValue Name="AL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="AZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="CAT">ELASTÀ</AnswerValue>
+                    <AnswerValue Name="CZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="DE">ELASTHAN</AnswerValue>
+                    <AnswerValue Name="EE">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="ES">ELASTANO</AnswerValue>
+                    <AnswerValue Name="FI">ELASTAANIA</AnswerValue>
+                    <AnswerValue Name="FR">ELASTHANNE</AnswerValue>
+                    <AnswerValue Name="HR">ELASTANSKO VLAKNO</AnswerValue>
+                    <AnswerValue Name="HU">ELASZTÁN</AnswerValue>
+                    <AnswerValue Name="ID">ELASTANE</AnswerValue>
+                    <AnswerValue Name="IT">ELASTAN</AnswerValue>
+                    <AnswerValue Name="LT">ELASTANAS</AnswerValue>
+                    <AnswerValue Name="LV">ELASTĀNS</AnswerValue>
+                    <AnswerValue Name="NL">ELASTAAN</AnswerValue>
+                    <AnswerValue Name="PL">ELASTAN</AnswerValue>
+                    <AnswerValue Name="PT">ELASTANO</AnswerValue>
+                    <AnswerValue Name="RO">ELASTAN</AnswerValue>
+                    <AnswerValue Name="RS">ELASTIN</AnswerValue>
+                    <AnswerValue Name="SE">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SI">ELASTAN</AnswerValue>
+                    <AnswerValue Name="SK">ELASTAN</AnswerValue>
+                    <AnswerValue Name="TR">ELASTAN</AnswerValue>
+                    <AnswerValue Name="US">SPANDEX</AnswerValue>
+                    <AnswerValue Name="UZ">ELASTAN</AnswerValue>
+                    <AnswerValue Name="VN">ELASTAN</AnswerValue>
+                    <AnswerValue Name="BG">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="CHS">氨纶</AnswerValue>
+                    <AnswerValue Name="GE">ელასტინი</AnswerValue>
+                    <AnswerValue Name="GR">ΕΛΑΣΤΑΝΗ</AnswerValue>
+                    <AnswerValue Name="JP">ポリウレタン</AnswerValue>
+                    <AnswerValue Name="KH">អេឡាស្ទែន</AnswerValue>
+                    <AnswerValue Name="KR">폴리우레탄</AnswerValue>
+                    <AnswerValue Name="KZ">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="MK">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="RU">ЭЛАСТАН</AnswerValue>
+                    <AnswerValue Name="TH">อีลาสเทน</AnswerValue>
+                    <AnswerValue Name="CHT">彈性纖維</AnswerValue>
+                    <AnswerValue Name="UA">ЕЛАСТАН</AnswerValue>
+                    <AnswerValue Name="ar">‫الإلستين‬</AnswerValue>
+                    <AnswerValue Name="IX">‫אלסטן‬</AnswerValue>
+                    <AnswerValue Name="MX">elastano</AnswerValue>
+                  </AnswerValues>
+                  <AnswerPrefix />
+                  <AnswerSuffix />
+                  <AnswerTranslations Value="ELASTANE" />
+                </Answer>
+              </Variable>
+            </MultiPart>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428989" Question="Order Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">B12345678</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="B12345678" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428990" Question="Product Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PROD1023</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PROD1023" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428991" Question="Season Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">1</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="1" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428996" Question="Wash care (Wash)">
+            <Answer>
+              <AnswerID>29455</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MACHINE WASH HOT</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">LAVER À LA MACHINE À L’EÀU CHAUDE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU MAKSIMUM 60°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">ซักด้วยนํ้าอุณหภูมิไม่เกิด้วน 60°C</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Temperatura máxima de lavado 60°C Proceso normal Usar detergente</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DE LAVAGEM 60ºC. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428992" Question="Wash care (Bleach)">
+            <Answer>
+              <AnswerID>31925</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">NO BLEACH</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NE PAS JAVELLISER</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">JANGAN DIKELANTANG</AnswerValue>
+                <AnswerValue Name="TH-THAI">ห้ามฟอมกขาว</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">No blanquear</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">NÃO ALVEJAR</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428995" Question="Wash care (Tumble dry)">
+            <Answer>
+              <AnswerID>29464</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">TUMBLE DRY MEDIUM</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">SÉCHER À LA MACHINE CYCLE MOYEN</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">DAPAT DILAKUKAN PENGERINGAN PUTAR SUHU NORMAL</AnswerValue>
+                <AnswerValue Name="TH-THAI">ปั่นหรืออบแห้งด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Es posible el secado en máquina o secadora temperatura normal; temperatura máxima de salida 80°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">POSSÍVEL SECAGEM EM TAMBOR, TEMPERATURA NORMAL, TEMPERATURA DE EXAUSTÃO MÁXIMA 80ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428994" Question="Wash care (Iron)">
+            <Answer>
+              <AnswerID>29469</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">MEDIUM IRON</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">REPASSER À TEMPÉRATURE MOYENNE</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">SUHU SETERIKA MAKSIMUM 150°C</AnswerValue>
+                <AnswerValue Name="TH-THAI">รีดด้วยความร้อนปานกลาง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Plancha con temperatura máxima de la base de 150°C</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">TEMPERATURA MÁXIMA DA BASE DO FERRO DE 150ºC</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Wash Instructions (Symbols)" QuestionID="15428993" Question="Wash care (Dry clean)">
+            <Answer>
+              <AnswerID>29473</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="US-AMERICAN ENGLISH">DRY CLEAN</AnswerValue>
+                <AnswerValue Name="CA-FRENCH">NETTOYAGE À SEC</AnswerValue>
+                <AnswerValue Name="ID -INDONESIAN">CUCI KERING PROFESIONAL DALAM TETRAKLOROETHANA</AnswerValue>
+                <AnswerValue Name="TH-THAI">การซักแห้ง</AnswerValue>
+                <AnswerValue Name="MX-SPANISH">Lavado en seco profesional en tetracloroetileno y todos los solventes que se indicant para el simbolo F proceso normal</AnswerValue>
+                <AnswerValue Name="PT-PORTUGUESE">LIMPEZA A SECO PROFISSIONAL COM TETRACLOROETILENO E TODOS OS SOLVENTES LISTADOS PARA O SÍMBOLO F. PROCESSO NORMAL</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Colour" QuestionID="15428986" Question="Tape Color">
+            <Answer>
+              <AnswerID>29843</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Color">BLACK</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15428998" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">123</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="123" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+    </OrderItem>
+  </OrderItems>
+</Order>

@@ -1,0 +1,20 @@
+# ── Core Framework ─────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+
+# ── Database ────────────────────────────────────────────
+sqlalchemy==2.0.30
+asyncpg==0.29.0
+psycopg2-binary==2.9.9
+
+# ── Config ──────────────────────────────────────────────
+python-dotenv==1.0.1
+pydantic[email]==2.7.1
+
+# ── XML / SVG Engine ────────────────────────────────────
+lxml==5.2.1
+
+# ── Rendering ───────────────────────────────────────────
+cairosvg==2.7.1
+pillow==10.3.0

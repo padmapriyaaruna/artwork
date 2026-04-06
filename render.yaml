@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: artwork-engine-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        sync: false      # Set this manually in Render dashboard
+      - key: DEBUG
+        value: "false"
+      - key: RENDER_DPI
+        value: "600"
+      - key: ALLOWED_ORIGINS
+        value: https://artwork-engine-frontend.onrender.com
+    healthCheckPath: /health
+
+  - type: web
+    name: artwork-engine-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://artwork-engine-backend.onrender.com/api

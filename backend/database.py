@@ -14,6 +14,8 @@ ASYNC_DB_URL = DATABASE_URL.replace(
     "postgresql://", "postgresql+asyncpg://"
 ).replace(
     "postgres://", "postgresql+asyncpg://"
+).replace(
+    "?sslmode=require", "?ssl=require"
 )
 
 engine = create_async_engine(

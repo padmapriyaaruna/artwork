@@ -10,18 +10,19 @@ from sqlalchemy.pool import NullPool
 from backend.config import DATABASE_URL
 
 # asyncpg driver — convert postgresql:// → postgresql+asyncpg://
+# We strip query params (like ?sslmode=require or channel_binding) because
+# asyncpg does not support them natively. We enforce SSL via connect_args instead.
 ASYNC_DB_URL = DATABASE_URL.replace(
     "postgresql://", "postgresql+asyncpg://"
 ).replace(
     "postgres://", "postgresql+asyncpg://"
-).replace(
-    "?sslmode=require", "?ssl=require"
-)
+).split("?")[0]
 
 engine = create_async_engine(
     ASYNC_DB_URL,
     poolclass=NullPool,   # Required for Neon serverless
     echo=False,
+    connect_args={"ssl": True}
 )
 
 AsyncSessionLocal = sessionmaker(

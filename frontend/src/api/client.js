@@ -10,6 +10,11 @@ export const uploadXML = (formData) =>
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
+export const uploadZIP = (formData) =>
+  api.post('/orders/upload-zip', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
 export const createOrder = (payload) => api.post('/orders/', payload);
 export const listOrders  = (skip=0, limit=50) => api.get(`/orders/?skip=${skip}&limit=${limit}`);
 export const getOrder    = (orderId) => api.get(`/orders/${orderId}`);

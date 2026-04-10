@@ -4,7 +4,7 @@
 # ────────────────────────────────────────────────────────────────────
 FROM python:3.11-slim
 
-# System dependencies for CairoSVG
+# System dependencies for CairoSVG + poppler (PDF→SVG)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2 \
     libpango-1.0-0 \
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libffi-dev \
     shared-mime-info \
     fonts-liberation \
+    poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

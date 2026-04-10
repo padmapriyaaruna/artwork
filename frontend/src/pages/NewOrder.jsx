@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { uploadXML, createOrder } from '../api/client';
-import { Upload, FileText, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { uploadXML, uploadZIP, createOrder } from '../api/client';
+import { Upload, FileText, Plus, Trash2, ChevronDown, ChevronUp, Archive } from 'lucide-react';
 
 const EMPTY_ITEM = {
   variant_name: '', quantity: 100,
@@ -37,22 +37,24 @@ export default function NewOrder() {
 
   const [expandedItem, setExpandedItem] = useState(0);
 
-  // ── XML upload ────────────────────────────────────────────────────────────
+  // ── File upload (ZIP or XML) ───────────────────────────────────────────────
   const handleFileDrop = (e) => {
     e.preventDefault(); setDragging(false);
     const f = e.dataTransfer?.files[0] || e.target.files[0];
     if (f) setFile(f);
   };
 
-  const handleXmlSubmit = async () => {
-    if (!file) return setError('Please select an XML file.');
+  const isZip = file && file.name.toLowerCase().endsWith('.zip');
+
+  const handleFileSubmit = async () => {
+    if (!file) return setError('Please select a ZIP or XML file.');
     const fd = new FormData();
     fd.append('file', file);
     setLoading(true); setError(''); setSuccess('');
     try {
-      const res = await uploadXML(fd);
+      const res = isZip ? await uploadZIP(fd) : await uploadXML(fd);
       setSuccess(res.data.message);
-      setTimeout(() => navigate(`/orders/${res.data.order_id}`), 1500);
+      setTimeout(() => navigate(`/orders/${res.data.order_id}`), 1800);
     } catch(e) {
       setError(e.response?.data?.detail || 'Upload failed.');
     } finally { setLoading(false); }
@@ -115,10 +117,14 @@ export default function NewOrder() {
 
       {/* ── XML tab ────────────────────────────────────────────────────── */}
       {tab === 'xml' && (
-        <div className="card" style={{ maxWidth: 600 }}>
-          <h2 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '20px' }}>
-            Upload BGP Connect XML
+        <div className="card" style={{ maxWidth: 620 }}>
+          <h2 style={{ fontSize: '15px', fontWeight: 600, marginBottom: '8px' }}>
+            Upload BRAT Order File
           </h2>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '20px' }}>
+            Drop a <strong>.zip</strong> (recommended) or a raw <strong>.xml</strong> file below.
+          </p>
+
           <div
             className={`upload-zone ${dragging ? 'drag-over' : ''}`}
             onDragOver={e => { e.preventDefault(); setDragging(true); }}
@@ -126,24 +132,35 @@ export default function NewOrder() {
             onDrop={handleFileDrop}
             onClick={() => fileRef.current?.click()}
           >
-            <Upload size={36} style={{ margin: '0 auto', color: 'var(--brand)', opacity: 0.8 }} />
-            <h3>{file ? file.name : 'Drop XML file here'}</h3>
-            <p>{file ? `${(file.size/1024).toFixed(1)} KB` : 'or click to browse'}</p>
-            <input ref={fileRef} type="file" accept=".xml" style={{ display:'none' }} onChange={handleFileDrop} />
+            {isZip
+              ? <Archive size={36} style={{ margin: '0 auto', color: 'var(--brand)', opacity: 0.8 }} />
+              : <Upload  size={36} style={{ margin: '0 auto', color: 'var(--brand)', opacity: 0.8 }} />
+            }
+            <h3>{file ? file.name : 'Drop ZIP or XML here'}</h3>
+            <p>{file ? `${(file.size/1024).toFixed(1)} KB · ${isZip ? 'BRAT ZIP' : 'XML file'}` : 'or click to browse'}</p>
+            <input ref={fileRef} type="file" accept=".zip,.xml" style={{ display:'none' }} onChange={handleFileDrop} />
           </div>
 
           {file && (
             <div style={{ display:'flex', gap:'12px', marginTop:'20px' }}>
-              <button className="btn btn-primary" onClick={handleXmlSubmit} disabled={loading}>
-                {loading ? <><span className="spinner" /> Parsing…</> : <><FileText size={15}/> Parse & Create Order</>}
+              <button className="btn btn-primary" onClick={handleFileSubmit} disabled={loading}>
+                {loading
+                  ? <><span className="spinner" /> Processing…</>
+                  : <><FileText size={15}/> {isZip ? 'Process ZIP & Create Order' : 'Parse XML & Create Order'}</>
+                }
               </button>
               <button className="btn btn-ghost" onClick={() => setFile(null)}>Clear</button>
             </div>
           )}
 
-          <div style={{ marginTop:'20px', padding:'14px', background:'var(--bg-elevated)', borderRadius:'var(--radius-md)', fontSize:'13px', color:'var(--text-secondary)' }}>
-            <strong style={{ color:'var(--text-primary)' }}>Supported format:</strong> BGP Connect / BRAT XML export.<br />
-            The engine will automatically parse all order items, sizes, fibre content, care symbols, and multilingual text.
+          {/* Info box */}
+          <div style={{ marginTop:'20px', padding:'14px', background:'var(--bg-elevated)', borderRadius:'var(--radius-md)', fontSize:'13px', color:'var(--text-secondary)', lineHeight:1.7 }}>
+            <strong style={{ color:'var(--text-primary)', display:'block', marginBottom:'6px' }}>How it works</strong>
+            <strong style={{ color:'var(--text-primary)' }}>Returning customer (existing template):</strong><br/>
+            ZIP containing only the XML — template is loaded automatically from the database.<br/><br/>
+            <strong style={{ color:'var(--text-primary)' }}>New customer (first-time template):</strong><br/>
+            ZIP containing the XML <em>and</em> the customer's PDF label template — the engine will
+            auto-convert the PDF to a variable-mapped SVG and store it for all future orders.
           </div>
         </div>
       )}

@@ -56,15 +56,14 @@ export default function NewOrder() {
       setSuccess(res.data.message);
       setTimeout(() => navigate(`/orders/${res.data.order_id}`), 1800);
     } catch(err) {
-      // Extract the most useful error message available
       const resp = err.response;
       let msg = '';
       if (resp) {
+        // Server replied — extract real error detail
         const d = resp.data;
         if (typeof d === 'string') {
           msg = d;
         } else if (d?.detail) {
-          // detail can be a string or an array (FastAPI validation errors)
           msg = Array.isArray(d.detail)
             ? d.detail.map(e => `${e.loc?.join('.')} — ${e.msg}`).join('\n')
             : d.detail;
@@ -74,14 +73,21 @@ export default function NewOrder() {
           msg = JSON.stringify(d);
         }
         msg = `[${resp.status}] ${msg}`;
+      } else if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        msg = 'Request timed out after 2 minutes. The backend may be processing a large PDF — please try again.';
       } else if (err.request) {
-        msg = 'No response from server — backend may be starting up. Please wait 30s and retry.';
+        // Request made but no response — almost always CORS or backend down
+        const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+        msg = `Cannot reach backend at ${apiBase}.\n`
+            + `If this is your first request today, the server may be waking up (free tier). `
+            + `Please wait 60 seconds and retry.`;
       } else {
         msg = err.message || 'Unknown error';
       }
       setError(msg);
     } finally { setLoading(false); }
   };
+
 
 
   // ── Manual form ───────────────────────────────────────────────────────────

@@ -9,8 +9,8 @@ from sqlalchemy.orm import selectinload
 from backend.database import get_db
 from backend.engine.xml_normalizer import parse_bgp_xml
 from backend.engine.zip_extractor import extract_zip
-from backend.engine.pdf_to_svg import pdf_bytes_to_svg, is_poppler_available
-from backend.engine.smart_field_mapper import map_svg_fields, build_field_map_summary
+from backend.engine.pdf_to_svg import is_poppler_available
+from backend.engine.dynamic_template_builder import build_variablized_svg
 from backend.engine.template_registry import get_template, register_template_from_svg
 from backend.models import Order, OrderItem, Artwork
 from backend.schemas import (
@@ -112,16 +112,20 @@ async def upload_zip(
     """
     Upload a BRAT ZIP file (.zip containing XML + optional PDF template).
 
-    Flow:
-      1. Extract XML + optional PDF from ZIP
-      2. Check if template already exists in DB (by design_code from XML)
-      3. If NEW template → convert PDF to SVG → auto-map fields → register in DB
-      4. If NO template and NO PDF → return clear error
-      5. Parse XML, save Order + Items
+    Fully autonomous flow:
+      1. Unzip → extract XML + optional PDF
+      2. Parse XML to get all real field values from first item
+      3. Check if template already exists in DB
+      4. If NEW template:
+           a. PDF must be present in ZIP
+           b. Convert PDF → SVG (poppler pdftosvg)
+           c. Use actual XML field values to find + replace matching text in SVG
+           d. Register variablized SVG in DB under detected template_id
+      5. Save order + items to DB
     """
     content = await file.read()
 
-    # ── Step 1: Unzip ──────────────────────────────────────────────────────
+    # ── Step 1: Unzip ──────────────────────────────────────────────────
     try:
         zip_contents = extract_zip(content)
     except ValueError as e:
@@ -133,52 +137,7 @@ async def upload_zip(
     template_id = zip_contents.template_id
     pdf_bytes   = zip_contents.pdf_bytes
 
-    # ── Step 2: Check if template exists ───────────────────────────────────
-    template_note = ""
-    existing_template = await get_template(db, template_id)
-
-    if not existing_template:
-        # ── Step 3a: New template — PDF required ───────────────────────────
-        if not pdf_bytes:
-            raise HTTPException(
-                status_code=422,
-                detail=(
-                    f"Template '{template_id}' not found in the system. "
-                    f"Please include the PDF template inside the ZIP for first-time orders."
-                ),
-            )
-
-        # ── Step 3b: Convert PDF → SVG ─────────────────────────────────────
-        if not is_poppler_available():
-            raise HTTPException(
-                status_code=500,
-                detail="PDF conversion tool (poppler) is not available on this server.",
-            )
-        try:
-            svg_string = pdf_bytes_to_svg(pdf_bytes)
-        except RuntimeError as e:
-            raise HTTPException(status_code=500, detail=f"PDF→SVG conversion failed: {e}")
-
-        # ── Step 3c: Smart-map SVG fields ──────────────────────────────────
-        mapped_svg, field_map = map_svg_fields(svg_string)
-        summary = build_field_map_summary(field_map)
-        print(f"[TemplateRegistry] Auto-created '{template_id}':\n{summary}")
-
-        # ── Step 3d: Register new template in DB ───────────────────────────
-        await register_template_from_svg(
-            db=db,
-            design_code=template_id,
-            name=f"{template_id} (auto-generated)",
-            svg_content=mapped_svg,
-            field_map=field_map,
-            variant_rules=[],
-            description=f"Auto-generated from PDF upload. {len(field_map)} fields mapped.",
-        )
-        template_note = f" New template '{template_id}' auto-created with {len(field_map)} mapped fields."
-    else:
-        template_note = f" Using existing template '{template_id}'."
-
-    # ── Step 4: Parse XML ──────────────────────────────────────────────────
+    # ── Step 2: Parse XML NOW (needed for dynamic template matching) ─────────
     try:
         normalized = parse_bgp_xml(xml_string)
     except Exception as e:
@@ -187,7 +146,7 @@ async def upload_zip(
     if not normalized.bgp_order_id:
         raise HTTPException(status_code=400, detail="Could not find OrderID in XML.")
 
-    # Duplicate check
+    # Duplicate order check
     existing_order = await db.execute(
         select(Order).where(Order.bgp_order_id == normalized.bgp_order_id)
     )
@@ -196,6 +155,64 @@ async def upload_zip(
             status_code=409,
             detail=f"Order {normalized.bgp_order_id} already exists.",
         )
+
+    # ── Step 3: Check if template exists ─────────────────────────────────
+    template_note = ""
+    existing_template = await get_template(db, template_id)
+
+    if not existing_template:
+        # ── Step 4a: New template — PDF required ──────────────────────────
+        if not pdf_bytes:
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    f"Template '{template_id}' is not registered. "
+                    f"Please include the customer's PDF template inside the ZIP "
+                    f"for the first order using this design."
+                ),
+            )
+
+        if not is_poppler_available():
+            raise HTTPException(
+                status_code=500,
+                detail="PDF conversion tool (poppler) is not available on this server.",
+            )
+
+        # ── Step 4b+c: PDF → SVG + dynamic value-driven field matching ───────
+        # Use the first parsed item's real field values to match elements in the PDF
+        try:
+            first_item_data = normalized.items[0].to_dict() if normalized.items else {}
+            variablized_svg, field_map = build_variablized_svg(pdf_bytes, first_item_data)
+        except RuntimeError as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Auto template creation failed: {e}"
+            )
+
+        print(
+            f"[TemplateRegistry] Auto-created '{template_id}' — "
+            f"{len(field_map)} fields mapped dynamically from XML values."
+        )
+
+        # ── Step 4d: Register in DB ───────────────────────────────────────
+        await register_template_from_svg(
+            db=db,
+            design_code=template_id,
+            name=f"{template_id} (auto-generated)",
+            svg_content=variablized_svg,
+            field_map=field_map,
+            variant_rules=[],
+            description=(
+                f"Dynamically generated from PDF upload on first order. "
+                f"{len(field_map)} fields auto-detected using XML values."
+            ),
+        )
+        template_note = (
+            f" New template '{template_id}' auto-created: "
+            f"{len(field_map)} fields detected from XML data."
+        )
+    else:
+        template_note = f" Using existing template '{template_id}'."
 
     # ── Step 5: Save order ────────────────────────────────────────────────
     order = await _create_order_in_db(normalized, db)

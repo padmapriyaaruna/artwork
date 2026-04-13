@@ -26,11 +26,20 @@ APP_VERSION = "1.0.0"
 DEBUG       = os.getenv("DEBUG", "true").lower() == "true"
 
 # ── CORS ───────────────────────────────────────────────────────────────────
-# In production set this to your Render static site URL
-ALLOWED_ORIGINS: list[str] = os.getenv(
+# Build origin list — strips whitespace from each entry
+_raw_origins = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:5173,http://localhost:3000"
-).split(",")
+    "http://localhost:5173,"
+    "http://localhost:3000,"
+    "https://artwork-engine-frontend.onrender.com,"
+    "https://artwork-engine.onrender.com"
+)
+
+ALLOWED_ORIGINS: list[str] = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+
+# If wildcard is in the list, FastAPI needs allow_origins=["*"]
+_ALLOW_ALL_ORIGINS: bool = "*" in ALLOWED_ORIGINS
+
 
 # ── App Settings ──────────────────────────────────────────────
 DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"

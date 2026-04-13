@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from backend.config import APP_NAME, APP_VERSION, ALLOWED_ORIGINS
+from backend.config import APP_NAME, APP_VERSION, ALLOWED_ORIGINS, _ALLOW_ALL_ORIGINS
 from backend.database import create_tables, AsyncSessionLocal
 from backend.engine.template_registry import seed_default_templates
 from backend.api import orders, artwork, approvals
@@ -41,11 +41,13 @@ app = FastAPI(
 # CORS — allow frontend (Render Static Site or localhost dev)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins     = ALLOWED_ORIGINS,
-    allow_credentials = True,
+    allow_origins     = ["*"] if _ALLOW_ALL_ORIGINS else ALLOWED_ORIGINS,
+    allow_credentials = not _ALLOW_ALL_ORIGINS,   # credentials not allowed with wildcard
     allow_methods     = ["*"],
     allow_headers     = ["*"],
+    expose_headers    = ["Content-Disposition"],   # needed for PDF/PNG downloads
 )
+
 
 # ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(orders.router,    prefix="/api")

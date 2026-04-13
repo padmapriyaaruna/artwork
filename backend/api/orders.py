@@ -75,6 +75,7 @@ async def _create_order_in_db(normalized, db: AsyncSession) -> Order:
             variant_name      = norm_item.variant_name,
             quantity          = norm_item.quantity,
             sizes             = norm_item.sizes,
+            # H&M fields
             order_number      = norm_item.order_number,
             product_number    = norm_item.product_number,
             season_code       = norm_item.season_code,
@@ -84,6 +85,18 @@ async def _create_order_in_db(normalized, db: AsyncSession) -> Order:
             fibre_content     = norm_item.fibre_content,
             care_symbols      = norm_item.care_symbols,
             additional_care   = norm_item.additional_care,
+            # OVS fields
+            barcode_number    = norm_item.barcode_number,
+            selling_price     = norm_item.selling_price,
+            currency_symbol   = norm_item.currency_symbol,
+            sku_code          = norm_item.sku_code,
+            commercial_ref    = norm_item.commercial_ref,
+            color             = norm_item.color,
+            style_code        = norm_item.style_code,
+            department        = norm_item.department,
+            sub_department    = norm_item.sub_department,
+            translation_code  = norm_item.translation_code,
+            extra_variables   = norm_item.extra_variables,
             status            = "pending",
         )
         db.add(item)

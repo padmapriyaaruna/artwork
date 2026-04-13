@@ -105,10 +105,25 @@ class OrderItem(Base):
     tape_color     = Column(String(50))
     supplier_style = Column(String(100))
 
-    # Structured data stored as JSON for full flexibility
+    # Structured H&M data stored as JSON
     fibre_content  = Column(JSON, default=list)   # [{header, percentage, wording}]
     care_symbols   = Column(JSON, default=dict)   # {wash, bleach, iron, dry_clean, tumble_dry}
-    additional_care = Column(JSON, default=list)  # [{"id": 52634, "values": {"GB": "...", "FR": "..."}}]
+    additional_care = Column(JSON, default=list)  # [{answer_id, values}]
+
+    # OVS Price Tag / Swing Ticket fields
+    barcode_number   = Column(String(50))
+    selling_price    = Column(String(50))
+    currency_symbol  = Column(String(10))
+    sku_code         = Column(String(50))
+    commercial_ref   = Column(String(100))
+    color            = Column(String(100))
+    style_code       = Column(String(100))
+    department       = Column(String(100))
+    sub_department   = Column(String(100))
+    translation_code = Column(String(200))
+
+    # Any extra dynamic variables not explicitly mapped
+    extra_variables  = Column(JSON, default=dict)
 
     # Which SVG layout variant should be used for this item
     layout_variant = Column(String(100), default="logo_with_size")

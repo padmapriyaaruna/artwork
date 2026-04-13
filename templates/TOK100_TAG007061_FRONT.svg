@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  OVS KIDS - TOK100 Main Clothing Tag (45mm x 220mm)
+  Template: TAG007061 / TOK100
+  Generated from PDF analysis of "_OVS KIDS 2023.pdf"
+  
+  Variable placeholders use {{field_name}} syntax.
+  Field map (SVG element id → XML variable):
+    barcode_field      → barcode_number   (EAN-13 barcode)
+    price_field        → selling_price    (e.g. 169,00)
+    currency_field     → currency_symbol  (e.g. AED)
+    sku_field          → sku_code         (e.g. 2768958)
+    color_field        → color            (e.g. EGGNOG)
+    commercial_ref_field → commercial_ref (e.g. PR711 AI08)
+    country_field      → country_of_origin (e.g. MIDDLE EAST)
+    size_years_field   → sizes.YEARS      (e.g. 4-5)
+    size_cm_field      → sizes.CM         (e.g. 110)
+    size_it_field      → sizes.IT         (e.g. 4-5)
+    size_mex_field     → sizes.MEX        (e.g. 4-5 A)
+    style_code_field   → style_code       (e.g. 2768957)
+    supplier_style_field → supplier_style (e.g. 262SWT301LT-230)
+    kids_brand_field   → [STATIC] OVS KIDS brand name
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 127.56 623.62"
+     width="45mm" height="220mm">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FRONT PANEL
+  ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- Background -->
+  <rect width="127.56" height="623.62" fill="#FFFFFF"/>
+
+  <!-- Top border line -->
+  <line x1="0" y1="2" x2="127.56" y2="2" stroke="#1E3A5F" stroke-width="1.5"/>
+
+  <!-- ── Brand Header ─────────────────────────────────────────────── -->
+  <g id="brand_header">
+    <!-- OVS KIDS brand mark (static) -->
+    <text id="ovs_brand" 
+          x="63.78" y="22" 
+          font-family="Barlow-Black, Barlow, Arial Black, sans-serif"
+          font-size="18" font-weight="900"
+          text-anchor="middle" fill="#1E3A5F" letter-spacing="3">OVS</text>
+    <text id="kids_brand_field" 
+          x="63.78" y="36" 
+          font-family="Barlow-Bold, Barlow, Arial, sans-serif"
+          font-size="11" font-weight="700"
+          text-anchor="middle" fill="#1E3A5F" letter-spacing="4">KIDS</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="44" x2="120.56" y2="44" stroke="#1E3A5F" stroke-width="0.75"/>
+
+  <!-- ── Product Description (STATIC - from PDF template) ────────── -->
+  <g id="product_description" font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+     font-size="6.5" fill="#1E3A5F" text-anchor="middle">
+    <text x="63.78" y="56">COTTON AND CASHMERE,</text>
+    <text x="63.78" y="65">PUSH UP FIT VITA REGOLARE</text>
+    <text x="63.78" y="74">GAMBA DRITTA .</text>
+    <text x="63.78" y="86">COTTON AND CASHMERE,</text>
+    <text x="63.78" y="95">PUSH UP FIT REGULAR WAIST</text>
+    <text x="63.78" y="104">STRAIGHT LEG.</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="112" x2="120.56" y2="112" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Size Grid ─────────────────────────────────────────────────── -->
+  <g id="size_grid" font-family="Barlow-SemiBold, Barlow, Arial, sans-serif"
+     font-size="7.5" fill="#1E3A5F">
+    
+    <!-- Size label headers -->
+    <text x="7" y="127" font-size="6" fill="#666666">YEARS</text>
+    <text x="40" y="127" font-size="6" fill="#666666">CM</text>
+    <text x="67" y="127" font-size="6" fill="#666666">IT</text>
+    <text x="94" y="127" font-size="6" fill="#666666">MEX</text>
+
+    <!-- Size values - VARIABLE -->
+    <text id="size_years_field" x="7" y="141" font-weight="700" font-size="9">{{sizes.YEARS}}</text>
+    <text id="size_cm_field"    x="40" y="141" font-weight="700" font-size="9">{{sizes.CM}}</text>
+    <text id="size_it_field"    x="67" y="141" font-weight="700" font-size="9">{{sizes.IT}}</text>
+    <text id="size_mex_field"   x="94" y="141" font-weight="700" font-size="9">{{sizes.MEX}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="150" x2="120.56" y2="150" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Price Block ────────────────────────────────────────────────── -->
+  <g id="price_block">
+    <!-- Currency symbol on left -->
+    <text id="currency_field"
+          x="14" y="175"
+          font-family="Barlow-Bold, Barlow, Arial, sans-serif"
+          font-size="8" font-weight="700"
+          text-anchor="start" fill="#1E3A5F">{{currency_symbol}}</text>
+
+    <!-- Selling price - large, prominent -->
+    <text id="price_field"
+          x="63.78" y="185"
+          font-family="FlamaCondensed-Bold, Barlow-Black, Arial Black, sans-serif"
+          font-size="28" font-weight="900"
+          text-anchor="middle" fill="#1E3A5F">{{selling_price}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="196" x2="120.56" y2="196" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Color ────────────────────────────────────────────────────── -->
+  <g id="color_block">
+    <text x="7" y="210" 
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888">COLOR</text>
+    <text id="color_field" 
+          x="7" y="221"
+          font-family="Barlow-SemiBold, Barlow, Arial, sans-serif"
+          font-size="7.5" font-weight="600"
+          text-anchor="start" fill="#1E3A5F">{{color}}</text>
+  </g>
+
+  <!-- ── SKU Code ──────────────────────────────────────────────────── -->
+  <g id="sku_block">
+    <text x="63.78" y="210" 
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888" text-anchor="middle">SKU</text>
+    <text id="sku_field" 
+          x="63.78" y="221"
+          font-family="Barlow-SemiBold, Barlow, Arial, sans-serif"
+          font-size="7.5" font-weight="600"
+          text-anchor="middle" fill="#1E3A5F">{{sku_code}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="228" x2="120.56" y2="228" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Commercial Ref ────────────────────────────────────────────── -->
+  <g id="commercial_ref_block">
+    <text x="7" y="241"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888">REF</text>
+    <text id="commercial_ref_field"
+          x="7" y="252"
+          font-family="Barlow-Medium, Barlow, Arial, sans-serif"
+          font-size="7" fill="#1E3A5F">{{commercial_ref}}</text>
+  </g>
+
+  <!-- ── Style Code ────────────────────────────────────────────────── -->
+  <g id="style_code_block">
+    <text x="63.78" y="241"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888" text-anchor="middle">STYLE</text>
+    <text id="style_code_field"
+          x="63.78" y="252"
+          font-family="Barlow-Medium, Barlow, Arial, sans-serif"
+          font-size="7" text-anchor="middle" fill="#1E3A5F">{{style_code}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="259" x2="120.56" y2="259" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Country of Origin ─────────────────────────────────────────── -->
+  <g id="country_block">
+    <text x="7" y="272"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888">MADE IN</text>
+    <text id="country_field"
+          x="7" y="283"
+          font-family="Barlow-SemiBold, Barlow, Arial, sans-serif"
+          font-size="7.5" font-weight="600"
+          text-anchor="start" fill="#1E3A5F">{{country_of_origin}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="290" x2="120.56" y2="290" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Supplier Style ─────────────────────────────────────────────── -->
+  <g id="supplier_style_block">
+    <text x="7" y="303"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="5.5" fill="#888888">SUPPLIER REF</text>
+    <text id="supplier_style_field"
+          x="7" y="314"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="6.5" fill="#1E3A5F">{{supplier_style}}</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="7" y1="320" x2="120.56" y2="320" stroke="#1E3A5F" stroke-width="0.5"/>
+
+  <!-- ── Barcode Area ────────────────────────────────────────────────── -->
+  <g id="barcode_block">
+    <!-- Barcode placeholder rectangle -->
+    <rect x="14" y="330" width="99.56" height="55" fill="#F5F5F5" stroke="#CCCCCC" stroke-width="0.5" rx="2"/>
+    
+    <!-- Barcode number text below bar representation -->
+    <text id="barcode_field"
+          x="63.78" y="396"
+          font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+          font-size="7" letter-spacing="2"
+          text-anchor="middle" fill="#1E3A5F">{{barcode_number}}</text>
+          
+    <!-- Barcode visual lines (simplified representation) -->
+    <g id="barcode_lines" fill="#1E3A5F">
+      <rect x="18"  y="334" width="1.5"  height="45"/>
+      <rect x="21"  y="334" width="2.5"  height="45"/>
+      <rect x="25"  y="334" width="1"    height="45"/>
+      <rect x="27.5" y="334" width="2"   height="45"/>
+      <rect x="31"  y="334" width="1.5"  height="45"/>
+      <rect x="34"  y="334" width="1"    height="45"/>
+      <rect x="36.5" y="334" width="3"   height="45"/>
+      <rect x="41"  y="334" width="1.5"  height="45"/>
+      <rect x="44"  y="334" width="1"    height="45"/>
+      <rect x="47"  y="334" width="2.5"  height="45"/>
+      <rect x="51"  y="334" width="1"    height="45"/>
+      <rect x="53.5" y="334" width="2"   height="45"/>
+      <rect x="57"  y="334" width="1.5"  height="45"/>
+      <rect x="60.5" y="334" width="1"   height="45"/>
+      <rect x="63"  y="334" width="3"    height="45"/>
+      <rect x="68"  y="334" width="1.5"  height="45"/>
+      <rect x="71.5" y="334" width="1"   height="45"/>
+      <rect x="74"  y="334" width="2.5"  height="45"/>
+      <rect x="78"  y="334" width="1"    height="45"/>
+      <rect x="80.5" y="334" width="2"   height="45"/>
+      <rect x="84"  y="334" width="1.5"  height="45"/>
+      <rect x="87.5" y="334" width="1"   height="45"/>
+      <rect x="90"  y="334" width="3"    height="45"/>
+      <rect x="95"  y="334" width="1.5"  height="45"/>
+      <rect x="98.5" y="334" width="2"   height="45"/>
+      <rect x="102" y="334" width="1"    height="45"/>
+      <rect x="104.5" y="334" width="1.5" height="45"/>
+      <rect x="107.5" y="334" width="2"  height="45"/>
+      <rect x="111.5" y="334" width="1"  height="45"/>
+    </g>
+  </g>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       STRING HOLE + FOOTER
+  ══════════════════════════════════════════════════════════════ -->
+
+  <!-- Separator before footer -->
+  <line x1="7" y1="406" x2="120.56" y2="406" stroke="#1E3A5F" stroke-width="0.75"/>
+
+  <!-- String hole info (static) -->
+  <g id="string_info" font-family="Barlow-Regular, Barlow, Arial, sans-serif"
+     fill="#666666" text-anchor="middle">
+    <text x="63.78" y="420" font-size="5.5">STRING: BIODEGRADABLE COMPONENT WAXED STRING,</text>
+    <text x="63.78" y="430" font-size="5.5">100% TWISTED COTTON, 22 cm TOTAL LENGTH</text>
+    <text x="63.78" y="442" font-size="5">CORDINO CERATO CON COMPONENTE BIODEGRADABILE,</text>
+    <text x="63.78" y="451" font-size="5">100% COTONE RITORTO, LUNGHEZZA TOTALE 22 CM</text>
+  </g>
+
+  <!-- Bottom border -->
+  <line x1="0" y1="620" x2="127.56" y2="620" stroke="#1E3A5F" stroke-width="1.5"/>
+
+  <!-- String hole punch position (top) -->
+  <circle cx="63.78" cy="610" r="4" fill="none" stroke="#1E3A5F" stroke-width="1"/>
+
+</svg>

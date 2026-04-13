@@ -1,0 +1,2867 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Order xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OrderStatus>Released</OrderStatus>
+  <SubStatus />
+  <ArtworkRequired>True</ArtworkRequired>
+  <ArtworkStatus>Approved</ArtworkStatus>
+  <Site>ovs.bgpconnect.com</Site>
+  <OrderID>B0854559</OrderID>
+  <OrderLink>https://ovs.bgpconnect.com/Order?orderId=854559</OrderLink>
+  <CustomerID>4010</CustomerID>
+  <CustomerName>COTTON BLOSSOM</CustomerName>
+  <CustomerEmail>ho.purchase@cotonblossom.org</CustomerEmail>
+  <CreatedDate>31/03/2026 10:19</CreatedDate>
+  <CustomerRef>E/548 REVISED</CustomerRef>
+  <RequiredDate>09/03/2026</RequiredDate>
+  <OrderedFromLocationID>india</OrderedFromLocationID>
+  <OrderedFromLocation>Sainmarks Industries India Private Ltd</OrderedFromLocation>
+  <InvoiceLocation>
+    <LocationID>4577</LocationID>
+    <LocationName>SHYAMALA</LocationName>
+    <AddressLine1>NAP Accessories Store, Shed No. 16</AddressLine1>
+    <AddressLine2>Netaji Apparel Park, Perumanallur</AddressLine2>
+    <AddressLine3>TIRUPUR</AddressLine3>
+    <City>INDIA</City>
+    <PostCode>641666</PostCode>
+    <isoCountryCode>IN</isoCountryCode>
+  </InvoiceLocation>
+  <DeliveryLocation>
+    <LocationID>4577</LocationID>
+    <LocationName>SHYAMALA</LocationName>
+    <AddressLine1>NAP Accessories Store, Shed No. 16</AddressLine1>
+    <AddressLine2>Netaji Apparel Park, Perumanallur</AddressLine2>
+    <AddressLine3>TIRUPUR</AddressLine3>
+    <City>INDIA</City>
+    <PostCode>641666</PostCode>
+    <isoCountryCode>IN</isoCountryCode>
+  </DeliveryLocation>
+  <OrderItems>
+    <OrderItem>
+      <OrderItemID>1299052</OrderItemID>
+      <PurchaseOrder>
+        <Reference />
+      </PurchaseOrder>
+      <Asset Id="6926">
+        <Name>TOK100</Name>
+        <Description>TOK100
+TAG - OVS KIDS
+T 0001</Description>
+        <Codes>
+          <Code Name="BPC" Value="TAG007061" />
+        </Codes>
+        <ProductTypes>
+          <ProductType Domain="Retailer">Clothing tag</ProductType>
+          <ProductType Domain="Britannia">Variable Data Swing Ticket</ProductType>
+        </ProductTypes>
+      </Asset>
+      <Item>
+        <ItemID>9627053</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0020</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0020" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="4-5" />
+          <Size Name="CM" Value="110" />
+          <Size Name="IT" Value="4-5" />
+          <Size Name="MEX" Value="4-5 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298798</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298798" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627054</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0030</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0030" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="5-6" />
+          <Size Name="CM" Value="116" />
+          <Size Name="IT" Value="5-6" />
+          <Size Name="MEX" Value="5-6 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298804</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298804" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768958</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768958" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627055</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0040</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0040" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="6-7" />
+          <Size Name="CM" Value="122" />
+          <Size Name="IT" Value="6-7" />
+          <Size Name="MEX" Value="6-7 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298811</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298811" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768959</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768959" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627056</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0050</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0050" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="7-8" />
+          <Size Name="CM" Value="128" />
+          <Size Name="IT" Value="7-8" />
+          <Size Name="MEX" Value="7-8 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298828</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298828" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768960</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768960" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627057</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0060</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0060" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="8-9" />
+          <Size Name="CM" Value="134" />
+          <Size Name="IT" Value="8-9" />
+          <Size Name="MEX" Value="8-9 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298835</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298835" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768961</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768961" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627058</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0070</VariantName>
+        <Quantity>128</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0070" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="9-10" />
+          <Size Name="CM" Value="140" />
+          <Size Name="IT" Value="9-10" />
+          <Size Name="MEX" Value="9-10 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298842</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298842" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768962</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768962" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28112</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">WARM</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627059</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0020</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0020" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="4-5" />
+          <Size Name="CM" Value="110" />
+          <Size Name="IT" Value="4-5" />
+          <Size Name="MEX" Value="4-5 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298798</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298798" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627060</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0030</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0030" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="5-6" />
+          <Size Name="CM" Value="116" />
+          <Size Name="IT" Value="5-6" />
+          <Size Name="MEX" Value="5-6 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298804</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298804" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768958</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768958" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627061</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0040</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0040" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="6-7" />
+          <Size Name="CM" Value="122" />
+          <Size Name="IT" Value="6-7" />
+          <Size Name="MEX" Value="6-7 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298811</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298811" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768959</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768959" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627062</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0050</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0050" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="7-8" />
+          <Size Name="CM" Value="128" />
+          <Size Name="IT" Value="7-8" />
+          <Size Name="MEX" Value="7-8 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298828</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298828" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768960</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768960" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627063</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0060</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0060" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="8-9" />
+          <Size Name="CM" Value="134" />
+          <Size Name="IT" Value="8-9" />
+          <Size Name="MEX" Value="8-9 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298835</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298835" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768961</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768961" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627064</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0070</VariantName>
+        <Quantity>21</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0070" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="9-10" />
+          <Size Name="CM" Value="140" />
+          <Size Name="IT" Value="9-10" />
+          <Size Name="MEX" Value="9-10 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298842</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298842" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">29,95</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="29,95" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768962</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768962" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28113</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">COLD</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>24440</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">EUR</AnswerValue>
+                <AnswerValue Name="Symbol">€</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627338</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0020</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0020" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="4-5" />
+          <Size Name="CM" Value="110" />
+          <Size Name="IT" Value="4-5" />
+          <Size Name="MEX" Value="4-5 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298798</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298798" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627339</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0030</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0030" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="5-6" />
+          <Size Name="CM" Value="116" />
+          <Size Name="IT" Value="5-6" />
+          <Size Name="MEX" Value="5-6 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298804</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298804" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768958</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768958" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627340</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0040</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0040" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="6-7" />
+          <Size Name="CM" Value="122" />
+          <Size Name="IT" Value="6-7" />
+          <Size Name="MEX" Value="6-7 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298811</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298811" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768959</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768959" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627341</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0050</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0050" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="7-8" />
+          <Size Name="CM" Value="128" />
+          <Size Name="IT" Value="7-8" />
+          <Size Name="MEX" Value="7-8 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298828</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298828" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768960</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768960" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627342</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0060</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0060" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="8-9" />
+          <Size Name="CM" Value="134" />
+          <Size Name="IT" Value="8-9" />
+          <Size Name="MEX" Value="8-9 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298835</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298835" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768961</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768961" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+      <Item>
+        <ItemID>9627343</ItemID>
+        <VariantName>222,223,224,226,228,230_ 3-15 Y-0070</VariantName>
+        <Quantity>15</Quantity>
+        <SizeChartItem Id="15872388" Value="222,223,224,226,228,230_ 3-15 Y-0070" SizeChartName="222,223,224,226,228,230,953_ 3-15 YEARS">
+          <Size Name="YEARS" Value="9-10" />
+          <Size Name="CM" Value="140" />
+          <Size Name="IT" Value="9-10" />
+          <Size Name="MEX" Value="9-10 A" />
+        </SizeChartItem>
+        <Variables>
+          <Variable Section="Var" AnswerType="Barcode" QuestionID="15872386" Question="Barcode Number">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">8051553298842</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="8051553298842" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872387" Question="Selling Price">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">169,00</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="169,00" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872389" Question="SKU Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768962</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768962" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Small Tag Code Chart" QuestionID="15872390" Question="Translation Code">
+            <MultiPart />
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872391" Question="Commercial Ref">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">PR711 AI08</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="PR711 AI08" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Country of Origin" QuestionID="15872392" Question="Country">
+            <Answer>
+              <AnswerID>28115</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Name">MIDDLE EAST</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872393" Question="Color">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">EGGNOG</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="EGGNOG" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872394" Question="Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872395" Question="Style Code">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">2768957</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="2768957" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872396" Question="Sub Department">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">3632</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="3632" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Text" QuestionID="15872397" Question="Supplier Style">
+            <Answer>
+              <AnswerID />
+              <AnswerValues>
+                <AnswerValue Name="">262SWT301LT-230</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations>
+                <Translation Language="En" Value="262SWT301LT-230" />
+              </AnswerTranslations>
+            </Answer>
+          </Variable>
+          <Variable Section="Var" AnswerType="Lookup List" LookupListType="Attributes" QuestionID="15872385" Question="Currency">
+            <Answer>
+              <AnswerID>28131</AnswerID>
+              <AnswerValues>
+                <AnswerValue Name="Currency">AED</AnswerValue>
+                <AnswerValue Name="Symbol">AED</AnswerValue>
+              </AnswerValues>
+              <AnswerPrefix />
+              <AnswerSuffix />
+              <AnswerTranslations />
+            </Answer>
+          </Variable>
+        </Variables>
+      </Item>
+    </OrderItem>
+  </OrderItems>
+</Order>

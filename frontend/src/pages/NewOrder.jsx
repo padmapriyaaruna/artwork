@@ -55,10 +55,34 @@ export default function NewOrder() {
       const res = isZip ? await uploadZIP(fd) : await uploadXML(fd);
       setSuccess(res.data.message);
       setTimeout(() => navigate(`/orders/${res.data.order_id}`), 1800);
-    } catch(e) {
-      setError(e.response?.data?.detail || 'Upload failed.');
+    } catch(err) {
+      // Extract the most useful error message available
+      const resp = err.response;
+      let msg = '';
+      if (resp) {
+        const d = resp.data;
+        if (typeof d === 'string') {
+          msg = d;
+        } else if (d?.detail) {
+          // detail can be a string or an array (FastAPI validation errors)
+          msg = Array.isArray(d.detail)
+            ? d.detail.map(e => `${e.loc?.join('.')} — ${e.msg}`).join('\n')
+            : d.detail;
+        } else if (d?.message) {
+          msg = d.message;
+        } else {
+          msg = JSON.stringify(d);
+        }
+        msg = `[${resp.status}] ${msg}`;
+      } else if (err.request) {
+        msg = 'No response from server — backend may be starting up. Please wait 30s and retry.';
+      } else {
+        msg = err.message || 'Unknown error';
+      }
+      setError(msg);
     } finally { setLoading(false); }
   };
+
 
   // ── Manual form ───────────────────────────────────────────────────────────
   const setField = (path, val) => {

@@ -2,8 +2,9 @@
 FastAPI application entry point.
 """
 from contextlib import asynccontextmanager
+import traceback
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -47,6 +48,21 @@ app.add_middleware(
     allow_headers     = ["*"],
     expose_headers    = ["Content-Disposition"],   # needed for PDF/PNG downloads
 )
+
+
+# ── Global exception handler — returns JSON, never plain text ─────────────────
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    tb = traceback.format_exc()
+    print(f"[ERROR] Unhandled exception on {request.method} {request.url}:\n{tb}")
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": str(exc),
+            "type": type(exc).__name__,
+            "path": str(request.url),
+        },
+    )
 
 
 # ── Routers ───────────────────────────────────────────────────────────────────

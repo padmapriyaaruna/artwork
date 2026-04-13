@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from backend.config import APP_NAME, APP_VERSION, ALLOWED_ORIGINS, _ALLOW_ALL_ORIGINS
-from backend.database import create_tables, AsyncSessionLocal
+from backend.database import create_tables, apply_migrations, AsyncSessionLocal
 from backend.engine.template_registry import seed_default_templates
 from backend.api import orders, artwork, approvals
 
@@ -17,17 +17,20 @@ from backend.api import orders, artwork, approvals
 # ── Startup / Shutdown ────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Run on startup: create DB tables and seed default templates."""
-    print(f"[Startup] Creating tables...")
+    """Run on startup: create tables, apply migrations, seed templates."""
+    print("[Startup] Creating tables...")
     await create_tables()
 
-    print(f"[Startup] Seeding default templates...")
+    print("[Startup] Applying DB migrations...")
+    await apply_migrations()
+
+    print("[Startup] Seeding default templates...")
     async with AsyncSessionLocal() as db:
         await seed_default_templates(db)
 
     print(f"[Startup] {APP_NAME} v{APP_VERSION} ready.")
     yield
-    print(f"[Shutdown] Goodbye.")
+    print("[Shutdown] Goodbye.")
 
 
 # ── App ───────────────────────────────────────────────────────────────────────

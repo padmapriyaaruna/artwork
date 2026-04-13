@@ -32,10 +32,28 @@ export default function OrderDetail() {
     setGenLoading(true); setError(''); setSuccess('');
     try {
       const res = await generateOrder(id);
-      setSuccess(`Generated ${res.data.generated} artwork(s). ${res.data.failed} failed.`);
+      const { generated, failed, errors } = res.data;
+      if (failed > 0 && generated === 0) {
+        // All failed — show first error detail
+        const firstErr = errors?.[0]?.error || 'Unknown error';
+        setError(`All ${failed} item(s) failed. First error: ${firstErr}`);
+      } else if (failed > 0) {
+        setSuccess(`Generated ${generated} artwork(s). ${failed} failed.`);
+      } else {
+        setSuccess(`✓ All ${generated} artwork(s) generated successfully!`);
+      }
       reload();
-    } catch(e) {
-      setError(e.response?.data?.detail || 'Generation failed.');
+    } catch(err) {
+      const resp = err.response;
+      if (resp?.data?.detail) {
+        setError(resp.data.detail);
+      } else if (resp?.data) {
+        setError(JSON.stringify(resp.data).slice(0, 300));
+      } else if (err.request) {
+        setError('No response from server. Backend may be processing — refresh in 30 seconds.');
+      } else {
+        setError(err.message || 'Generation failed.');
+      }
     } finally { setGenLoading(false); }
   };
 
@@ -45,10 +63,12 @@ export default function OrderDetail() {
       await generateItem(itemId);
       setSuccess('Artwork generated.');
       reload();
-    } catch(e) {
-      setError(e.response?.data?.detail || 'Generation failed.');
+    } catch(err) {
+      const resp = err.response;
+      setError(resp?.data?.detail || err.message || 'Generation failed.');
     }
   };
+
 
   if (loading) return (
     <div style={{ textAlign:'center', padding:'60px' }}>
@@ -166,15 +186,23 @@ export default function OrderDetail() {
                 <p style={{ fontSize:'12px', fontWeight:600, color:'var(--text-secondary)', textTransform:'uppercase', letterSpacing:'0.5px', marginBottom:'14px' }}>Label Data</p>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
                   {[
+                    // H&M fields
                     ['Order No.',    current.order_number],
                     ['Product No.',  current.product_number],
                     ['Season Code',  current.season_code],
                     ['Quantity',     current.quantity],
                     ['Country',      current.country_of_origin],
-                    ['Tape Color',   current.tape_color],
                     ['Layout',       current.layout_variant],
                     ['Supplier Ref', current.supplier_style],
-                  ].map(([k,v]) => (
+                    ['Tape Color',   current.tape_color],
+                    // OVS fields
+                    ['Barcode',      current.barcode_number],
+                    ['Price',        current.selling_price ? `${current.currency_symbol || ''} ${current.selling_price}`.trim() : null],
+                    ['SKU',          current.sku_code],
+                    ['Color',        current.color],
+                    ['Commercial Ref', current.commercial_ref],
+                    ['Style Code',   current.style_code],
+                  ].filter(([,v]) => v != null && v !== '').map(([k,v]) => (
                     <div key={k} style={{ padding:'10px 14px', background:'var(--bg-elevated)', borderRadius:'var(--radius-md)' }}>
                       <p style={{ fontSize:'11px', color:'var(--text-muted)', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.4px' }}>{k}</p>
                       <p style={{ fontSize:'13px', fontWeight:500, marginTop:'3px' }}>{v||'—'}</p>

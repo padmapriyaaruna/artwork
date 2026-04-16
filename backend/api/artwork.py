@@ -173,15 +173,37 @@ async def get_artwork_info(artwork_id: str, db: AsyncSession = Depends(get_db)):
     }
 
 
-# ── GET /artwork/{artwork_id}/approval-sheet ───────────────────────────────────
-from backend.api.orders import _item_to_response
+# ── Helper: build lean variant info for approval sheet ────────────────────────
+def _approval_variant(item: OrderItem) -> dict:
+    """Lightweight item dict for approval sheet rendering — no order access needed."""
+    art = item.artwork
+    return {
+        "id":              str(item.id),
+        "variant_name":    item.variant_name,
+        "quantity":        item.quantity,
+        "sizes":           item.sizes or {},
+        "barcode_number":  item.barcode_number,
+        "selling_price":   item.selling_price,
+        "currency_symbol": item.currency_symbol,
+        "color":           item.color,
+        "commercial_ref":  item.commercial_ref,
+        "style_code":      item.style_code,
+        "has_artwork":     art is not None,
+        "artwork_id":      str(art.id) if art else None,
+        "artwork_status":  art.status if art else None,
+    }
 
+
+# ── GET /artwork/{artwork_id}/approval-sheet ───────────────────────────────────
 @router.get("/{artwork_id}/approval-sheet")
 async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(get_db)):
     """Get all structured data for rendering the approval sheet in the UI."""
     result = await db.execute(
         select(Artwork)
-        .options(selectinload(Artwork.item).selectinload(OrderItem.order))
+        .options(
+            selectinload(Artwork.item)
+            .selectinload(OrderItem.order)
+        )
         .where(Artwork.id == artwork_id)
     )
     art = result.scalar_one_or_none()
@@ -191,30 +213,34 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
     item = art.item
     order = item.order
 
-    # Find sibling items for the same variant group
+    # Find all sibling items (same order, same variant_name/colour group)
+    # Eagerly load BOTH .artwork and .order so _approval_variant() can access them
     siblings_result = await db.execute(
         select(OrderItem)
-        .options(selectinload(OrderItem.artwork))
+        .options(
+            selectinload(OrderItem.artwork),
+            selectinload(OrderItem.order),   # needed by _item_to_response
+        )
         .where(
             OrderItem.order_id == item.order_id,
-            OrderItem.variant_name == item.variant_name
+            OrderItem.variant_name == item.variant_name,
         )
-        .order_by(OrderItem.sizes)
+        .order_by(OrderItem.created_at)      # JSON column cannot be used in ORDER BY
     )
     siblings = siblings_result.scalars().all()
 
-    all_variants = [_item_to_response(sib) for sib in siblings]
+    all_variants = [_approval_variant(sib) for sib in siblings]
 
     return {
-        "buyer": "OVS",  # Custom logic can be added to infer this from order
-        "customer_name": order.customer_name if order else "",
-        "design_code": order.design_code if order else "",
-        "product_code": item.product_number or item.commercial_ref or "",
-        "submitted_date": order.created_date if order else "",
-        "bgp_order_id": order.bgp_order_id if order else "",
-        "variant_name": item.variant_name,
-        "label_size": "45mm x 100mm",
-        "all_variants": all_variants
+        "buyer":          order.customer_name if order else "OVS",
+        "customer_name":  order.customer_name if order else "",
+        "design_code":    order.design_code   if order else "",
+        "product_code":   item.product_number or item.commercial_ref or "",
+        "submitted_date": order.created_date  if order else "",
+        "bgp_order_id":   order.bgp_order_id  if order else "",
+        "variant_name":   item.variant_name   or "",
+        "label_size":     "45mm x 100mm",
+        "all_variants":   all_variants,
     }
 
 
@@ -241,7 +267,7 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
         select(OrderItem)
         .options(selectinload(OrderItem.artwork))
         .where(OrderItem.order_id == item.order_id)
-        .order_by(OrderItem.sizes)
+        .order_by(OrderItem.created_at)   # JSON column cannot be used in ORDER BY
     )
     all_items = order_items_result.scalars().all()
 

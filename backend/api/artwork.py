@@ -197,7 +197,12 @@ def _approval_variant(item: OrderItem) -> dict:
 # ── GET /artwork/{artwork_id}/approval-sheet ───────────────────────────────────
 @router.get("/{artwork_id}/approval-sheet")
 async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(get_db)):
-    """Get all structured data for rendering the approval sheet in the UI."""
+    """
+    Returns structured data for the Approval Preview UI page.
+
+    Groups sibling items by country_of_origin, matching the TOK100 layout
+    (one page / group per market: WARM, COLD, MIDDLE EAST, etc.).
+    """
     result = await db.execute(
         select(Artwork)
         .options(
@@ -210,37 +215,60 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
     if not art:
         raise HTTPException(status_code=404, detail="Artwork not found.")
 
-    item = art.item
+    item  = art.item
     order = item.order
 
-    # Find all sibling items (same order, same variant_name/colour group)
-    # Eagerly load BOTH .artwork and .order so _approval_variant() can access them
-    siblings_result = await db.execute(
+    # ── Load ALL items in this order (with their artwork) ──────────────────
+    all_items_result = await db.execute(
         select(OrderItem)
         .options(
             selectinload(OrderItem.artwork),
-            selectinload(OrderItem.order),   # needed by _item_to_response
         )
-        .where(
-            OrderItem.order_id == item.order_id,
-            OrderItem.variant_name == item.variant_name,
-        )
-        .order_by(OrderItem.created_at)      # JSON column cannot be used in ORDER BY
+        .where(OrderItem.order_id == item.order_id)
+        .order_by(OrderItem.created_at)
     )
-    siblings = siblings_result.scalars().all()
+    all_items = all_items_result.scalars().all()
 
-    all_variants = [_approval_variant(sib) for sib in siblings]
+    # ── Group by (supplier_style, country_of_origin) ── same as TOK100 pages
+    from collections import defaultdict
+    groups: dict = defaultdict(list)
+    for sib in all_items:
+        key = sib.country_of_origin or "UNKNOWN"
+        groups[key].append(_approval_variant(sib))
+
+    # Build ordered list starting with the group that contains the clicked item
+    current_group_key = item.country_of_origin or "UNKNOWN"
+    ordered_keys = [current_group_key] + [k for k in groups if k != current_group_key]
+
+    country_groups = []
+    for k in ordered_keys:
+        group_items = groups[k]
+        # Red title format: "supplier_style - country_of_origin - color - bgp_order_id"
+        first = group_items[0] if group_items else {}
+        supplier  = item.supplier_style or ""
+        color     = item.color or ""
+        order_id  = order.bgp_order_id if order else ""
+        red_title = f"{supplier} - {k} - {color} - {order_id}"
+        country_groups.append({
+            "country":    k,
+            "title":      red_title,
+            "label_size": "45mm x 100mm",
+            "variants":   group_items,
+        })
+
+    # Derive a safe product_code: prefer commercial_ref, fall back to sku_code
+    product_code = item.commercial_ref or item.sku_code or item.product_number or ""
 
     return {
-        "buyer":          order.customer_name if order else "OVS",
-        "customer_name":  order.customer_name if order else "",
-        "design_code":    order.design_code   if order else "",
-        "product_code":   item.product_number or item.commercial_ref or "",
-        "submitted_date": order.created_date  if order else "",
-        "bgp_order_id":   order.bgp_order_id  if order else "",
-        "variant_name":   item.variant_name   or "",
+        "buyer":          "OVS",
+        "customer_name":  order.customer_name  if order else "",
+        "design_code":    order.design_code    if order else "",
+        "product_code":   product_code,
+        "submitted_date": order.created_date   if order else "",
+        "bgp_order_id":   order.bgp_order_id   if order else "",
         "label_size":     "45mm x 100mm",
-        "all_variants":   all_variants,
+        "country_groups": country_groups,          # NEW: list of groups for multi-page preview
+        "all_variants":   [_approval_variant(sib) for sib in all_items],  # flat list for simple views
     }
 
 
@@ -249,65 +277,85 @@ from backend.services.approval_pdf_service import create_approval_sheet_pdf
 
 @router.get("/{artwork_id}/approval-pdf")
 async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_db)):
-    """Generate and download the full TOK100-style approval PDF."""
+    """Generate and download the full TOK100-style multi-page approval PDF."""
     result = await db.execute(
         select(Artwork)
-        .options(selectinload(Artwork.item).selectinload(OrderItem.order))
+        .options(
+            selectinload(Artwork.item)
+            .selectinload(OrderItem.order)
+        )
         .where(Artwork.id == artwork_id)
     )
     art = result.scalar_one_or_none()
     if not art:
         raise HTTPException(status_code=404, detail="Artwork not found.")
 
-    item = art.item
+    item  = art.item
     order = item.order
 
-    # Group sibling items by variant_name
+    # Load all items in this order with their artwork PNG data
     order_items_result = await db.execute(
         select(OrderItem)
         .options(selectinload(OrderItem.artwork))
         .where(OrderItem.order_id == item.order_id)
-        .order_by(OrderItem.created_at)   # JSON column cannot be used in ORDER BY
+        .order_by(OrderItem.created_at)
     )
     all_items = order_items_result.scalars().all()
 
-    groups = {}
+    # Build {artwork_id: png_bytes} lookup for the PDF service
+    png_streams: dict = {}
     for sib in all_items:
-        vname = sib.variant_name or 'Default'
-        if vname not in groups:
-            groups[vname] = []
         if sib.artwork and sib.artwork.png_data:
-            groups[vname].append({
-                'png_stream': sib.artwork.png_data,
-                'quantity': sib.quantity,
-                'sizes': sib.sizes
-            })
+            png_streams[str(sib.artwork.id)] = sib.artwork.png_data
+
+    # Group items by country_of_origin (one PDF page per group)
+    from collections import defaultdict
+    by_country: dict = defaultdict(list)
+    for sib in all_items:
+        country_key = sib.country_of_origin or "UNKNOWN"
+        by_country[country_key].append(sib)
 
     variant_groups = []
-    for k, v in groups.items():
+    for country_key, sibs in by_country.items():
+        supplier = sibs[0].supplier_style or ""
+        color    = sibs[0].color or ""
+        order_id = order.bgp_order_id if order else ""
+        red_title = f"{supplier} - {country_key} - {color} - {order_id}"
+
+        variants = []
+        for sib in sibs:
+            variants.append({
+                "artwork_id":      str(sib.artwork.id) if sib.artwork else None,
+                "quantity":        sib.quantity,
+                "sizes":           sib.sizes or {},
+                "barcode_number":  sib.barcode_number,
+                "selling_price":   sib.selling_price,
+                "currency_symbol": sib.currency_symbol,
+            })
+
         variant_groups.append({
-            'title': k,
-            'variants': v
+            "country":    country_key,
+            "title":      red_title,
+            "label_size": "45mm x 100mm",
+            "variants":   variants,
         })
 
     order_data = {
-        "buyer": "OVS",
-        "customer_name": order.customer_name if order else "",
-        "design_code": order.design_code if order else "",
-        "product_code": item.product_number or item.commercial_ref or "",
-        "submitted_date": order.created_date if order else "",
-        "bgp_order_id": order.bgp_order_id if order else "",
+        "buyer":          "OVS",
+        "customer_name":  order.customer_name  if order else "",
+        "design_code":    order.design_code    if order else "",
+        "product_code":   item.commercial_ref or item.sku_code or item.product_number or "",
+        "submitted_date": order.created_date   if order else "",
+        "bgp_order_id":   order.bgp_order_id   if order else "",
     }
 
-    # Dummy front tag for simulation (In real app, backend generates or uses uploaded logo PNG)
-    # Using the first available label PNG as a placeholder for front tag
-    single_front = variant_groups[0]['variants'][0]['png_stream'] if variant_groups and variant_groups[0]['variants'] else None
+    pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, png_streams)
 
-    pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, single_front)
-
+    filename = f"approval_sheet_{order.bgp_order_id if order else 'order'}.pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
-        headers={"Content-Disposition": f"attachment; filename=approval_sheet_{order.bgp_order_id if order else 'order'}.pdf"},
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
+
 

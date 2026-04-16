@@ -1,6 +1,7 @@
 """
 Artwork API — generate artwork and serve PNG/PDF binary responses.
 """
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import Response
 from sqlalchemy import select
@@ -170,3 +171,117 @@ async def get_artwork_info(artwork_id: str, db: AsyncSession = Depends(get_db)):
         "pdf_url":     f"/artwork/{art.id}/pdf",
         "thumbnail_url": f"/artwork/{art.id}/thumbnail",
     }
+
+
+# ── GET /artwork/{artwork_id}/approval-sheet ───────────────────────────────────
+from backend.api.orders import _item_to_response
+
+@router.get("/{artwork_id}/approval-sheet")
+async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(get_db)):
+    """Get all structured data for rendering the approval sheet in the UI."""
+    result = await db.execute(
+        select(Artwork)
+        .options(selectinload(Artwork.item).selectinload(OrderItem.order))
+        .where(Artwork.id == artwork_id)
+    )
+    art = result.scalar_one_or_none()
+    if not art:
+        raise HTTPException(status_code=404, detail="Artwork not found.")
+
+    item = art.item
+    order = item.order
+
+    # Find sibling items for the same variant group
+    siblings_result = await db.execute(
+        select(OrderItem)
+        .options(selectinload(OrderItem.artwork))
+        .where(
+            OrderItem.order_id == item.order_id,
+            OrderItem.variant_name == item.variant_name
+        )
+        .order_by(OrderItem.sizes)
+    )
+    siblings = siblings_result.scalars().all()
+
+    all_variants = [_item_to_response(sib) for sib in siblings]
+
+    return {
+        "buyer": "OVS",  # Custom logic can be added to infer this from order
+        "customer_name": order.customer_name if order else "",
+        "design_code": order.design_code if order else "",
+        "product_code": item.product_number or item.commercial_ref or "",
+        "submitted_date": order.created_date if order else "",
+        "bgp_order_id": order.bgp_order_id if order else "",
+        "variant_name": item.variant_name,
+        "label_size": "45mm x 100mm",
+        "all_variants": all_variants
+    }
+
+
+# ── GET /artwork/{artwork_id}/approval-pdf ─────────────────────────────────
+from backend.services.approval_pdf_service import create_approval_sheet_pdf
+
+@router.get("/{artwork_id}/approval-pdf")
+async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_db)):
+    """Generate and download the full TOK100-style approval PDF."""
+    result = await db.execute(
+        select(Artwork)
+        .options(selectinload(Artwork.item).selectinload(OrderItem.order))
+        .where(Artwork.id == artwork_id)
+    )
+    art = result.scalar_one_or_none()
+    if not art:
+        raise HTTPException(status_code=404, detail="Artwork not found.")
+
+    item = art.item
+    order = item.order
+
+    # Group sibling items by variant_name
+    order_items_result = await db.execute(
+        select(OrderItem)
+        .options(selectinload(OrderItem.artwork))
+        .where(OrderItem.order_id == item.order_id)
+        .order_by(OrderItem.sizes)
+    )
+    all_items = order_items_result.scalars().all()
+
+    groups = {}
+    for sib in all_items:
+        vname = sib.variant_name or 'Default'
+        if vname not in groups:
+            groups[vname] = []
+        if sib.artwork and sib.artwork.png_data:
+            groups[vname].append({
+                'png_stream': sib.artwork.png_data,
+                'quantity': sib.quantity,
+                'sizes': sib.sizes
+            })
+
+    variant_groups = []
+    for k, v in groups.items():
+        variant_groups.append({
+            'title': k,
+            'variants': v
+        })
+
+    order_data = {
+        "buyer": "OVS",
+        "customer_name": order.customer_name if order else "",
+        "design_code": order.design_code if order else "",
+        "product_code": item.product_number or item.commercial_ref or "",
+        "submitted_date": order.created_date if order else "",
+        "bgp_order_id": order.bgp_order_id if order else "",
+    }
+
+    # Dummy front tag for simulation (In real app, backend generates or uses uploaded logo PNG)
+    # Using the first available label PNG as a placeholder for front tag
+    single_front = variant_groups[0]['variants'][0]['png_stream'] if variant_groups and variant_groups[0]['variants'] else None
+
+    pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, single_front)
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=approval_sheet_{order.bgp_order_id if order else 'order'}.pdf"},
+    )
+

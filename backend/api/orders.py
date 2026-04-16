@@ -24,6 +24,7 @@ router = APIRouter(prefix="/orders", tags=["Orders"])
 # ── Helper: build item response ───────────────────────────────────────────────
 def _item_to_response(item: OrderItem) -> dict:
     art = item.artwork
+    order = item.order
     return {
         "id":               str(item.id),
         "order_id":         str(item.order_id),
@@ -41,11 +42,31 @@ def _item_to_response(item: OrderItem) -> dict:
         "care_symbols":     item.care_symbols or {},
         "additional_care":  item.additional_care or [],
         "layout_variant":   item.layout_variant,
+        # OVS Price Tag fields
+        "barcode_number":   item.barcode_number,
+        "selling_price":    item.selling_price,
+        "currency_symbol":  item.currency_symbol,
+        "sku_code":         item.sku_code,
+        "commercial_ref":   item.commercial_ref,
+        "color":            item.color,
+        "style_code":       item.style_code,
+        "department":       item.department,
+        "sub_department":   item.sub_department,
+        "translation_code": item.translation_code,
+        "extra_variables":  item.extra_variables or {},
+        # Status
         "status":           item.status,
         "has_artwork":      art is not None,
         "artwork_id":       str(art.id) if art else None,
         "artwork_status":   art.status if art else None,
         "created_at":       item.created_at,
+        # Order-level fields needed for approval sheet
+        "customer_name":    order.customer_name if order else None,
+        "design_code":      order.design_code if order else None,
+        "bgp_order_id":     order.bgp_order_id if order else None,
+        "order_date":       order.created_date if order else None,
+        "required_date":    order.required_date if order else None,
+        "site":             order.site if order else None,
     }
 
 

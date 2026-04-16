@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import NewOrder from './pages/NewOrder';
 import OrderDetail from './pages/OrderDetail';
 import ApprovalPortal from './pages/ApprovalPortal';
+import ApprovalPreview from './pages/ApprovalPreview';
 
 function Sidebar() {
   const links = [
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="/"            element={<Dashboard />} />
             <Route path="/new-order"   element={<NewOrder />} />
             <Route path="/orders/:id"  element={<OrderDetail />} />
+            <Route path="/orders/:orderId/approval-preview/:artworkId" element={<ApprovalPreview />} />
             <Route path="/approvals"   element={<ApprovalPortal />} />
           </Routes>
         </main>

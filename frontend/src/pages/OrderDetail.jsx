@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOrder, generateOrder, generateItem, artworkPngUrl, artworkPdfUrl } from '../api/client';
-import { Zap, Download, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Zap, Download, ArrowLeft, RefreshCw, Eye } from 'lucide-react';
 
 const itemStatusBadge = (s) => {
   const map = { pending:'badge-pending', generating:'badge-generating', ready:'badge-ready', approved:'badge-approved', rejected:'badge-rejected' };
@@ -18,10 +18,20 @@ export default function OrderDetail() {
   const [error,   setError]   = useState('');
   const [success, setSuccess] = useState('');
 
-  const reload = () => {
+  const reload = (keepSelectedId) => {
     setLoading(true);
     getOrder(id)
-      .then(r => { setOrder(r.data); if (!selectedItem && r.data.items?.length) setSelectedItem(r.data.items[0]); })
+      .then(r => {
+        setOrder(r.data);
+        const items = r.data.items || [];
+        // Always sync selectedItem from fresh data so artwork_id / status are up-to-date
+        if (keepSelectedId) {
+          const fresh = items.find(i => i.id === keepSelectedId) || items[0] || null;
+          setSelectedItem(fresh);
+        } else if (!selectedItem && items.length) {
+          setSelectedItem(items[0]);
+        }
+      })
       .catch(() => setError('Failed to load order.'))
       .finally(() => setLoading(false));
   };
@@ -42,7 +52,7 @@ export default function OrderDetail() {
       } else {
         setSuccess(`✓ All ${generated} artwork(s) generated successfully!`);
       }
-      reload();
+      reload(selectedItem?.id);
     } catch(err) {
       const resp = err.response;
       if (resp?.data?.detail) {
@@ -62,7 +72,7 @@ export default function OrderDetail() {
     try {
       await generateItem(itemId);
       setSuccess('Artwork generated.');
-      reload();
+      reload(itemId);
     } catch(err) {
       const resp = err.response;
       setError(resp?.data?.detail || err.message || 'Generation failed.');
@@ -116,7 +126,7 @@ export default function OrderDetail() {
             {order.items.map((item, i) => (
               <div
                 key={item.id}
-                onClick={() => setSelectedItem(item)}
+                onClick={() => setSelectedItem(item)}  // stale-safe: label data reads from `current` (re-derived from order.items)
                 style={{
                   padding:'14px 20px',
                   cursor:'pointer',
@@ -168,14 +178,22 @@ export default function OrderDetail() {
                   <h2 style={{ fontSize:'15px', fontWeight:600 }}>Artwork Preview</h2>
                   <p className="text-muted text-sm">{current.variant_name} · Status: <span style={{ color: current.artwork_status==='approved'?'var(--success)':current.artwork_status==='rejected'?'var(--danger)':'var(--warning)' }}>{current.artwork_status}</span></p>
                 </div>
-                <a className="btn btn-ghost" href={artworkPdfUrl(current.artwork_id)} target="_blank" rel="noreferrer">
-                  <Download size={15}/> Download PDF
-                </a>
+                <div className="flex gap-2 items-center">
+                  <a className="btn btn-ghost" href={artworkPdfUrl(current.artwork_id)} target="_blank" rel="noreferrer">
+                    <Download size={15}/> Download Label PDF
+                  </a>
+                  <button className="btn btn-primary" onClick={() => navigate(`/orders/${order.id}/approval-preview/${current.artwork_id}`)}>
+                    <Eye size={15}/> Preview Approval Sheet
+                  </button>
+                </div>
               </div>
 
               <div className="artwork-viewer">
+                {/* key forces React to unmount/remount the img whenever the artwork changes,
+                    preventing the browser from serving a cached image for a different variant */}
                 <img
-                  src={artworkPngUrl(current.artwork_id) + `?t=${Date.now()}`}
+                  key={current.artwork_id}
+                  src={artworkPngUrl(current.artwork_id) + `?v=${current.artwork_id}`}
                   alt="Generated artwork"
                   onError={e => e.target.style.display='none'}
                 />

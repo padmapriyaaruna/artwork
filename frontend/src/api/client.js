@@ -35,6 +35,8 @@ export const getArtworkInfo  = (artworkId) => api.get(`/artwork/${artworkId}`);
 export const artworkPngUrl       = (artworkId) => `${BASE}/artwork/${artworkId}/png`;
 export const artworkPdfUrl       = (artworkId) => `${BASE}/artwork/${artworkId}/pdf`;
 export const artworkThumbnailUrl = (artworkId) => `${BASE}/artwork/${artworkId}/thumbnail`;
+export const getApprovalSheetData = (artworkId) => api.get(`/artwork/${artworkId}/approval-sheet`);
+export const approvalSheetPdfUrl  = (artworkId) => `${BASE}/artwork/${artworkId}/approval-pdf`;
 
 // ── Approvals ────────────────────────────────────────────────────────────────
 export const listPending        = ()                       => api.get('/approvals/pending');

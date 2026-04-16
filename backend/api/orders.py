@@ -128,6 +128,7 @@ async def _create_order_in_db(normalized, db: AsyncSession) -> Order:
 @router.post("/upload-zip", response_model=XMLUploadResponse, status_code=201)
 async def upload_zip(
     file: UploadFile = File(...),
+    force_refresh_template: bool = False,
     db: AsyncSession = Depends(get_db),
 ):
     """
@@ -181,8 +182,10 @@ async def upload_zip(
     template_note = ""
     existing_template = await get_template(db, template_id)
 
-    if not existing_template:
-        # ── Step 4a: New template — PDF required ──────────────────────────
+    need_to_build = (not existing_template) or (force_refresh_template and pdf_bytes)
+
+    if need_to_build:
+        # ── Step 4a: Template creation/rebuild — PDF required ─────────────────
         if not pdf_bytes:
             raise HTTPException(
                 status_code=422,
@@ -199,8 +202,7 @@ async def upload_zip(
                 detail="PDF conversion tool (poppler) is not available on this server.",
             )
 
-        # ── Step 4b+c: PDF → SVG + dynamic value-driven field matching ───────
-        # Use the first parsed item's real field values to match elements in the PDF
+        # ── Step 4b+c: PDF → SVG + dynamic value-driven field matching ─────────
         try:
             first_item_data = normalized.items[0].to_dict() if normalized.items else {}
             variablized_svg, field_map = build_variablized_svg(pdf_bytes, first_item_data)
@@ -210,12 +212,13 @@ async def upload_zip(
                 detail=f"Auto template creation failed: {e}"
             )
 
+        action = "rebuilt" if (force_refresh_template and existing_template) else "auto-created"
         print(
-            f"[TemplateRegistry] Auto-created '{template_id}' — "
+            f"[TemplateRegistry] {action.capitalize()} '{template_id}' — "
             f"{len(field_map)} fields mapped dynamically from XML values."
         )
 
-        # ── Step 4d: Register in DB ───────────────────────────────────────
+        # ── Step 4d: Register in DB (creates or overwrites) ──────────────────
         await register_template_from_svg(
             db=db,
             design_code=template_id,
@@ -224,18 +227,18 @@ async def upload_zip(
             field_map=field_map,
             variant_rules=[],
             description=(
-                f"Dynamically generated from PDF upload on first order. "
+                f"Dynamically generated from PDF upload. "
                 f"{len(field_map)} fields auto-detected using XML values."
             ),
         )
         template_note = (
-            f" New template '{template_id}' auto-created: "
+            f" Template '{template_id}' {action}: "
             f"{len(field_map)} fields detected from XML data."
         )
     else:
         template_note = f" Using existing template '{template_id}'."
 
-    # ── Step 5: Save order ────────────────────────────────────────────────
+    # ── Step 5: Save order ─────────────────────────────────────────────────────
     order = await _create_order_in_db(normalized, db)
     await db.commit()
 
@@ -250,6 +253,32 @@ async def upload_zip(
             + template_note
         ),
     )
+
+
+# ── DELETE /orders/template/{design_code} (admin) ─────────────────────────────
+@router.delete("/template/{design_code}", status_code=200)
+async def delete_template(
+    design_code: str,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Admin: delete a stored SVG template so it is rebuilt from scratch
+    on the next ZIP upload that includes a PDF.
+    """
+    from sqlalchemy import delete as sql_delete
+    from backend.models import Template
+    result = await db.execute(
+        sql_delete(Template).where(Template.design_code == design_code)
+    )
+    await db.commit()
+    return {
+        "detail": (
+            f"Template '{design_code}' deleted ({result.rowcount} row(s) removed). "
+            f"Re-upload ZIP + PDF to rebuild with correct symbol preservation."
+        )
+    }
+
+
 
 
 # ── POST /orders/upload-xml ───────────────────────────────────────────────────

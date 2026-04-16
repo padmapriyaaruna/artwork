@@ -28,8 +28,8 @@ export const listOrders  = (skip=0, limit=50) => api.get(`/orders/?skip=${skip}&
 export const getOrder    = (orderId) => api.get(`/orders/${orderId}`);
 
 // ── Artwork ──────────────────────────────────────────────────────────────────
-export const generateItem    = (itemId)    => api.post(`/artwork/generate/${itemId}`);
-export const generateOrder   = (orderId)   => api.post(`/artwork/generate-order/${orderId}`);
+export const generateItem    = (itemId)    => api.post(`/artwork/generate/${itemId}`, null, { timeout: 120000 });
+export const generateOrder   = (orderId)   => api.post(`/artwork/generate-order/${orderId}`, null, { timeout: 15000 });
 export const getArtworkInfo  = (artworkId) => api.get(`/artwork/${artworkId}`);
 
 export const artworkPngUrl       = (artworkId) => `${BASE}/artwork/${artworkId}/png`;

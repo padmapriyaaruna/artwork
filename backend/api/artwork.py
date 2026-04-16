@@ -2,13 +2,13 @@
 Artwork API — generate artwork and serve PNG/PDF binary responses.
 """
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi.responses import Response
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from backend.database import get_db
+from backend.database import get_db, AsyncSessionLocal
 from backend.models import Order, OrderItem, Artwork
 from backend.schemas import ArtworkResponse
 from backend.services.artwork_service import (
@@ -61,59 +61,81 @@ async def generate_artwork(
     }
 
 
+# ── Background worker ──────────────────────────────────────────────────────────
+
+async def _generate_order_background(order_id: str) -> None:
+    """
+    Background task: generates artwork for every item in the order.
+    Uses its own DB session so it runs independently of the HTTP request.
+    Items are marked 'generating' while in progress, then 'ready' when done.
+    The order status flips to 'completed' (or 'in_progress' on partial failure).
+    """
+    async with AsyncSessionLocal() as db:
+        result = await db.execute(
+            select(Order)
+            .options(selectinload(Order.items).selectinload(OrderItem.artwork))
+            .where(Order.id == order_id)
+        )
+        order = result.scalar_one_or_none()
+        if not order:
+            return
+
+        errors = []
+
+        for item in order.items:
+            # Re-load item with order relationship
+            item_result = await db.execute(
+                select(OrderItem)
+                .options(selectinload(OrderItem.order), selectinload(OrderItem.artwork))
+                .where(OrderItem.id == item.id)
+            )
+            full_item = item_result.scalar_one()
+            try:
+                full_item.status = "generating"
+                await db.commit()
+                await generate_artwork_for_item(db, full_item)
+            except Exception as e:
+                full_item.status = "pending"
+                await db.commit()
+                errors.append(str(e))
+                print(f"[ArtworkBG] Item {full_item.id} failed: {e}")
+
+        order.status = "completed" if not errors else "in_progress"
+        await db.commit()
+        print(f"[ArtworkBG] Order {order_id} done — {len(errors)} error(s).")
+
+
 # ── POST /artwork/generate-order/{order_id} ───────────────────────────────────
-@router.post("/generate-order/{order_id}", status_code=201)
+@router.post("/generate-order/{order_id}", status_code=202)
 async def generate_artwork_for_order(
     order_id: str,
+    background_tasks: BackgroundTasks,
     db: AsyncSession = Depends(get_db),
 ):
-    """Generate artwork for ALL items in an order at once."""
+    """
+    Trigger artwork generation for ALL items in an order.
+
+    Returns 202 Accepted immediately — processing happens in the background.
+    Poll GET /orders/{order_id} to track readiness; items will transition
+    from 'pending' → 'generating' → 'ready' as each one completes.
+    """
     result = await db.execute(
-        select(Order)
-        .options(selectinload(Order.items).selectinload(OrderItem.artwork))
-        .where(Order.id == order_id)
+        select(Order).where(Order.id == order_id)
     )
     order = result.scalar_one_or_none()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found.")
 
-    results = []
-    errors  = []
-
-    for item in order.items:
-        # Re-load item with order relationship for service
-        item_result = await db.execute(
-            select(OrderItem)
-            .options(selectinload(OrderItem.order), selectinload(OrderItem.artwork))
-            .where(OrderItem.id == item.id)
-        )
-        full_item = item_result.scalar_one()
-        try:
-            full_item.status = "generating"
-            await db.commit()
-            artwork = await generate_artwork_for_item(db, full_item)
-            results.append({
-                "item_id":    str(full_item.id),
-                "artwork_id": str(artwork.id),
-                "status":     "generated",
-                "png_url":    f"/artwork/{artwork.id}/png",
-                "pdf_url":    f"/artwork/{artwork.id}/pdf",
-                "thumbnail_url": f"/artwork/{artwork.id}/thumbnail",
-            })
-        except Exception as e:
-            full_item.status = "pending"
-            await db.commit()
-            errors.append({"item_id": str(full_item.id), "error": str(e)})
-
-    order.status = "completed" if not errors else "in_progress"
+    # Mark order as in_progress immediately so the UI knows work started
+    order.status = "in_progress"
     await db.commit()
 
+    background_tasks.add_task(_generate_order_background, order_id)
+
     return {
-        "order_id":    order_id,
-        "generated":   len(results),
-        "failed":      len(errors),
-        "results":     results,
-        "errors":      errors,
+        "order_id":  order_id,
+        "status":    "processing",
+        "message":   "Artwork generation started. Poll GET /orders/{order_id} for progress.",
     }
 
 

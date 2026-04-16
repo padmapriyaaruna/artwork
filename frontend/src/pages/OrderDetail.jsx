@@ -38,33 +38,69 @@ export default function OrderDetail() {
 
   useEffect(() => { reload(); }, [id]);
 
-  const handleGenerateAll = async () => {
-    setGenLoading(true); setError(''); setSuccess('');
-    try {
-      const res = await generateOrder(id);
-      const { generated, failed, errors } = res.data;
-      if (failed > 0 && generated === 0) {
-        // All failed — show first error detail
-        const firstErr = errors?.[0]?.error || 'Unknown error';
-        setError(`All ${failed} item(s) failed. First error: ${firstErr}`);
-      } else if (failed > 0) {
-        setSuccess(`Generated ${generated} artwork(s). ${failed} failed.`);
-      } else {
-        setSuccess(`✓ All ${generated} artwork(s) generated successfully!`);
+  // ── Poll every 5s while backend is generating ──────────────────────────────
+  const [polling, setPolling] = useState(false);
+
+  const startPolling = (keepId) => {
+    setPolling(true);
+    const MAX_POLLS = 60;   // 5 min cap
+    let count = 0;
+    const timer = setInterval(async () => {
+      count++;
+      try {
+        const r = await import('../api/client').then(m => m.getOrder(id));
+        const fresh = r.data;
+        setOrder(fresh);
+        // Sync selected item
+        const freshItem = fresh.items?.find(i => i.id === keepId) || fresh.items?.[0];
+        if (freshItem) setSelectedItem(freshItem);
+
+        const items = fresh.items || [];
+        const doneCount   = items.filter(i => i.has_artwork).length;
+        const totalCount  = items.length;
+        const stillActive = items.some(i => i.status === 'generating');
+        const orderDone   = fresh.status === 'completed' || fresh.status === 'in_progress';
+
+        if ((!stillActive && orderDone) || doneCount === totalCount || count >= MAX_POLLS) {
+          clearInterval(timer);
+          setPolling(false);
+          setGenLoading(false);
+          const failedCount = items.filter(i => !i.has_artwork).length;
+          if (failedCount > 0) {
+            setSuccess(`Generated ${doneCount} artwork(s). ${failedCount} item(s) pending — check logs.`);
+          } else {
+            setSuccess(`✓ All ${doneCount} artwork(s) generated successfully!`);
+          }
+        }
+      } catch {
+        // Network blip — keep polling
       }
-      reload(selectedItem?.id);
+    }, 5000);
+  };
+
+  const handleGenerateAll = async () => {
+    setGenLoading(true); setError(''); setSuccess(''); setPolling(false);
+    try {
+      await generateOrder(id);
+      // 202 response — backend is processing in background
+      setSuccess('⚙ Generating artwork in background… This page will update automatically.');
+      startPolling(selectedItem?.id);
     } catch(err) {
+      setGenLoading(false);
       const resp = err.response;
       if (resp?.data?.detail) {
         setError(resp.data.detail);
       } else if (resp?.data) {
         setError(JSON.stringify(resp.data).slice(0, 300));
       } else if (err.request) {
-        setError('No response from server. Backend may be processing — refresh in 30 seconds.');
+        // Network timeout — backend IS working, just start polling anyway
+        setSuccess('⚙ Request timed out but backend is still processing. Checking progress…');
+        startPolling(selectedItem?.id);
+        setGenLoading(true); // keep spinner until poll confirms done
       } else {
         setError(err.message || 'Generation failed.');
       }
-    } finally { setGenLoading(false); }
+    }
   };
 
   const handleGenerateItem = async (itemId) => {
@@ -103,14 +139,23 @@ export default function OrderDetail() {
             <h1 className="text-mono" style={{ color:'#a78bfa' }}>{order.bgp_order_id}</h1>
             <p>{order.customer_name} · {order.design_code} · {order.item_count} variant(s)</p>
           </div>
-          <button className="btn btn-primary" onClick={handleGenerateAll} disabled={genLoading}>
-            {genLoading ? <><span className="spinner"/> Generating…</> : <><Zap size={15}/> Generate All Artwork</>}
-          </button>
+          <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
+            {polling && (
+              <span style={{ fontSize:'13px', color:'var(--text-secondary)' }}>
+                {order.items.filter(i => i.has_artwork).length}/{order.item_count} done
+              </span>
+            )}
+            <button className="btn btn-primary" onClick={handleGenerateAll} disabled={genLoading}>
+              {genLoading
+                ? <><span className="spinner"/> {polling ? 'Processing…' : 'Generating…'}</>
+                : <><Zap size={15}/> Generate All Artwork</>}
+            </button>
+          </div>
         </div>
       </div>
 
       {error   && <div className="alert alert-error">⚠ {error}</div>}
-      {success && <div className="alert alert-success">✓ {success}</div>}
+      {success && <div className="alert alert-success">{success}</div>}
 
       {/* Two-column layout */}
       <div style={{ display:'grid', gridTemplateColumns:'320px 1fr', gap:'24px', alignItems:'start' }}>

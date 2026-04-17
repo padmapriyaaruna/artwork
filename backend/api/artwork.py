@@ -345,6 +345,7 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
         country_key = sib.country_of_origin or "UNKNOWN"
         by_country[country_key].append(sib)
 
+
     variant_groups = []
     for country_key, sibs in by_country.items():
         supplier = sibs[0].supplier_style or ""
@@ -354,12 +355,22 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
         variants = []
         for sib in sibs:
             variants.append({
-                "artwork_id":      str(sib.artwork.id) if sib.artwork else None,
-                "quantity":        sib.quantity,
-                "sizes":           sib.sizes or {},
-                "barcode_number":  sib.barcode_number,
-                "selling_price":   sib.selling_price,
-                "currency_symbol": sib.currency_symbol,
+                # Approval sheet fields (legacy)
+                "artwork_id":       str(sib.artwork.id) if sib.artwork else None,
+                # All OVS data fields needed by _draw_back_panel
+                "quantity":         sib.quantity,
+                "sizes":            sib.sizes or {},
+                "barcode_number":   sib.barcode_number or "",
+                "selling_price":    sib.selling_price or "",
+                "currency_symbol":  sib.currency_symbol or "",
+                "sku_code":         sib.sku_code or "",
+                "commercial_ref":   sib.commercial_ref or "",
+                "style_code":       sib.style_code or "",
+                "sub_department":   sib.sub_department or "",
+                "department":       sib.department or "",
+                "country_of_origin": sib.country_of_origin or "",
+                "supplier_style":   sib.supplier_style or "",
+                "color":            sib.color or "",
             })
 
         variant_groups.append({
@@ -368,6 +379,7 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
             "label_size": "45mm x 100mm",
             "variants":   variants,
         })
+
 
     order_data = {
         "buyer":          "OVS",

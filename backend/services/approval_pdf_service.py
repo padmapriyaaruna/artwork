@@ -1,280 +1,213 @@
 """
-Approval PDF Service — generates a TOK100-style landscape A3 approval sheet.
+Approval PDF Service — generates OVS KIDS approval sheet matching TOK100_B0854559_1.pdf.
 
 Layout per page (one page per country_of_origin group):
-  ┌──────────────────────────────────────────────────────────────────┐
-  │  Sainmarks®  │ BUYER / CUSTOMER / DESIGN CODE / PRODUCT / DATE  │ ARTWORK FOR APPROVAL │
-  ├──────────────────────────────────────────────────────────────────┤
-  │         {supplier_style} - {country} - {color} - {order_id}     │  (red bold)
-  │                       45mm x 100mm                               │
-  │  Front  │  Back                                                  │
-  │  [navy] │  [tag1] [tag2] [tag3] [tag4] [tag5] [tag6]           │
-  │  OVS    │  Qty-21 Qty-21 ...                                     │
-  └──────────────────────────────────────────────────────────────────┘
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  Sainmarks®  │ BUYER/CUSTOMER/DESIGN/PRODUCT/DATE │ ARTWORK FOR │
+  │              │                                     │  APPROVAL   │
+  ├─────────────────────────────────────────────────────────────────┤
+  │  {supplier_style} - {country} - {color} - {order_id}  RED BOLD │
+  │                    45mm x 100mm                                  │
+  │  Front         Back                                              │
+  │  [navy front]  [back1] [back2] [back3] [back4] [back5] [back6]  │
+  │                 Qty-128 Qty-128  ...                             │
+  └─────────────────────────────────────────────────────────────────┘
 
-Uses PyMuPDF (fitz). No font files needed — uses built-in PDF base fonts.
+Uses PyMuPDF. For OVS templates, draws directly — no PNG embedding.
 """
 import io
+import re
 from typing import Optional
+from collections import defaultdict
+
 import fitz  # PyMuPDF
 
-
-# ── Page geometry (A3 landscape in points: 1pt = 1/72 inch) ───────────────────
-PAGE_W = 1191.0   # A3 landscape width  (~420mm)
-PAGE_H = 842.0    # A3 landscape height (~297mm)
-
-# Margins
-MARGIN_X = 40.0
-MARGIN_Y = 30.0
-
-# Header box dimensions
-HDR_TOP    = MARGIN_Y
-HDR_H      = 120.0
-HDR_BOTTOM = HDR_TOP + HDR_H
-
-# Logo cell width, info cell width, approval cell width
-LOGO_W     = 200.0
-INFO_W     = 400.0
-APPROVAL_W = 160.0
-
-HDR_LEFT   = MARGIN_X
-HDR_RIGHT  = HDR_LEFT + LOGO_W + INFO_W + APPROVAL_W
-
-# Title zone
-TITLE_TOP  = HDR_BOTTOM + 20.0
-
-# Label area
-LABEL_TOP  = TITLE_TOP + 70.0
-LABEL_BOT  = PAGE_H - MARGIN_Y - 60.0  # leave room for qty text
-
-# Front column width
-FRONT_W    = 130.0
-
-# Back tags start x
-BACK_START = HDR_LEFT + FRONT_W + 20.0
+from backend.engine.tok100_label_builder import (
+    _draw_front_panel,
+    _draw_back_panel,
+    _fix_currency,
+    _split_price,
+    FB, FR, DARK, GREY, LGREY, NAVY, WHITE
+)
 
 
-# ── Font helpers (built-in PDF base14, no file needed) ────────────────────────
-# PyMuPDF 1.24+ requires the short Base-14 aliases, NOT full names.
-# "helv" = Helvetica,  "hebo" = Helvetica-Bold
-F_REGULAR = "helv"
-F_BOLD    = "hebo"
+# ── Page geometry (matching reference TOK100_B0854559_1.pdf aspect ratio) ─────
+# We use A3 landscape (1191 × 842 pt) for compatibility
+PAGE_W = 1191.0
+PAGE_H = 842.0
 
+MAR_X  = 28.0
+MAR_Y  = 18.0
+
+# Header box
+HDR_H  = 105.0
+HDR_T  = MAR_Y
+HDR_B  = HDR_T + HDR_H
+
+# Three header columns
+LOGO_W     = 170.0
+INFO_W     = 380.0
+APPROVAL_W = 140.0
+HDR_L  = MAR_X
+HDR_R  = HDR_L + LOGO_W + INFO_W + APPROVAL_W
+
+# Title / dimension zone
+TITLE_T = HDR_B + 14.0
+
+# Label layout
+LABEL_T = TITLE_T + 60.0
+LABEL_B = PAGE_H - MAR_Y - 30.0   # leave 30pt for Qty text
+
+FRONT_W  = 90.0        # front panel width (narrower)
+BACK_GAP = 8.0         # gap between panels
+
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _draw_header(page: fitz.Page, order_data: dict) -> None:
-    """Draw the Sainmarks header box with three columns."""
     # Outer border
-    border = fitz.Rect(HDR_LEFT, HDR_TOP, HDR_RIGHT, HDR_BOTTOM)
+    border = fitz.Rect(HDR_L, HDR_T, HDR_R, HDR_B)
     page.draw_rect(border, color=(0.6, 0.6, 0.6), width=0.7)
 
-    # Vertical dividers
-    x1 = HDR_LEFT + LOGO_W
+    x1 = HDR_L + LOGO_W
     x2 = x1 + INFO_W
-    page.draw_line(fitz.Point(x1, HDR_TOP), fitz.Point(x1, HDR_BOTTOM),
-                   color=(0.6, 0.6, 0.6), width=0.7)
-    page.draw_line(fitz.Point(x2, HDR_TOP), fitz.Point(x2, HDR_BOTTOM),
-                   color=(0.6, 0.6, 0.6), width=0.7)
 
-    # ── Cell 1: Sainmarks logo (text approximation) ──────────────────────────
-    logo_cx = HDR_LEFT + LOGO_W / 2
-    page.insert_text(fitz.Point(logo_cx - 30, HDR_TOP + 55),
-                     "Sainmarks\u00ae",
-                     fontname=F_BOLD, fontsize=18,
+    # Column dividers
+    for xd in [x1, x2]:
+        page.draw_line(fitz.Point(xd, HDR_T), fitz.Point(xd, HDR_B),
+                       color=(0.6, 0.6, 0.6), width=0.7)
+
+    # Cell 1: Sainmarks® logo (text)
+    lo_cx = HDR_L + LOGO_W / 2
+    fs_logo = 15.0
+    tw = fitz.get_text_length("Sainmarks\u00ae", fontname=FB, fontsize=fs_logo)
+    page.insert_text(fitz.Point(lo_cx - tw / 2, HDR_T + HDR_H / 2 + fs_logo / 2),
+                     "Sainmarks\u00ae", fontname=FB, fontsize=fs_logo,
                      color=(0.15, 0.55, 0.25))
 
-    # ── Cell 2: Info rows ────────────────────────────────────────────────────
+    # Cell 2: info rows
     rows = [
-        ("BUYER",          order_data.get("buyer", "")),
+        ("BUYER",          order_data.get("buyer", "OVS")),
         ("CUSTOMER",       order_data.get("customer_name", "")),
         ("DESIGN CODE",    order_data.get("design_code", "")),
         ("PRODUCT CODE",   order_data.get("product_code", "")),
         ("SUBMITTED DATE", order_data.get("submitted_date", "")),
     ]
     row_h = HDR_H / len(rows)
-    for i, (label, value) in enumerate(rows):
-        y = HDR_TOP + i * row_h + row_h * 0.65
-        # Horizontal divider (except first)
+    for i, (label, val) in enumerate(rows):
+        y = HDR_T + i * row_h + row_h * 0.65
         if i > 0:
-            page.draw_line(fitz.Point(x1, HDR_TOP + i * row_h),
-                           fitz.Point(x2, HDR_TOP + i * row_h),
+            page.draw_line(fitz.Point(x1, HDR_T + i * row_h),
+                           fitz.Point(x2, HDR_T + i * row_h),
                            color=(0.7, 0.7, 0.7), width=0.4)
-        page.insert_text(fitz.Point(x1 + 6, y),
-                         f"{label} : {value}",
-                         fontname=F_REGULAR, fontsize=9,
-                         color=(0.2, 0.2, 0.2))
+        page.insert_text(fitz.Point(x1 + 5, y),
+                         f"{label} : {val}",
+                         fontname=FR, fontsize=8.0, color=(0.2, 0.2, 0.2))
 
-    # ── Cell 3: ARTWORK FOR APPROVAL ─────────────────────────────────────────
-    text_lines = ["ARTWORK", "FOR", "APPROVAL"]
-    for i, line in enumerate(text_lines):
-        y = HDR_TOP + 30 + i * 20
-        tw = fitz.get_text_length(line, fontname=F_BOLD, fontsize=11)
-        cx = x2 + APPROVAL_W / 2 - tw / 2
-        page.insert_text(fitz.Point(cx, y),
-                         line,
-                         fontname=F_BOLD, fontsize=11,
-                         color=(0.15, 0.15, 0.15))
+    # Cell 3: ARTWORK FOR APPROVAL
+    for i, line in enumerate(["ARTWORK", "FOR", "APPROVAL"]):
+        y = HDR_T + 24 + i * 18
+        tw = fitz.get_text_length(line, fontname=FB, fontsize=10.0)
+        page.insert_text(fitz.Point(x2 + APPROVAL_W / 2 - tw / 2, y),
+                         line, fontname=FB, fontsize=10.0, color=(0.1, 0.1, 0.1))
 
 
-def _draw_titles(page: fitz.Page, red_title: str, label_size: str) -> None:
-    """Draw the red product title and dimension subtitle."""
-    # Red bold title — centered
-    tw = fitz.get_text_length(red_title, fontname=F_BOLD, fontsize=14)
-    cx = PAGE_W / 2 - tw / 2
-    page.insert_text(fitz.Point(cx, TITLE_TOP + 20),
-                     red_title,
-                     fontname=F_BOLD, fontsize=14,
+def _draw_page_labels(page: fitz.Page,
+                      country: str, title: str, label_size: str,
+                      front_x: float) -> None:
+    # Red bold title
+    fs_title = 12.0
+    tw = fitz.get_text_length(title, fontname=FB, fontsize=fs_title)
+    cx = (HDR_L + HDR_R) / 2
+    page.insert_text(fitz.Point(cx - tw / 2, TITLE_T + 14),
+                     title, fontname=FB, fontsize=fs_title,
                      color=(0.82, 0.08, 0.08))
 
-    # Label size subtitle
-    tw2 = fitz.get_text_length(label_size, fontname=F_BOLD, fontsize=11)
-    cx2 = PAGE_W / 2 - tw2 / 2
-    page.insert_text(fitz.Point(cx2, TITLE_TOP + 40),
-                     label_size,
-                     fontname=F_BOLD, fontsize=11,
+    # Dimension subtitle
+    fs_dim = 10.0
+    tw2 = fitz.get_text_length(label_size, fontname=FB, fontsize=fs_dim)
+    page.insert_text(fitz.Point(cx - tw2 / 2, TITLE_T + 33),
+                     label_size, fontname=FB, fontsize=fs_dim,
                      color=(0.1, 0.1, 0.1))
 
-
-def _draw_front_back_labels(page: fitz.Page) -> None:
-    """Draw 'Front' and 'Back' section labels."""
-    page.insert_text(fitz.Point(HDR_LEFT, LABEL_TOP - 10),
-                     "Front",
-                     fontname=F_BOLD, fontsize=12,
-                     color=(0.1, 0.1, 0.1))
-    page.insert_text(fitz.Point(BACK_START, LABEL_TOP - 10),
-                     "Back",
-                     fontname=F_BOLD, fontsize=12,
-                     color=(0.1, 0.1, 0.1))
+    # "Front" / "Back" labels
+    page.insert_text(fitz.Point(front_x, LABEL_T - 8),
+                     "Front", fontname=FB, fontsize=11.0, color=DARK)
+    back_x = front_x + FRONT_W + BACK_GAP
+    page.insert_text(fitz.Point(back_x, LABEL_T - 8),
+                     "Back", fontname=FB, fontsize=11.0, color=DARK)
 
 
-def _draw_front_tag(page: fitz.Page) -> None:
-    """
-    Draw the OVS kids navy blue front hang tag.
-    Purely CSS/vector — no image file needed.
-    """
-    tag_w = FRONT_W - 10
-    tag_h = LABEL_BOT - LABEL_TOP
-    r = fitz.Rect(HDR_LEFT, LABEL_TOP, HDR_LEFT + tag_w, LABEL_BOT)
-
-    # Navy background
-    page.draw_rect(r, color=(0.06, 0.09, 0.16), fill=(0.06, 0.09, 0.16), width=0)
-
-    cx = HDR_LEFT + tag_w / 2
-    # White punch hole dot
-    page.draw_circle(fitz.Point(cx, LABEL_TOP + 18), 5,
-                     color=(1, 1, 1), fill=(1, 1, 1))
-
-    # OVS text in gold/yellow
-    ovs_y = LABEL_TOP + tag_h * 0.42
-    tw = fitz.get_text_length("OVS", fontname=F_BOLD, fontsize=32)
-    page.insert_text(fitz.Point(cx - tw / 2, ovs_y),
-                     "OVS",
-                     fontname=F_BOLD, fontsize=32,
-                     color=(0.92, 0.71, 0.18))
-
-    # kids text in gold below
-    tw2 = fitz.get_text_length("kids", fontname=F_BOLD, fontsize=18)
-    page.insert_text(fitz.Point(cx - tw2 / 2, ovs_y + 28),
-                     "kids",
-                     fontname=F_BOLD, fontsize=18,
-                     color=(0.92, 0.71, 0.18))
-
-    # Thin magenta/pink horizontal line near bottom
-    line_y = LABEL_BOT - 25
-    page.draw_line(fitz.Point(HDR_LEFT, line_y),
-                   fitz.Point(HDR_LEFT + tag_w, line_y),
-                   color=(0.88, 0.13, 0.39), width=1)
-
-
-def _draw_back_tags(page: fitz.Page, variants: list[dict], png_streams: dict) -> None:
-    """
-    Draw each back label tag image + Qty text.
-    variants: list of {artwork_id, quantity, sizes, barcode_number, selling_price, currency_symbol}
-    png_streams: {artwork_id: bytes}
-    """
-    max_tags = 6
-    visible = variants[:max_tags]
-    if not visible:
-        return
-
-    total_back_w = PAGE_W - BACK_START - MARGIN_X
-    tag_w = min(115.0, total_back_w / max(len(visible), 1) - 8)
-    tag_h = LABEL_BOT - LABEL_TOP
-    gap   = (total_back_w - tag_w * len(visible)) / max(len(visible) - 1, 1) if len(visible) > 1 else 0
-    gap   = max(gap, 8)
-
-    for i, v in enumerate(visible):
-        x = BACK_START + i * (tag_w + gap)
-        tag_rect = fitz.Rect(x, LABEL_TOP, x + tag_w, LABEL_BOT)
-
-        art_id = v.get("artwork_id")
-        png_bytes = png_streams.get(art_id) if art_id else None
-
-        if png_bytes:
-            # Drop shadow / border
-            page.draw_rect(tag_rect, color=(0.85, 0.06, 0.4), width=0.8)
-            page.insert_image(tag_rect, stream=png_bytes, keep_proportion=True)
-        else:
-            # Placeholder box
-            page.draw_rect(tag_rect, color=(0.8, 0.8, 0.8), width=0.5)
-            page.insert_text(fitz.Point(x + 10, LABEL_TOP + tag_h / 2),
-                             "No Artwork",
-                             fontname=F_REGULAR, fontsize=7,
-                             color=(0.5, 0.5, 0.5))
-
-        # Qty label below
-        qty = v.get("quantity", 0)
-        qty_txt = f"Qty - {qty}"
-        tw = fitz.get_text_length(qty_txt, fontname=F_BOLD, fontsize=10)
-        page.insert_text(fitz.Point(x + tag_w / 2 - tw / 2, LABEL_BOT + 22),
-                         qty_txt,
-                         fontname=F_BOLD, fontsize=10,
-                         color=(0.1, 0.1, 0.1))
-
-
-def _draw_page_number(page: fitz.Page, num: int) -> None:
+def _page_number(page: fitz.Page, num: int) -> None:
     txt = str(num)
-    tw = fitz.get_text_length(txt, fontname=F_REGULAR, fontsize=9)
-    page.insert_text(fitz.Point(PAGE_W / 2 - tw / 2, PAGE_H - 12),
-                     txt, fontname=F_REGULAR, fontsize=9,
-                     color=(0.5, 0.5, 0.5))
+    tw = fitz.get_text_length(txt, fontname=FR, fontsize=8.0)
+    page.insert_text(fitz.Point(PAGE_W / 2 - tw / 2, PAGE_H - 6),
+                     txt, fontname=FR, fontsize=8.0, color=(0.5, 0.5, 0.5))
 
 
-# ── Public entry point ────────────────────────────────────────────────────────
+# ── Public API ────────────────────────────────────────────────────────────────
 
 def create_approval_sheet_pdf(
     order_data: dict,
     variant_groups: list[dict],
-    png_streams: dict,
+    png_streams: Optional[dict] = None,          # kept for backward compat, unused
 ) -> bytes:
     """
-    Build the full TOK100-style approval PDF.
+    Build the full approval PDF.
 
-    Args:
-        order_data: {buyer, customer_name, design_code, product_code, submitted_date, bgp_order_id}
-        variant_groups: list of {
-            'country': str,
-            'title': str,            # red bold line e.g. "262SWT301LT-230 - WARM - EGGNOG - B0854559"
-            'label_size': str,       # e.g. "45mm x 100mm"
-            'variants': [
-                {artwork_id, quantity, sizes, barcode_number, selling_price, currency_symbol}
-            ]
-        }
-        png_streams: {artwork_id: bytes}  — artwork PNG binary keyed by artwork UUID
-
-    Returns:
-        PDF bytes
+    variant_groups: list of {
+        'country'    : str,
+        'title'      : str,   e.g. "262SWT301LT-230 - WARM - EGGNOG - B0854559"
+        'label_size' : str,   e.g. "45mm x 100mm"
+        'variants'   : list[{all item fields required by _draw_back_panel}]
+    }
     """
     doc = fitz.open()
 
     for page_num, group in enumerate(variant_groups, start=1):
         page = doc.new_page(width=PAGE_W, height=PAGE_H)
 
+        # White background
+        page.draw_rect(fitz.Rect(0, 0, PAGE_W, PAGE_H),
+                       color=WHITE, fill=WHITE, width=0)
+
+        # Header
         _draw_header(page, order_data)
-        _draw_titles(page, group.get("title", ""), group.get("label_size", "45mm x 100mm"))
-        _draw_front_back_labels(page)
-        _draw_front_tag(page)
-        _draw_back_tags(page, group.get("variants", []), png_streams)
-        _draw_page_number(page, page_num)
+
+        variants = group.get("variants", [])
+        n_back   = min(len(variants), 6)
+        if n_back == 0:
+            _page_number(page, page_num)
+            continue
+
+        label_h  = LABEL_B - LABEL_T
+        back_w   = max(1, ((HDR_R - HDR_L) - FRONT_W - BACK_GAP
+                           - (BACK_GAP * (n_back - 1))) / n_back)
+        back_w   = min(back_w, 135.0)
+
+        # Recalculate layout: front + all backs centred
+        total_w  = FRONT_W + BACK_GAP + n_back * back_w + (n_back - 1) * BACK_GAP
+        start_x  = (PAGE_W - total_w) / 2
+
+        front_x  = start_x
+
+        # Page titles
+        _draw_page_labels(page,
+                          group.get("country", ""),
+                          group.get("title", ""),
+                          group.get("label_size", "45mm x 100mm"),
+                          front_x)
+
+        # Front panel (navy OVS)
+        _draw_front_panel(page, front_x, LABEL_T, FRONT_W, label_h)
+
+        # Back panels — one per size variant
+        back_start = front_x + FRONT_W + BACK_GAP
+        for i, v in enumerate(variants[:6]):
+            bx = back_start + i * (back_w + BACK_GAP)
+            _draw_back_panel(page, bx, LABEL_T, back_w, label_h, v)
+
+        _page_number(page, page_num)
 
     if not doc.page_count:
         doc.new_page(width=PAGE_W, height=PAGE_H)

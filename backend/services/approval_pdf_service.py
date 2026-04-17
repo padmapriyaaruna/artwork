@@ -55,8 +55,10 @@ BACK_START = HDR_LEFT + FRONT_W + 20.0
 
 
 # ── Font helpers (built-in PDF base14, no file needed) ────────────────────────
-F_REGULAR = "helvetica"
-F_BOLD    = "helvetica-bold"
+# PyMuPDF 1.24+ requires the short Base-14 aliases, NOT full names.
+# "helv" = Helvetica,  "hebo" = Helvetica-Bold
+F_REGULAR = "helv"
+F_BOLD    = "hebo"
 
 
 def _draw_header(page: fitz.Page, order_data: dict) -> None:

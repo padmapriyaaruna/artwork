@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv
+venv/
+env/
+
+# Analysis artifacts (local only — too large for git)
+template_analysis/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/build/
+
+# OS
+.DS_Store
+Thumbs.db

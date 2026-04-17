@@ -225,33 +225,39 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
     Groups sibling items by country_of_origin, matching the TOK100 layout
     (one page / group per market: WARM, COLD, MIDDLE EAST, etc.).
     """
+    # Step 1: load the Artwork + its OrderItem
     result = await db.execute(
         select(Artwork)
-        .options(
-            selectinload(Artwork.item)
-            .selectinload(OrderItem.order)
-        )
+        .options(selectinload(Artwork.item))
         .where(Artwork.id == artwork_id)
     )
     art = result.scalar_one_or_none()
     if not art:
         raise HTTPException(status_code=404, detail="Artwork not found.")
 
-    item  = art.item
-    order = item.order
+    item = art.item
+    if not item:
+        raise HTTPException(status_code=404, detail="OrderItem for this artwork not found.")
 
-    # ── Load ALL items in this order (with their artwork) ──────────────────
+    # Step 2: load Order explicitly — avoids SQLAlchemy async lazy-load issues
+    from backend.models import Order
+    order_result = await db.execute(
+        select(Order).where(Order.id == item.order_id)
+    )
+    order = order_result.scalar_one_or_none()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found.")
+
+    # Step 3: load ALL items in this order (with their artwork)
     all_items_result = await db.execute(
         select(OrderItem)
-        .options(
-            selectinload(OrderItem.artwork),
-        )
+        .options(selectinload(OrderItem.artwork))
         .where(OrderItem.order_id == item.order_id)
         .order_by(OrderItem.created_at)
     )
     all_items = all_items_result.scalars().all()
 
-    # ── Group by (supplier_style, country_of_origin) ── same as TOK100 pages
+    # ── Group by country_of_origin ── same as TOK100 pages
     from collections import defaultdict
     groups: dict = defaultdict(list)
     for sib in all_items:
@@ -265,12 +271,9 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
     country_groups = []
     for k in ordered_keys:
         group_items = groups[k]
-        # Red title format: "supplier_style - country_of_origin - color - bgp_order_id"
-        first = group_items[0] if group_items else {}
         supplier  = item.supplier_style or ""
         color     = item.color or ""
-        order_id  = order.bgp_order_id if order else ""
-        red_title = f"{supplier} - {k} - {color} - {order_id}"
+        red_title = f"{supplier} - {k} - {color} - {order.bgp_order_id}"
         country_groups.append({
             "country":    k,
             "title":      red_title,
@@ -283,14 +286,14 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
 
     return {
         "buyer":          "OVS",
-        "customer_name":  order.customer_name  if order else "",
-        "design_code":    order.design_code    if order else "",
+        "customer_name":  order.customer_name,
+        "design_code":    order.design_code,
         "product_code":   product_code,
-        "submitted_date": order.created_date   if order else "",
-        "bgp_order_id":   order.bgp_order_id   if order else "",
+        "submitted_date": order.created_date or "",
+        "bgp_order_id":   order.bgp_order_id,
         "label_size":     "45mm x 100mm",
-        "country_groups": country_groups,          # NEW: list of groups for multi-page preview
-        "all_variants":   [_approval_variant(sib) for sib in all_items],  # flat list for simple views
+        "country_groups": country_groups,
+        "all_variants":   [_approval_variant(sib) for sib in all_items],
     }
 
 
@@ -302,18 +305,23 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
     """Generate and download the full TOK100-style multi-page approval PDF."""
     result = await db.execute(
         select(Artwork)
-        .options(
-            selectinload(Artwork.item)
-            .selectinload(OrderItem.order)
-        )
+        .options(selectinload(Artwork.item))
         .where(Artwork.id == artwork_id)
     )
     art = result.scalar_one_or_none()
     if not art:
         raise HTTPException(status_code=404, detail="Artwork not found.")
 
-    item  = art.item
-    order = item.order
+    item = art.item
+    if not item:
+        raise HTTPException(status_code=404, detail="OrderItem for this artwork not found.")
+
+    # Load Order explicitly — avoids SQLAlchemy async lazy-load issues
+    from backend.models import Order
+    order_result = await db.execute(select(Order).where(Order.id == item.order_id))
+    order = order_result.scalar_one_or_none()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found.")
 
     # Load all items in this order with their artwork PNG data
     order_items_result = await db.execute(
@@ -341,8 +349,7 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
     for country_key, sibs in by_country.items():
         supplier = sibs[0].supplier_style or ""
         color    = sibs[0].color or ""
-        order_id = order.bgp_order_id if order else ""
-        red_title = f"{supplier} - {country_key} - {color} - {order_id}"
+        red_title = f"{supplier} - {country_key} - {color} - {order.bgp_order_id}"
 
         variants = []
         for sib in sibs:
@@ -364,16 +371,16 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
 
     order_data = {
         "buyer":          "OVS",
-        "customer_name":  order.customer_name  if order else "",
-        "design_code":    order.design_code    if order else "",
+        "customer_name":  order.customer_name,
+        "design_code":    order.design_code,
         "product_code":   item.commercial_ref or item.sku_code or item.product_number or "",
-        "submitted_date": order.created_date   if order else "",
-        "bgp_order_id":   order.bgp_order_id   if order else "",
+        "submitted_date": order.created_date or "",
+        "bgp_order_id":   order.bgp_order_id,
     }
 
     pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, png_streams)
 
-    filename = f"approval_sheet_{order.bgp_order_id if order else 'order'}.pdf"
+    filename = f"approval_sheet_{order.bgp_order_id}.pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
@@ -381,3 +388,50 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
     )
 
 
+# ── GET /artwork/{artwork_id}/debug-template ─────────────────────────────────
+@router.get("/{artwork_id}/debug-template")
+async def debug_template(artwork_id: str, db: AsyncSession = Depends(get_db)):
+    """
+    Debug endpoint — returns template variablization info for an artwork's order.
+    Shows field_map, placeholder count in SVG, and which placeholders were found.
+    Useful for verifying the template was built correctly without downloading.
+    """
+    result = await db.execute(
+        select(Artwork)
+        .options(selectinload(Artwork.item))
+        .where(Artwork.id == artwork_id)
+    )
+    art = result.scalar_one_or_none()
+    if not art:
+        raise HTTPException(status_code=404, detail="Artwork not found.")
+
+    item = art.item
+    if not item:
+        raise HTTPException(status_code=404, detail="OrderItem not found.")
+
+    from backend.models import Order
+    order_result = await db.execute(select(Order).where(Order.id == item.order_id))
+    order = order_result.scalar_one_or_none()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found.")
+
+    from backend.engine.template_registry import get_template
+    template = await get_template(db, order.design_code)
+    if not template:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No template found for design_code='{order.design_code}'."
+        )
+
+    import re
+    svg = template.svg_content or ""
+    placeholders = re.findall(r"\{\{([^}]+)\}\}", svg)
+
+    return {
+        "design_code":        order.design_code,
+        "template_id":        str(template.id),
+        "svg_char_count":     len(svg),
+        "field_map":          template.field_map or {},
+        "placeholder_count":  len(placeholders),
+        "placeholders_found": list(set(placeholders)),
+    }

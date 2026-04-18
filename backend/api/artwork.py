@@ -2,11 +2,12 @@
 Artwork API — generate artwork and serve PNG/PDF binary responses.
 """
 from datetime import datetime
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import Response
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+import fitz  # PyMuPDF — used for approval-sheet PNG rendering
 
 from backend.database import get_db, AsyncSessionLocal
 from backend.models import Order, OrderItem, Artwork
@@ -297,12 +298,16 @@ async def get_approval_sheet_data(artwork_id: str, db: AsyncSession = Depends(ge
     }
 
 
-# ── GET /artwork/{artwork_id}/approval-pdf ─────────────────────────────────
+
+# ── Shared helper: build approval-sheet PDF bytes ────────────────────────────
 from backend.services.approval_pdf_service import create_approval_sheet_pdf
 
-@router.get("/{artwork_id}/approval-pdf")
-async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_db)):
-    """Generate and download the full TOK100-style multi-page approval PDF."""
+async def _build_approval_pdf_bytes(artwork_id: str, db: AsyncSession) -> tuple[bytes, str]:
+    """
+    Load all DB data for the order that contains artwork_id and
+    return (pdf_bytes, bgp_order_id).  Used by both the download
+    endpoint and the PNG-preview endpoint so they are always in sync.
+    """
     result = await db.execute(
         select(Artwork)
         .options(selectinload(Artwork.item))
@@ -316,14 +321,11 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
     if not item:
         raise HTTPException(status_code=404, detail="OrderItem for this artwork not found.")
 
-    # Load Order explicitly — avoids SQLAlchemy async lazy-load issues
-    from backend.models import Order
     order_result = await db.execute(select(Order).where(Order.id == item.order_id))
     order = order_result.scalar_one_or_none()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found.")
 
-    # Load all items in this order with their artwork PNG data
     order_items_result = await db.execute(
         select(OrderItem)
         .options(selectinload(OrderItem.artwork))
@@ -332,45 +334,35 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
     )
     all_items = order_items_result.scalars().all()
 
-    # Build {artwork_id: png_bytes} lookup for the PDF service
-    png_streams: dict = {}
-    for sib in all_items:
-        if sib.artwork and sib.artwork.png_data:
-            png_streams[str(sib.artwork.id)] = sib.artwork.png_data
-
-    # Group items by country_of_origin (one PDF page per group)
     from collections import defaultdict
     by_country: dict = defaultdict(list)
     for sib in all_items:
         country_key = sib.country_of_origin or "UNKNOWN"
         by_country[country_key].append(sib)
 
-
     variant_groups = []
     for country_key, sibs in by_country.items():
-        supplier = sibs[0].supplier_style or ""
-        color    = sibs[0].color or ""
+        supplier  = sibs[0].supplier_style or ""
+        color     = sibs[0].color or ""
         red_title = f"{supplier} - {country_key} - {color} - {order.bgp_order_id}"
 
         variants = []
         for sib in sibs:
             variants.append({
-                # Approval sheet fields (legacy)
-                "artwork_id":       str(sib.artwork.id) if sib.artwork else None,
-                # All OVS data fields needed by _draw_back_panel
-                "quantity":         sib.quantity,
-                "sizes":            sib.sizes or {},
-                "barcode_number":   sib.barcode_number or "",
-                "selling_price":    sib.selling_price or "",
-                "currency_symbol":  sib.currency_symbol or "",
-                "sku_code":         sib.sku_code or "",
-                "commercial_ref":   sib.commercial_ref or "",
-                "style_code":       sib.style_code or "",
-                "sub_department":   sib.sub_department or "",
-                "department":       sib.department or "",
+                "artwork_id":        str(sib.artwork.id) if sib.artwork else None,
+                "quantity":          sib.quantity,
+                "sizes":             sib.sizes or {},
+                "barcode_number":    sib.barcode_number or "",
+                "selling_price":     sib.selling_price or "",
+                "currency_symbol":   sib.currency_symbol or "",
+                "sku_code":          sib.sku_code or "",
+                "commercial_ref":    sib.commercial_ref or "",
+                "style_code":        sib.style_code or "",
+                "sub_department":    sib.sub_department or "",
+                "department":        sib.department or "",
                 "country_of_origin": sib.country_of_origin or "",
-                "supplier_style":   sib.supplier_style or "",
-                "color":            sib.color or "",
+                "supplier_style":    sib.supplier_style or "",
+                "color":             sib.color or "",
             })
 
         variant_groups.append({
@@ -379,7 +371,6 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
             "label_size": "45mm x 100mm",
             "variants":   variants,
         })
-
 
     order_data = {
         "buyer":          "OVS",
@@ -390,14 +381,62 @@ async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_
         "bgp_order_id":   order.bgp_order_id,
     }
 
-    pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, png_streams)
+    pdf_bytes = create_approval_sheet_pdf(order_data, variant_groups, {})
+    return pdf_bytes, order.bgp_order_id
 
-    filename = f"approval_sheet_{order.bgp_order_id}.pdf"
+
+# ── GET /artwork/{artwork_id}/approval-pdf ────────────────────────────────────
+@router.get("/{artwork_id}/approval-pdf")
+async def download_approval_pdf(artwork_id: str, db: AsyncSession = Depends(get_db)):
+    """Download the full multi-page approval PDF."""
+    pdf_bytes, bgp_order_id = await _build_approval_pdf_bytes(artwork_id, db)
+    filename = f"approval_sheet_{bgp_order_id}.pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
+
+
+# ── GET /artwork/{artwork_id}/approval-sheet-png ──────────────────────────────
+@router.get("/{artwork_id}/approval-sheet-png")
+async def approval_sheet_page_png(
+    artwork_id: str,
+    page: int = Query(default=0, ge=0, description="0-based page index"),
+    dpi:  int = Query(default=150, ge=72, le=300, description="Render resolution"),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Render one page of the approval-sheet PDF as PNG.
+    Used by the Approval Preview UI so the screen view is
+    pixel-identical to the downloadable PDF.
+    """
+    pdf_bytes, _ = await _build_approval_pdf_bytes(artwork_id, db)
+
+    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+    n_pages = doc.page_count
+    if page >= n_pages:
+        doc.close()
+        raise HTTPException(
+            status_code=404,
+            detail=f"Page {page} does not exist (PDF has {n_pages} page(s)).",
+        )
+
+    mat = fitz.Matrix(dpi / 72, dpi / 72)
+    pix = doc[page].get_pixmap(matrix=mat, alpha=False)
+    png_bytes = pix.tobytes("png")
+    doc.close()
+
+    return Response(
+        content=png_bytes,
+        media_type="image/png",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Page": str(page),
+            "X-Total-Pages": str(n_pages),
+        },
+    )
+
 
 
 # ── GET /artwork/{artwork_id}/debug-template ─────────────────────────────────

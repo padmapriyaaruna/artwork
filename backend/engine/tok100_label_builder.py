@@ -60,18 +60,18 @@ _C3 = INNER_W / 3.0   # ≈ 42.4 pt
 
 # ── White-overwrite zones (panel-relative, x0/y0/x1/y1) ──────────────────────
 # Strategy:
-#  A-full : y=120-192, full inner width.
-#           y=120 start erases any template separator that leaked near y=130.
-#           y=192 stop preserves the Triman logo in the left col (starts ~y=201).
-#  B2     : y=192-258, middle col only — dept+barcode+style+cref.
-#  B3     : y=192-258, right col only  — MADE IN / address vertical text.
+#  A-full : y=120-188, full inner width.
+#           Stops at y=188 to preserve the Triman logo top in left col.
+#           Grid row-2 bbox (bl-fs_gr to bl+1 = ~181-189) is covered.
+#  B2     : y=188-258, middle col only — dept codes + barcode + style + cref.
+#  B3     : y=188-258, right col only  — MADE IN / address vertical text.
 #  C      : y=256-OUTER_H, full width  — price section.
-# The LEFT COL (x 11.5→53.9) between y=192 and y=201 is blank white space in
-# the template, so sub_dept text can be drawn there without erasing Triman.
+# LEFT COL below y=188 is NOT cleared → Triman logo fully preserved from template.
+# sub_dept code goes to middle col so left col is purely the Triman graphic.
 ZONES = [
-    (INNER_X,           120.0, INNER_X + INNER_W,   192.0),  # A-full
-    (INNER_X + _C3,     192.0, INNER_X + 2 * _C3,  258.0),  # B2 middle
-    (INNER_X + 2*_C3,   192.0, INNER_X + INNER_W,  258.0),  # B3 right
+    (INNER_X,           120.0, INNER_X + INNER_W,   188.0),  # A-full
+    (INNER_X + _C3,     188.0, INNER_X + 2 * _C3,  258.0),  # B2 middle
+    (INNER_X + 2*_C3,   188.0, INNER_X + INNER_W,  258.0),  # B3 right
     (INNER_X,           256.0, INNER_X + INNER_W,  OUTER_H), # C price
 ]
 
@@ -181,17 +181,23 @@ def _draw_ean13(page, x0, y0, w, h, bc):
     for idx, bit in enumerate(bits):
         if bit == "1":
             rx = x0 + idx * mod_w
-            page.draw_rect(fitz.Rect(rx, y0, min(rx + mod_w, x0 + w), y0 + h),
-                           color=None, fill=DARK, width=0)
+            bar_right = min(rx + mod_w, x0 + w)
+            if bar_right - rx >= 0.1:   # guard against degenerate zero-width rects
+                page.draw_rect(fitz.Rect(rx, y0, bar_right, y0 + h),
+                               color=None, fill=DARK, width=0)
 
-def _draw_barcode(page, x0, y0, w, bar_h, bc_str):
-    """Draw EAN-13 bars (bar_h pt tall) then human-readable digits below."""
+def _draw_barcode(page, x0, y0, w, bar_h, bc_str, txt_x0=None, txt_w=None):
+    """Draw EAN-13 bars (bar_h pt tall) then human-readable digits below.
+    txt_x0 / txt_w allow centering the digit text in a wider area than the bars.
+    """
     _draw_ean13(page, x0, y0, w, bar_h, bc_str)
     p1, p2, p3 = _bc_chunks(bc_str)
-    txt = f"{p1}  {p2}  {p3}"
-    fs  = 5.0
+    txt = f"{p1} {p2} {p3}"   # single-space groups
+    fs  = 4.8
+    cx0 = txt_x0 if txt_x0 is not None else x0
+    cw  = txt_w  if txt_w  is not None else w
     page.insert_text(
-        fitz.Point(_cx(txt, FR, fs, x0, w), y0 + bar_h + fs + 0.5),
+        fitz.Point(_cx(txt, FR, fs, cx0, cw), y0 + bar_h + fs + 0.5),
         txt, fontname=FR, fontsize=fs, color=DARK,
     )
 
@@ -357,7 +363,8 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
             cx1 = cx0 + c3w
             is_cur = (sz == cur_yrs)
             if is_cur:
-                page.draw_rect(fitz.Rect(cx0, bl - fs_gr - 2, cx1, bl + 2),
+                # Tighter highlight: 1 pt margin above cap-height, 1 pt below baseline
+                page.draw_rect(fitz.Rect(cx0, bl - fs_gr + 1, cx1, bl + 1),
                                color=None, fill=BLACK, width=0)
             fn = FB if is_cur else FR
             tc = WHITE if is_cur else DARK
@@ -367,22 +374,22 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
                 sz, fontname=fn, fontsize=fs_gr, color=tc,
             )
 
-    # ── 6. DEPT / SKU CODES ROW (y_rel=193.2, reference-measured) ──────────────
-    # These codes appear above the barcode block in the middle column,
-    # and sub_dept in the left column at the same y baseline.
+    # ── 6. DEPT / SKU CODES ROW — all codes in middle col ──────────────────────
+    # Left col is left clean (Triman only from template); sub_dept moves here.
     sub_dept = str(item_data.get("sub_department", "") or "")
     dept     = str(item_data.get("department",     "") or "")
     sku      = str(item_data.get("sku_code",        "") or "")
-    fs_c     = 5.5
-    dept_y   = ay(196.0)   # measured: 760px/3.879px/pt=196pt (bottom image estimation)
+    fs_c     = 5.5    # font size for barcode refs (style, cref)
+    fs_dept  = 4.5    # slightly tighter so all 3 codes fit in middle col
+    dept_y   = ay(196.0)
+    mc_dept  = ix0 + _C3 + 2   # left edge of middle col (unshifted, for dept label)
 
-    # Sub-dept in left col, dept and SKU in middle col
-    page.insert_text(fitz.Point(ix0 + GAP, dept_y),
-                     sub_dept, fontname=FR, fontsize=fs_c, color=DARK)
-    page.insert_text(fitz.Point(ix0 + _C3 + GAP, dept_y),
-                     dept, fontname=FR, fontsize=fs_c, color=DARK)
-    page.insert_text(fitz.Point(ix0 + _C3 + 22,  dept_y),
-                     sku,  fontname=FR, fontsize=fs_c, color=DARK)
+    # Draw sub_dept, dept, sku left-to-right in middle col
+    _dx = mc_dept
+    for code in filter(None, [sub_dept, dept, sku]):
+        page.insert_text(fitz.Point(_dx, dept_y),
+                         code, fontname=FR, fontsize=fs_dept, color=DARK)
+        _dx += fitz.get_text_length(code, fontname=FR, fontsize=fs_dept) + 3
 
     # ── 7. BARCODE + REFS (middle column, Zone B2) ───────────────────────────
     # Reference text positions (abs→panel_rel):
@@ -394,11 +401,15 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     bc_str = str(item_data.get("barcode_number",  "") or "")
     style  = str(item_data.get("style_code",      "") or "")
     cref   = str(item_data.get("commercial_ref",  "") or "")
-    mc_x0  = ix0 + _C3 + 2
-    mc_w   = _C3 - 4
+    mc_x0  = ix0 + _C3 + 5   # 3 pt right of col edge (user: barcode slightly right)
+    mc_w   = _C3 - 7          # reduced to keep right edge at same position
+    # Digit text uses the FULL column width so it doesn't bleed left
+    mc_num_x0 = ix0 + _C3 + 2
+    mc_num_w  = _C3 - 4
     BC_Y   = 200.0   # barcode bars top (pt below dept codes descenders)
-    BAR_H  = 16.0    # bar height in pt; number text at BC_Y+16+5.5=221.5 ≈ ref 220.2
-    _draw_barcode(page, mc_x0, ay(BC_Y), mc_w, BAR_H, bc_str)
+    BAR_H  = 16.0    # bar height in pt; number text at BC_Y+16+4.8+0.5=221.3 ≈ ref 220.2
+    _draw_barcode(page, mc_x0, ay(BC_Y), mc_w, BAR_H, bc_str,
+                  txt_x0=mc_num_x0, txt_w=mc_num_w)
     # style → y=200+29=229 ≈ ref 229.2;  cref → y=200+39=239 ≈ ref 239.2
     for txt, y_off in [(style, 29), (cref, 39)]:
         if txt:
@@ -443,7 +454,7 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     page.draw_line(
         fitz.Point(ox + SEP_X0, ay(SEP_Y)),
         fitz.Point(ox + SEP_X1, ay(SEP_Y)),
-        color=GREEN, dashes="[3 3]", width=1.0,
+        color=GREEN, dashes="[3 3] 0", width=1.0,    # phase=0 required by PDF spec
     )
 
     # ── 10. PRICE ─────────────────────────────────────────────────────────────
@@ -451,22 +462,27 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     price_raw = str(item_data.get("selling_price", "0,00") or "0,00")
     major, minor = _split_price(price_raw)
 
-    fs_sym   = 10.0
-    fs_major = 24.0
-    fs_minor = 13.0
+    # Price typography (matched to TOK100_B0854559_1.pdf reference):
+    #   € — small superscript, raised to TOP-align with major cap-height
+    #   29  — large bold dominant number
+    #   ,95 — raised SAME height as €, smaller than major, same font as €
+    fs_sym   = 9.0    # currency symbol size
+    fs_major = 24.0   # dominant price number
+    fs_minor = 11.0   # cents — visibly smaller than major (was 13)
+    raise_h  = fs_major * 0.42   # both € and ,95 raised by same amount
     icx = ix0 + INNER_W / 2
 
-    sym_w = fitz.get_text_length(currency, fontname=FR, fontsize=fs_sym) + 2
+    sym_w = fitz.get_text_length(currency, fontname=FR, fontsize=fs_sym) + 1
     maj_w = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
     min_w = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
     px    = icx - (sym_w + maj_w + min_w) / 2
     pr_y  = ay(SEP_Y + 26)
 
-    page.insert_text(fitz.Point(px,             pr_y - fs_major*0.38),
+    page.insert_text(fitz.Point(px,               pr_y - raise_h),
                      currency, fontname=FR, fontsize=fs_sym,   color=DARK)
-    page.insert_text(fitz.Point(px + sym_w,     pr_y),
+    page.insert_text(fitz.Point(px + sym_w,       pr_y),
                      major,    fontname=FB, fontsize=fs_major,  color=DARK)
-    page.insert_text(fitz.Point(px+sym_w+maj_w+1, pr_y - fs_major*0.35),
+    page.insert_text(fitz.Point(px+sym_w+maj_w+1, pr_y - raise_h),
                      minor,    fontname=FR, fontsize=fs_minor,  color=DARK)
 
     # ── 11. QTY below outer panel ─────────────────────────────────────────────

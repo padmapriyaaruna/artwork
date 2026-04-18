@@ -87,14 +87,14 @@ SEP_X1  = 134.4
 _C3     = INNER_W / 3.0   # ~42.4 pt per column
 
 # White-overwrite zones.
-# Left-col strip y=188-258: erases ALL Triman/recycling icons from template
-# (they span from y≈192 to bottom of barcode zone at y≈258).
+# NOTE: Left column (x=INNER_X..INNER_X+_C3) for y>188 is NOT erased so the
+# Triman/FR recycling logos from the static template show through correctly.
+# Only zones A (full-width), B2 (middle col), B3 (right col), C (price) are erased.
 ZONES = [
-    (INNER_X,         120.0, INNER_X + INNER_W,  188.0),
-    (INNER_X,         188.0, INNER_X + _C3,       258.0),   # left col full height
-    (INNER_X + _C3,   188.0, INNER_X + 2*_C3,    258.0),
-    (INNER_X + 2*_C3, 188.0, INNER_X + INNER_W,  258.0),
-    (INNER_X,         256.0, INNER_X + INNER_W,  OUTER_H),
+    (INNER_X,         120.0, INNER_X + INNER_W,  188.0),   # Zone A: full width
+    (INNER_X + _C3,   188.0, INNER_X + 2*_C3,    258.0),   # Zone B2: middle col
+    (INNER_X + 2*_C3, 188.0, INNER_X + INNER_W,  258.0),   # Zone B3: right col
+    (INNER_X,         256.0, INNER_X + INNER_W,  OUTER_H), # Zone C: price area
 ]
 
 # ── Colours ───────────────────────────────────────────────────────────────────
@@ -336,7 +336,10 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     fs_val   = 9.0
     CELL_PAD = 4.0
     TABLE_TOP = 138.0     # panel-relative y of top border
-    TABLE_BOT = 168.0     # panel-relative y of bottom border
+    TABLE_BOT = 163.5     # panel-relative y of bottom border
+                          # Must be <= chip_box_top - 2pt clearance
+                          # chip_box_top = R1_BL - fs_gr - 1.0 = 173.3-6.5-1.0 = 165.8
+                          # TABLE_BOT=163.5 gives 2.3pt clearance gap to chip box
     vert_x = ix0 + half   # vertical divider x
 
     # Top horizontal line: ix0 -> ix1 (same span as KIDS lines above)
@@ -404,7 +407,8 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
             cx = chip_x0 + ci * CHIP_PITCH
             is_cur = (sz == cur_yrs)
             if is_cur:
-                # Compact chip box: exactly CHIP_W wide, 1pt padding top+bottom
+                # Compact chip box. box_top must NOT touch TABLE_BOT line above.
+                # TABLE_BOT=163.5, box_top=R1_BL-fs_gr-1.0=165.8 -> 2.3pt safe gap.
                 box_top = bl - fs_gr - 1.0
                 box_bot = bl + 1.5
                 page.draw_rect(

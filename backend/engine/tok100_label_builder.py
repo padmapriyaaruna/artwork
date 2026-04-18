@@ -1,5 +1,5 @@
 """
-TOK100 Label Builder v7  –  pixel-fidelity using template embed + variable overlay
+TOK100 Label Builder v9  –  pixel-fidelity using template embed + variable overlay
 
 v7 fixes applied (per user review of TOK100_B0854559_1.pdf vs _OVS KIDS 2023.pdf):
   1. Zone A starts at y=120 (was 130) — erases any template stray line near y=130
@@ -159,40 +159,50 @@ _EAN_R = ["1110010","1100110","1101100","1000010","1011100",
 _EAN_PARITY = ["LLLLLL","LLGLGG","LLGGLG","LLGGGL","LGLLGG",
                "LGGLLG","LGGGLL","LGLGLG","LGLGGL","LGGLGL"]
 
-def _draw_ean13(page, x0, y0, w, h, bc):
-    """Render a proper EAN-13 barcode using standard ISO/IEC 15420 bit patterns."""
-    raw = (str(bc) if bc else "").strip()
+def _ean13_bits(bc):
+    """Return the 95-module EAN-13 bit string (ISO/IEC 15420)."""
+    raw    = (str(bc) if bc else "").strip()
     digits = (raw + "0" * 13)[:13]
     try:
         digs = [int(c) for c in digits]
     except ValueError:
         digs = [0] * 13
     parity = _EAN_PARITY[digs[0]]
-    # Build 95-module bit string: start(3) + left-6×7 + centre(5) + right-6×7 + end(3)
-    bits = "101"
+    bits   = "101"
     for i, p in enumerate(parity):
         d = digs[i + 1]
-        bits += _EAN_L[d] if p == "L" else _EAN_G[d]
+        bits += _EAN_L[d] if p == 'L' else _EAN_G[d]
     bits += "01010"
     for i in range(6):
         bits += _EAN_R[digs[i + 7]]
     bits += "101"
-    mod_w = w / 95.0
-    for idx, bit in enumerate(bits):
-        if bit == "1":
-            rx = x0 + idx * mod_w
-            bar_right = min(rx + mod_w, x0 + w)
-            if bar_right - rx >= 0.1:   # guard against degenerate zero-width rects
-                page.draw_rect(fitz.Rect(rx, y0, bar_right, y0 + h),
-                               color=None, fill=DARK, width=0)
+    return bits
+
 
 def _draw_barcode(page, x0, y0, w, bar_h, bc_str, txt_x0=None, txt_w=None):
-    """Draw EAN-13 bars (bar_h pt tall) then human-readable digits below.
-    txt_x0 / txt_w allow centering the digit text in a wider area than the bars.
+    """Render EAN-13 as a crisp 300-DPI Pillow PNG embedded in the PDF,
+    then print the human-readable digit string below the bars.
+    txt_x0 / txt_w let you centre the digit text in a wider area than the bars.
     """
-    _draw_ean13(page, x0, y0, w, bar_h, bc_str)
+    from PIL import Image, ImageDraw
+    bits  = _ean13_bits(bc_str)
+    # Render at 300 DPI for clean bar edges
+    w_px  = max(190, round(w      / 72 * 300))
+    h_px  = max( 60, round(bar_h  / 72 * 300))
+    img   = Image.new('RGB', (w_px, h_px), (255, 255, 255))
+    draw  = ImageDraw.Draw(img)
+    mod   = w_px / len(bits)
+    for i, b in enumerate(bits):
+        if b == '1':
+            lx = round(i * mod)
+            rx = max(lx + 1, round((i + 1) * mod))
+            draw.rectangle([lx, 0, rx, h_px - 1], fill=(0, 0, 0))
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    page.insert_image(fitz.Rect(x0, y0, x0 + w, y0 + bar_h), stream=buf.getvalue())
+    # Human-readable digit string centred below the bars
     p1, p2, p3 = _bc_chunks(bc_str)
-    txt = f"{p1} {p2} {p3}"   # single-space groups
+    txt = f"{p1} {p2} {p3}"
     fs  = 4.8
     cx0 = txt_x0 if txt_x0 is not None else x0
     cw  = txt_w  if txt_w  is not None else w
@@ -347,30 +357,28 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     page.insert_text(fitz.Point(_rx(mex_txt, FB, fs_val, ix1 - GAP), bl2),
                      mex_txt, fontname=FB, fontsize=fs_val, color=DARK)
 
-    # ── 5. SIZE GRID: 2 rows of 3 ─────────────────────────────────────────────
-    # Cell width = INNER_W / 3  (since 3 sizes per row)
-    c3w    = INNER_W / 3.0
-    fs_gr  = 7.5
-    cell_h = 12.0
-
-    # Row 1 → 4-5, 5-6, 6-7   baseline y_rel=179.2 (reference text extraction)
-    # Row 2 → 7-8, 8-9, 9-10  baseline y_rel=188   (image pixel measurement: 730px/3.879px/pt)
+    # ── 5. SIZE GRID — compact chips, centred in INNER_W ─────────────────────────
+    # 34 pt chips with 2 pt gaps: total 106 pt → 10.6 pt inset each side from border.
+    # Compact aspect ratio (34:8) vs old full-column (42.4:8) eliminates stretched look.
+    CHIP_W   = 34.0   # per-chip width
+    CHIP_GAP = 2.0    # gap between chips (visible white separation)
+    fs_gr    = 7.5
+    chip_x0  = ix0 + (INNER_W - 3 * CHIP_W - 2 * CHIP_GAP) / 2  # centred left edge
     grid_baselines = [ay(179.2), ay(188.0)]
 
     for ri, (row, bl) in enumerate(zip(SIZE_ROWS, grid_baselines)):
         for ci, sz in enumerate(row):
-            cx0 = ix0 + ci * c3w
-            cx1 = cx0 + c3w
+            cx = chip_x0 + ci * (CHIP_W + CHIP_GAP)
             is_cur = (sz == cur_yrs)
             if is_cur:
-                # Tighter highlight: 1 pt margin above cap-height, 1 pt below baseline
-                page.draw_rect(fitz.Rect(cx0, bl - fs_gr + 1, cx1, bl + 1),
+                # Tight highlight: 1 pt above cap-height, 1 pt below baseline
+                page.draw_rect(fitz.Rect(cx, bl - fs_gr + 1, cx + CHIP_W, bl + 1),
                                color=None, fill=BLACK, width=0)
             fn = FB if is_cur else FR
             tc = WHITE if is_cur else DARK
             tw = fitz.get_text_length(sz, fontname=fn, fontsize=fs_gr)
             page.insert_text(
-                fitz.Point(cx0 + (c3w - tw) / 2, bl),
+                fitz.Point(cx + (CHIP_W - tw) / 2, bl),
                 sz, fontname=fn, fontsize=fs_gr, color=tc,
             )
 
@@ -462,14 +470,15 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     price_raw = str(item_data.get("selling_price", "0,00") or "0,00")
     major, minor = _split_price(price_raw)
 
-    # Price typography (matched to TOK100_B0854559_1.pdf reference):
-    #   € — small superscript, raised to TOP-align with major cap-height
-    #   29  — large bold dominant number
-    #   ,95 — raised SAME height as €, smaller than major, same font as €
-    fs_sym   = 9.0    # currency symbol size
-    fs_major = 24.0   # dominant price number
-    fs_minor = 11.0   # cents — visibly smaller than major (was 13)
-    raise_h  = fs_major * 0.42   # both € and ,95 raised by same amount
+    # Price typography — cap-top aligned to match TOK100_B0854559_1.pdf:
+    #   € (7.5 pt) and ,95 (10 pt) are raised so their TOP EDGES = top of "29".
+    #   raise = fs_major * CAP_H − fs_part * CAP_H  (where CAP_H = 0.72 for Helv)
+    CAP_H     = 0.72
+    fs_sym    = 7.5    # € currency symbol — visibly smaller than number (was 9)
+    fs_major  = 24.0   # dominant price number (unchanged)
+    fs_minor  = 10.0   # ,95 cents — noticeably smaller than major (was 11)
+    EUR_raise = fs_major * CAP_H - fs_sym   * CAP_H   # 17.28 − 5.40 = 11.88 pt
+    MIN_raise = fs_major * CAP_H - fs_minor * CAP_H   # 17.28 − 7.20 = 10.08 pt
     icx = ix0 + INNER_W / 2
 
     sym_w = fitz.get_text_length(currency, fontname=FR, fontsize=fs_sym) + 1
@@ -478,11 +487,11 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     px    = icx - (sym_w + maj_w + min_w) / 2
     pr_y  = ay(SEP_Y + 26)
 
-    page.insert_text(fitz.Point(px,               pr_y - raise_h),
+    page.insert_text(fitz.Point(px,               pr_y - EUR_raise),
                      currency, fontname=FR, fontsize=fs_sym,   color=DARK)
     page.insert_text(fitz.Point(px + sym_w,       pr_y),
                      major,    fontname=FB, fontsize=fs_major,  color=DARK)
-    page.insert_text(fitz.Point(px+sym_w+maj_w+1, pr_y - raise_h),
+    page.insert_text(fitz.Point(px+sym_w+maj_w+1, pr_y - MIN_raise),
                      minor,    fontname=FR, fontsize=fs_minor,  color=DARK)
 
     # ── 11. QTY below outer panel ─────────────────────────────────────────────

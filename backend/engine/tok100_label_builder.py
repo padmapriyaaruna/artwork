@@ -89,12 +89,15 @@ _C3     = INNER_W / 3.0   # ~42.4 pt per column
 # White-overwrite zones.
 # NOTE: Left column (x=INNER_X..INNER_X+_C3) for y>188 is NOT erased so the
 # Triman/FR recycling logos from the static template show through correctly.
-# Only zones A (full-width), B2 (middle col), B3 (right col), C (price) are erased.
+# Zone B2 left boundary is extended 10pt into left col to erase the template's
+# own barcode '8' guard digit and leading digits that bleed at the column edge.
+# The Triman logos sit higher in the left col (y~192-230) and are untouched
+# because we only extend the LEFT PART of zone B2 (middle col white erase).
 ZONES = [
-    (INNER_X,         120.0, INNER_X + INNER_W,  188.0),   # Zone A: full width
-    (INNER_X + _C3,   188.0, INNER_X + 2*_C3,    258.0),   # Zone B2: middle col
-    (INNER_X + 2*_C3, 188.0, INNER_X + INNER_W,  258.0),   # Zone B3: right col
-    (INNER_X,         256.0, INNER_X + INNER_W,  OUTER_H), # Zone C: price area
+    (INNER_X,              120.0, INNER_X + INNER_W,       188.0),   # Zone A: full width
+    (INNER_X + _C3 - 15,   188.0, INNER_X + 2*_C3,          258.0),  # Zone B2: mid col + 15pt left
+    (INNER_X + 2*_C3,      188.0, INNER_X + INNER_W,        258.0),  # Zone B3: right col
+    (INNER_X,              256.0, INNER_X + INNER_W,        OUTER_H), # Zone C: price area
 ]
 
 # ── Colours ───────────────────────────────────────────────────────────────────
@@ -442,45 +445,48 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     style    = str(item_data.get("style_code",      "") or "")
     cref     = str(item_data.get("commercial_ref",  "") or "")
 
-    mc_x0 = ix0 + _C3         # left edge of middle column
+    mc_x0 = ix0 + _C3         # left edge of middle column (~42.4pt from ix0)
     mc_x1 = ix0 + 2 * _C3     # right edge of middle column
     mc_w  = mc_x1 - mc_x0     # ~42.4 pt
 
-    # Barcode image: placed exactly within middle col, 0.5pt inset
-    bc_x0 = mc_x0 + 0.5
-    bc_w  = mc_w  - 1.0
+    # Barcode image: inset 8pt from left to fully clear the logo bleed edge.
+    # The price-tag/tag logo in the left col extends ~7pt past mc_x0.
+    # bc_x0 = mc_x0 + 8.0 places bars cleanly to the right with no overlap.
+    BC_INSET = 8.0
+    bc_x0 = mc_x0 + BC_INSET
+    bc_w  = mc_w  - BC_INSET - 0.5   # ~33.9 pt
 
-    # Dept codes: tab-separated, centred in full mc_w
+    # Dept codes: centred in bc_x0..bc_x0+bc_w (aligns with bars, avoids logo)
     fs_dept  = 5.0
     dept_str = "  ".join(p for p in [sub_dept, dept, sku_code] if p)
     DEPT_Y   = 200.6   # panel-relative
 
     if dept_str:
         page.insert_text(
-            fitz.Point(_cx(dept_str, FR, fs_dept, mc_x0, mc_w), ay(DEPT_Y)),
+            fitz.Point(_cx(dept_str, FR, fs_dept, bc_x0, bc_w), ay(DEPT_Y)),
             dept_str, fontname=FR, fontsize=fs_dept, color=DARK,
         )
 
     # Barcode bars
-    BC_Y  = 207.0   # panel-relative top of bars (6.4pt below dept codes)
-    BAR_H = 16.0    # measured from actual PDF (~16pt rendered height)
+    BC_Y  = 207.0   # panel-relative top of bars
+    BAR_H = 16.0    # measured from actual PDF
 
     _draw_barcode(page, bc_x0, ay(BC_Y), bc_w, BAR_H, bc_str,
-                  txt_x0=mc_x0, txt_w=mc_w)
+                  txt_x0=bc_x0, txt_w=bc_w)
 
-    # Style code + cref below digit string
+    # Style code + cref centred in same bc_x0..bc_x0+bc_w region
     fs_c    = 5.0
     style_y = 236.7   # panel-relative
     cref_y  = 246.1   # panel-relative
 
     if style:
         page.insert_text(
-            fitz.Point(_cx(style, FR, fs_c, mc_x0, mc_w), ay(style_y)),
+            fitz.Point(_cx(style, FR, fs_c, bc_x0, bc_w), ay(style_y)),
             style, fontname=FR, fontsize=fs_c, color=GREY,
         )
     if cref:
         page.insert_text(
-            fitz.Point(_cx(cref, FR, fs_c, mc_x0, mc_w), ay(cref_y)),
+            fitz.Point(_cx(cref, FR, fs_c, bc_x0, bc_w), ay(cref_y)),
             cref, fontname=FR, fontsize=fs_c, color=GREY,
         )
 

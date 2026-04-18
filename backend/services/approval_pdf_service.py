@@ -14,6 +14,9 @@ Layout per page (one page per country_of_origin group):
   └─────────────────────────────────────────────────────────────────┘
 
 Uses PyMuPDF. For OVS templates, draws directly — no PNG embedding.
+
+Panel sizes come from tok100_label_builder constants:
+  OUTER_W = 150.3 pt, OUTER_H = 305.5 pt (53mm x 108mm physical)
 """
 import io
 import re
@@ -25,19 +28,19 @@ import fitz  # PyMuPDF
 from backend.engine.tok100_label_builder import (
     _draw_front_panel,
     _draw_back_panel,
-    _fix_currency,
-    _split_price,
+    OUTER_W, OUTER_H,
     FB, FR, DARK, GREY, LGREY, NAVY, WHITE
 )
 
 
-# ── Page geometry (matching reference TOK100_B0854559_1.pdf aspect ratio) ─────
-# We use A3 landscape (1191 × 842 pt) for compatibility
+# ── Page geometry ─────────────────────────────────────────────────────────────
+# We use A3 landscape (1191 × 842) for compatibility.
+# Panel dimensions come from tok100_label_builder (OUTER_W=150.3, OUTER_H=305.5).
 PAGE_W = 1191.0
-PAGE_H = 842.0
+PAGE_H =  842.0
 
-MAR_X  = 28.0
-MAR_Y  = 18.0
+MAR_X  =  24.0
+MAR_Y  =  18.0
 
 # Header box
 HDR_H  = 105.0
@@ -52,14 +55,13 @@ HDR_L  = MAR_X
 HDR_R  = HDR_L + LOGO_W + INFO_W + APPROVAL_W
 
 # Title / dimension zone
-TITLE_T = HDR_B + 14.0
+TITLE_T = HDR_B + 12.0
 
-# Label layout
-LABEL_T = TITLE_T + 60.0
-LABEL_B = PAGE_H - MAR_Y - 30.0   # leave 30pt for Qty text
+# Label layout: OUTER_H from builder = 305.5 pt, fits in remaining height
+LABEL_T = TITLE_T + 55.0          # top of label row
+LABEL_B = PAGE_H - MAR_Y - 28.0   # leave space for Qty text
 
-FRONT_W  = 90.0        # front panel width (narrower)
-BACK_GAP = 8.0         # gap between panels
+PANEL_GAP = 8.0   # gap between panels
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -130,10 +132,10 @@ def _draw_page_labels(page: fitz.Page,
                      label_size, fontname=FB, fontsize=fs_dim,
                      color=(0.1, 0.1, 0.1))
 
-    # "Front" / "Back" labels
+    # "Front" / "Back" labels — positions use OUTER_W (panel width) + PANEL_GAP
     page.insert_text(fitz.Point(front_x, LABEL_T - 8),
                      "Front", fontname=FB, fontsize=11.0, color=DARK)
-    back_x = front_x + FRONT_W + BACK_GAP
+    back_x = front_x + OUTER_W + PANEL_GAP
     page.insert_text(fitz.Point(back_x, LABEL_T - 8),
                      "Back", fontname=FB, fontsize=11.0, color=DARK)
 
@@ -180,16 +182,10 @@ def create_approval_sheet_pdf(
             _page_number(page, page_num)
             continue
 
-        label_h  = LABEL_B - LABEL_T
-        back_w   = max(1, ((HDR_R - HDR_L) - FRONT_W - BACK_GAP
-                           - (BACK_GAP * (n_back - 1))) / n_back)
-        back_w   = min(back_w, 135.0)
-
-        # Recalculate layout: front + all backs centred
-        total_w  = FRONT_W + BACK_GAP + n_back * back_w + (n_back - 1) * BACK_GAP
-        start_x  = (PAGE_W - total_w) / 2
-
-        front_x  = start_x
+        # Centre all panels (1 front + n_back backs) on the page
+        total_panels = 1 + n_back
+        total_w = total_panels * OUTER_W + (total_panels - 1) * PANEL_GAP
+        front_x = (PAGE_W - total_w) / 2
 
         # Page titles
         _draw_page_labels(page,
@@ -198,14 +194,14 @@ def create_approval_sheet_pdf(
                           group.get("label_size", "45mm x 100mm"),
                           front_x)
 
-        # Front panel (navy OVS)
-        _draw_front_panel(page, front_x, LABEL_T, FRONT_W, label_h)
+        # Front panel — uses OUTER_W x OUTER_H fixed dimensions
+        _draw_front_panel(page, front_x, LABEL_T)
 
-        # Back panels — one per size variant
-        back_start = front_x + FRONT_W + BACK_GAP
+        # Back panels — one per size variant, same fixed dimensions
+        back_start = front_x + OUTER_W + PANEL_GAP
         for i, v in enumerate(variants[:6]):
-            bx = back_start + i * (back_w + BACK_GAP)
-            _draw_back_panel(page, bx, LABEL_T, back_w, label_h, v)
+            bx = back_start + i * (OUTER_W + PANEL_GAP)
+            _draw_back_panel(page, bx, LABEL_T, v)
 
         _page_number(page, page_num)
 

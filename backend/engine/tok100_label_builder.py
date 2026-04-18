@@ -1,28 +1,32 @@
 """
-TOK100 Label Builder v6  –  pixel-fidelity using template embed + variable overlay
+TOK100 Label Builder v7  –  pixel-fidelity using template embed + variable overlay
 
-Key layout corrections vs v5 (based on master template _OVS KIDS 2023.pdf / reference)
---------------------------------------------------------------------------------------
-• Size detail (YEARS / IT rows): same baseline per row, LABEL left-aligned + VALUE
-  right-aligned within each half; thin separator lines at y_rel=141 and y_rel=159.
-• Size grid: 2 rows of 3 sizes (not 1 row of 6).
-  Row 1 → 4-5, 5-6, 6-7   (baseline y_rel=179.2, measured from reference)
-  Row 2 → 7-8, 8-9, 9-10  (baseline y_rel=191)
-• Zone A extended to y=202 to fully cover both grid rows.
-• Dept / SKU codes placed at y_rel=200 (inside Zone A, at its bottom edge).
-• Right column: three vertical text lines (rotate=90, bottom→top) for
-  "MADE IN country", "OVS – Via …", "30174 Venezia ITALIA – info@...".
+v7 fixes applied (per user review of TOK100_B0854559_1.pdf vs _OVS KIDS 2023.pdf):
+  1. Zone A starts at y=120 (was 130) — erases any template stray line near y=130
+     so only ONE separator appears above the YEARS+IT block.
+  2. Zone structure split: full-width y=120-192, then middle+right cols only y=192-258.
+     Left column below y=192 is NOT erased → Triman logo fully preserved.
+  3. Only ONE separator line (sep1 at y=141, inset 2 pt from border).
+     Sep2 between YEARS and IT removed — reference shows no line there.
+  4. Separator lines have SEP_INSET=2 pt margin from inner border
+     so inner spacing is uniform top-to-bottom.
+  5. Proper EAN-13 barcode using ISO/IEC 15420 bit patterns (no pseudo-random bars).
+  6. Barcode bars 16 pt tall (was 8 pt); barcode number text at correct y.
+  7. Green price-separator dashes "[3 3]" (3 pt on, 3 pt off) for visible gaps.
+  8. Border-restore lines start at y=120 to match new zone top.
 
 Reference measurements (TOK100_B0854559_1.pdf, 400 DPI):
-  Panel outer : 150.3 × 305.5 pt  (white, no visible border)
+  Panel outer : 150.3 × 305.5 pt
   Inner area  : offset (11.5, 10.8), 127.2 × 283.9 pt
   Hole        : centre (74.8, 30.2), r=5.1  — magenta stroke, white fill
-  SEP line    : y_rel=257.49, x 12.7→134.4, dashed green
-  Text rowstaken from abs→panel_rel conversions:
-    y_panel=151.2  YEARS/CM row values
-    y_panel=167.2  IT/MEX row values
+  sep1 line   : y_rel=141 (above YEARS+IT block)
+  SEP green   : y_rel=257.49, x 12.7→134.4, dashed green
+  Text rows from abs→panel_rel:
+    y_panel=151.2  YEARS/CM values
+    y_panel=167.2  IT/MEX values
     y_panel=179.2  Grid row 1 (4-5 5-6 6-7)
-    y_panel=193.2  Sub-dept / Dept / SKU codes
+    y_panel=188    Grid row 2 (7-8 8-9 9-10)
+    y_panel=196    Sub-dept / Dept / SKU codes
 """
 import io, os, re
 import fitz  # PyMuPDF
@@ -55,18 +59,20 @@ SEP_X1  = 134.4
 _C3 = INNER_W / 3.0   # ≈ 42.4 pt
 
 # ── White-overwrite zones (panel-relative, x0/y0/x1/y1) ──────────────────────
-# Left column (x 11.5→53.9) below y=202 is deliberately NOT erased so the
-# Triman recycling logo survives from the static template embed.
-# Zone A covers the entire size section (detail rows + both grid rows + dept row).
+# Strategy:
+#  A-full : y=120-192, full inner width.
+#           y=120 start erases any template separator that leaked near y=130.
+#           y=192 stop preserves the Triman logo in the left col (starts ~y=201).
+#  B2     : y=192-258, middle col only — dept+barcode+style+cref.
+#  B3     : y=192-258, right col only  — MADE IN / address vertical text.
+#  C      : y=256-OUTER_H, full width  — price section.
+# The LEFT COL (x 11.5→53.9) between y=192 and y=201 is blank white space in
+# the template, so sub_dept text can be drawn there without erasing Triman.
 ZONES = [
-    # A: full-width – size detail, both grid rows, dept/SKU codes
-    (INNER_X,          130.0,  INNER_X + INNER_W,            202.0),
-    # B2: middle column only – barcode bars + text + style + cref
-    (INNER_X + _C3,    200.0,  INNER_X + 2 * _C3,            258.0),
-    # B3: right column only – address / made-in country (vertical)
-    (INNER_X + 2*_C3,  200.0,  INNER_X + INNER_W,            258.0),
-    # C: price (full width)
-    (INNER_X,          256.0,  INNER_X + INNER_W,            OUTER_H),
+    (INNER_X,           120.0, INNER_X + INNER_W,   192.0),  # A-full
+    (INNER_X + _C3,     192.0, INNER_X + 2 * _C3,  258.0),  # B2 middle
+    (INNER_X + 2*_C3,   192.0, INNER_X + INNER_W,  258.0),  # B3 right
+    (INNER_X,           256.0, INNER_X + INNER_W,  OUTER_H), # C price
 ]
 
 # ── Colours ───────────────────────────────────────────────────────────────────
@@ -142,25 +148,45 @@ def _bc_chunks(bc):
     return bc, "", ""
 
 
-def _draw_ean_bars(page, x0, y0, w, h, bc):
-    """Simplified EAN-13-style bar representation."""
-    digits = (str(bc) if bc else "").ljust(13, "0")[:13]
-    mod_w = w / 95.0
-    x = x0
-    dark = True
-    for d in digits:
-        bw = mod_w * (1 + int(d) % 4)
-        if dark:
-            page.draw_rect(fitz.Rect(x, y0, min(x+bw, x0+w), y0+h),
-                           color=None, fill=DARK, width=0)
-        x += bw
-        dark = not dark
-        if x >= x0 + w:
-            break
+# ── EAN-13 encoding tables (ISO/IEC 15420) ───────────────────────────────────
+_EAN_L = ["0001101","0011001","0010011","0111101","0100011",
+          "0110001","0101111","0111011","0110111","0001011"]
+_EAN_G = ["0100111","0110011","0011011","0100001","0011101",
+          "0111001","0000101","0010001","0001001","0010111"]
+_EAN_R = ["1110010","1100110","1101100","1000010","1011100",
+          "1001110","1010000","1000100","1001000","1110100"]
+# Left-half parity pattern indexed by first (system) digit
+_EAN_PARITY = ["LLLLLL","LLGLGG","LLGGLG","LLGGGL","LGLLGG",
+               "LGGLLG","LGGGLL","LGLGLG","LGLGGL","LGGLGL"]
 
-def _draw_barcode(page, x0, y0, w, h, bc_str):
-    bar_h = h * 0.60
-    _draw_ean_bars(page, x0, y0, w, bar_h, bc_str)
+def _draw_ean13(page, x0, y0, w, h, bc):
+    """Render a proper EAN-13 barcode using standard ISO/IEC 15420 bit patterns."""
+    raw = (str(bc) if bc else "").strip()
+    digits = (raw + "0" * 13)[:13]
+    try:
+        digs = [int(c) for c in digits]
+    except ValueError:
+        digs = [0] * 13
+    parity = _EAN_PARITY[digs[0]]
+    # Build 95-module bit string: start(3) + left-6×7 + centre(5) + right-6×7 + end(3)
+    bits = "101"
+    for i, p in enumerate(parity):
+        d = digs[i + 1]
+        bits += _EAN_L[d] if p == "L" else _EAN_G[d]
+    bits += "01010"
+    for i in range(6):
+        bits += _EAN_R[digs[i + 7]]
+    bits += "101"
+    mod_w = w / 95.0
+    for idx, bit in enumerate(bits):
+        if bit == "1":
+            rx = x0 + idx * mod_w
+            page.draw_rect(fitz.Rect(rx, y0, min(rx + mod_w, x0 + w), y0 + h),
+                           color=None, fill=DARK, width=0)
+
+def _draw_barcode(page, x0, y0, w, bar_h, bc_str):
+    """Draw EAN-13 bars (bar_h pt tall) then human-readable digits below."""
+    _draw_ean13(page, x0, y0, w, bar_h, bc_str)
     p1, p2, p3 = _bc_chunks(bc_str)
     txt = f"{p1}  {p2}  {p3}"
     fs  = 5.0
@@ -255,15 +281,13 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
         )
 
     # ── 3. Restore magenta inner-border edges erased by overwrite ─────────────
-    # Bottom edge
+    # Zone A now starts at y=120 so restore from y=120 down.
     page.draw_line(fitz.Point(ix0, iy1), fitz.Point(ix1, iy1),
-                   color=MAGENTA, width=0.5)
-    # Left edge (lower section only — upper from template)
-    page.draw_line(fitz.Point(ix0, oy+130), fitz.Point(ix0, iy1),
-                   color=MAGENTA, width=0.5)
-    # Right edge
-    page.draw_line(fitz.Point(ix1, oy+130), fitz.Point(ix1, iy1),
-                   color=MAGENTA, width=0.5)
+                   color=MAGENTA, width=0.5)                              # bottom
+    page.draw_line(fitz.Point(ix0, oy+120), fitz.Point(ix0, iy1),
+                   color=MAGENTA, width=0.5)                              # left
+    page.draw_line(fitz.Point(ix1, oy+120), fitz.Point(ix1, iy1),
+                   color=MAGENTA, width=0.5)                              # right
 
     # ── Convenience helpers ───────────────────────────────────────────────────
     def ay(r): return oy + r    # panel-relative → page absolute y
@@ -280,18 +304,22 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     fs_val = 9.0    # "4-5", "110" values
     GAP    = 3.0    # left margin inside each half
 
+    SEP_INSET = 2.0    # pt inset from inner border — keeps lines from touching magenta
     vert_x = ix0 + half   # x of vertical divider between left/right halves
 
-    # ── Separator above row 1 (y_rel=141) ────────────────────────────────────
+    # ── ONE separator ABOVE the YEARS+IT block (y_rel=141) ───────────────────
+    # Reference has only one separator here; no line between YEARS and IT rows.
     sep1 = ay(141)
-    page.draw_line(fitz.Point(ix0, sep1), fitz.Point(ix1, sep1),
+    page.draw_line(fitz.Point(ix0 + SEP_INSET, sep1),
+                   fitz.Point(ix1 - SEP_INSET, sep1),
                    color=MID, width=0.6)
-    # Vertical centre divider (spans both rows)
-    page.draw_line(fitz.Point(vert_x, sep1), fitz.Point(vert_x, ay(160)),
+    # Vertical centre divider — spans the full YEARS+IT block height
+    page.draw_line(fitz.Point(vert_x, sep1),
+                   fitz.Point(vert_x, ay(172)),
                    color=LGREY, width=0.3)
 
     # ── Row 1: YEARS [val right-aligned] | CM [val right-aligned] ─────────────
-    bl1 = ay(151.2)   # baseline — reference-measured
+    bl1 = ay(151.2)   # reference-measured baseline
     page.insert_text(fitz.Point(ix0 + GAP, bl1),
                      "YEARS", fontname=FB, fontsize=fs_lbl, color=DARK)
     page.insert_text(fitz.Point(_rx(cur_yrs, FB, fs_val, vert_x - GAP), bl1),
@@ -301,15 +329,8 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     page.insert_text(fitz.Point(_rx(cur_cm, FB, fs_val, ix1 - GAP), bl1),
                      cur_cm, fontname=FB, fontsize=fs_val, color=DARK)
 
-    # ── Separator between row 1 and row 2 (y_rel=159) ─────────────────────────
-    sep2 = ay(159)
-    page.draw_line(fitz.Point(ix0, sep2), fitz.Point(ix1, sep2),
-                   color=LGREY, width=0.3)
-    page.draw_line(fitz.Point(vert_x, sep2), fitz.Point(vert_x, ay(176)),
-                   color=LGREY, width=0.3)
-
-    # ── Row 2: IT [val] | MEX [val A] ─────────────────────────────────────────
-    bl2 = ay(167.2)   # baseline — reference-measured
+    # ── Row 2: IT [val] | MEX [val A]  (no separator between YEARS and IT) ────
+    bl2 = ay(167.2)   # reference-measured baseline
     mex_txt = f"{cur_mex} A"
     page.insert_text(fitz.Point(ix0 + GAP, bl2),
                      "IT", fontname=FB, fontsize=fs_lbl, color=DARK)
@@ -375,10 +396,11 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     cref   = str(item_data.get("commercial_ref",  "") or "")
     mc_x0  = ix0 + _C3 + 2
     mc_w   = _C3 - 4
-    BC_Y   = 200.0   # barcode bars top: 4pt below dept codes descenders
-    _draw_barcode(page, mc_x0, ay(BC_Y), mc_w, 14.0, bc_str)
+    BC_Y   = 200.0   # barcode bars top (pt below dept codes descenders)
+    BAR_H  = 16.0    # bar height in pt; number text at BC_Y+16+5.5=221.5 ≈ ref 220.2
+    _draw_barcode(page, mc_x0, ay(BC_Y), mc_w, BAR_H, bc_str)
+    # style → y=200+29=229 ≈ ref 229.2;  cref → y=200+39=239 ≈ ref 239.2
     for txt, y_off in [(style, 29), (cref, 39)]:
-        # y_off from BC_Y=200: style→229, cref→239  ✓ ref: 229.2, 239.2
         if txt:
             page.insert_text(
                 fitz.Point(_cx(txt, FR, fs_c, mc_x0, mc_w), ay(BC_Y + y_off)),
@@ -417,11 +439,11 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
                          color=vcol, rotate=90)
 
     # ── 9. DASHED GREEN PRICE SEPARATOR ──────────────────────────────────────
-    # Reference-measured: y_rel=257.49, x 12.7→134.4, h≈0.5→ draw as line
+    # Reference: y_rel=257.49, x 12.7→134.4. "[3 3]" = 3pt dash / 3pt gap.
     page.draw_line(
         fitz.Point(ox + SEP_X0, ay(SEP_Y)),
         fitz.Point(ox + SEP_X1, ay(SEP_Y)),
-        color=GREEN, dashes="[4 2]", width=0.8,
+        color=GREEN, dashes="[3 3]", width=1.0,
     )
 
     # ── 10. PRICE ─────────────────────────────────────────────────────────────

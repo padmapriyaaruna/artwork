@@ -1,0 +1,110 @@
+{
+  "_comment": "All measurements in PDF points (1pt = 1/72 inch). Measured from TOK100_B0854559_1.pdf at 500 DPI.",
+
+  "code": "TOK100",
+  "description": "OVS Kids 100mm hang tag",
+  "customer": "OVS",
+
+  "panel": {
+    "outer_w_pt": 150.3,
+    "outer_h_pt": 305.5,
+    "inner_x_offset": 11.6,
+    "inner_y_offset": 10.7,
+    "inner_w_pt": 127.2,
+    "inner_h_pt": 283.9,
+    "inner_w_mm": 44.9,
+    "inner_h_mm": 100.1
+  },
+
+  "colors": {
+    "border_magenta_rgb": [0.898, 0.023, 0.584],
+    "navy_rgb":           [0.000, 0.141, 0.235],
+    "gold_rgb":           [0.922, 0.714, 0.180],
+    "price_sep_green_rgb":[0.451, 0.749, 0.267],
+    "white_rgb":          [1.000, 1.000, 1.000],
+    "dark_rgb":           [0.080, 0.080, 0.080]
+  },
+
+  "elements": {
+    "hole": {
+      "center_rel_x": 74.8,
+      "center_rel_y": 30.2,
+      "radius_pt": 5.1,
+      "stroke": "border_magenta_rgb",
+      "fill": "white_rgb"
+    },
+    "price_separator": {
+      "y_rel": 257.49,
+      "x0_rel": 12.7,
+      "x1_rel": 134.4,
+      "height_pt": 0.5,
+      "style": "solid",
+      "color": "price_sep_green_rgb"
+    }
+  },
+
+  "size_range": ["4-5", "5-6", "6-7", "7-8", "8-9", "9-10"],
+  "cm_map": {
+    "4-5": "110", "5-6": "116", "6-7": "122",
+    "7-8": "128", "8-9": "134", "9-10": "140"
+  },
+  "it_same_as_years": true,
+  "mex_same_as_years": true,
+
+  "variable_fields": [
+    "barcode_number",
+    "selling_price",
+    "currency_symbol",
+    "sku_code",
+    "commercial_ref",
+    "style_code",
+    "sub_department",
+    "department",
+    "sizes",
+    "quantity"
+  ],
+
+  "static_note": "country_of_origin in XML maps to OVS price-zone code (WARM/COLD/MIDDLE EAST), NOT physical country. 'Made in' text is static in the template design. Do NOT use country_of_origin for label 'Made in' text.",
+
+  "back_panel_template": "TOK100/back_panel_ref.pdf",
+
+  "variable_overwrite_zones": [
+    {
+      "name": "size_detail_and_grid",
+      "comment": "Covers YEARS/IT rows and the 6-cell size grid",
+      "y0_rel": 130.0, "y1_rel": 185.0,
+      "x0_rel": 11.6,  "x1_rel": 138.8
+    },
+    {
+      "name": "refs_barcode_address",
+      "comment": "Dept/SKU row, barcode bars+text, style code, commercial ref, OVS address",
+      "y0_rel": 183.0, "y1_rel": 257.0,
+      "x0_rel": 11.6,  "x1_rel": 138.8
+    },
+    {
+      "name": "price",
+      "comment": "Price area below the green separator",
+      "y0_rel": 255.0, "y1_rel": 304.0,
+      "x0_rel": 11.6,  "x1_rel": 138.8
+    }
+  ],
+
+  "text_positions": {
+    "_note": "All Y values relative to panel top. Baseline positions from reference.",
+    "kids_header_y_rel": 60.2,
+    "sep1_y_rel": 57.5,
+    "sep2_y_rel": 67.5,
+    "size_detail_y_rel": 151.2,
+    "size_grid_row1_y_rel": 167.2,
+    "size_grid_row2_y_rel": 179.2,
+    "dept_sku_y_rel": 193.2,
+    "barcode_bars_y0_rel": 195.0,
+    "barcode_bars_y1_rel": 215.0,
+    "barcode_text_y_rel": 220.2,
+    "style_code_y_rel": 229.2,
+    "commercial_ref_y_rel": 239.2,
+    "price_sep_y_rel": 257.49,
+    "price_major_y_rel": 260.2,
+    "qty_y_below_panel": 15.0
+  }
+}

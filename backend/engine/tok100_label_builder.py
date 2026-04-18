@@ -1,35 +1,34 @@
 """
-TOK100 Label Builder v3 — pixel-precise match of TOK100_B0854559_1.pdf reference.
+TOK100 Label Builder v4 — Template-embed + variable overlay approach.
 
-Reference panel measurements (from actual PDF at 400 DPI):
-  Outer panel : 150.3 × 305.5 pt = 53.0 × 107.8 mm
-  Inner label  : 127.2 × 283.9 pt ≈ 45mm × 100mm
-  Label spacing: 169.6 pt (centre-to-centre between K I D S positions)
+Architecture
+------------
+1. For the BACK panel, we embed backend/templates/OVS/TOK100/back_panel_ref.pdf
+   as the base layer (pixel-perfect static content: FSC logo, QR code,
+   Triman recycling logo, magenta border, punch hole, K I D S header,
+   separator lines, barcode bars, recycling text).
 
-Exact layout zones (relative to inner panel top, in pts):
-  ┌─────────────────────────────────────────────┐  ← y=0
-  │  FSC logo │ Hole │ QR code  │               │  ← y=0-60
-  │           │      │ + recycle text            │
-  ├─────────────────────────────────────────────┤  ← y=60  separator line
-  │                K I D S                       │  ← y=63
-  ├─────────────────────────────────────────────┤  ← y=68  separator line
-  │              (blank space)                   │  ← y=68-140
-  │  YEARS 4-5 │         CM 110                 │  ← y=140 (size highlight row)
-  │  IT    4-5 │        MEX 4-5 A               │  ← y=151
-  ├─────────────────────────────────────────────┤
-  │  [4-5] 5-6  6-7  7-8  8-9  9-10            │  ← y=165 (full grid, [] = black bg)
-  │  3632  230  2768957                          │  ← y=185 (dept | colour | SKU)
-  ├───────────┬────────────────┬─────────────────┤  ← y=195
-  │ Triman/  │ ████████████  │ MADE IN         │
-  │ Recycle  │ 8 051553 2987│ INDIA           │  ← y=195-260 (3-column)
-  │  logos   │ 2768957       │ OVS address     │
-  │          │ PR711 AI08    │                 │
-  ├─────────────────────────────────────────────┤  ← y=260 separator
-  │              € 29,95                         │  ← y=260-305
-  └─────────────────────────────────────────────┘  ← y=305
-  Qty - 128   (below label)
+2. We then draw WHITE filled rectangles over three variable zones:
+   - Zone A: size detail rows + size grid  (y_rel 130–185)
+   - Zone B: dept/SKU/barcode text/refs   (y_rel 183–257)
+   - Zone C: price area                   (y_rel 255–305)
+
+3. Variable content is drawn on top of the white zones.
+
+Measurements (all from reference TOK100_B0854559_1.pdf at 500 DPI)
+-------------------------------------------------------------------
+Panel outer   : 150.3 × 305.5 pt (white fill, no stroke)
+Inner content : offset (11.6, 10.7), size 127.2 × 283.9 pt
+                = 44.9 mm × 100.1 mm (physical label)
+Magenta border: RGB(0.898, 0.023, 0.584) — embedded from reference
+Hole          : centre (74.8, 30.2) from panel TL, radius 5.1 pt
+Green sep     : y_rel=257.49, x 12.7→134.4, h=0.5 pt,
+                RGB(0.451, 0.749, 0.267), solid
+
+Data note: country_of_origin in XML = OVS price-zone code (WARM/COLD/MID EAST)
+           NOT a physical country.  Do NOT use it for "Made in" text.
 """
-import io, re, math
+import io, os, re, math
 import fitz  # PyMuPDF
 
 try:
@@ -39,71 +38,79 @@ try:
 except ImportError:
     HAS_QRCODE = False
 
+# ── Template file ─────────────────────────────────────────────────────────────
+_HERE = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.normpath(
+    os.path.join(_HERE, "..", "templates", "OVS", "TOK100")
+)
+BACK_PANEL_TEMPLATE = os.path.join(TEMPLATE_DIR, "back_panel_ref.pdf")
 
-# ── Exact reference panel dimensions ─────────────────────────────────────────
-# We work at 1:1 scale of the reference (1pt = 1pt)
-# Then render to PNG at chosen DPI for screen/approval
+# ── Panel geometry (from reference measurements) ──────────────────────────────
+OUTER_W  = 150.3  # panel width  pt
+OUTER_H  = 305.5  # panel height pt
 
-OUTER_W = 150.3          # full panel width including border
-OUTER_H = 305.5          # full panel height including border
-INNER_X = 11.0           # inner content starts from left of outer
-INNER_Y = 10.0           # inner content starts from top of outer
-INNER_W = OUTER_W - 2 * INNER_X     # ≈ 128 pt = ~45mm
-INNER_H = OUTER_H - 2 * INNER_Y     # ≈ 285 pt = ~100mm
+INNER_X  =  11.6  # inner content left offset from panel edge
+INNER_Y  =  10.7  # inner content top offset from panel edge
+INNER_W  = 127.2  # inner content width  pt = 44.9 mm
+INNER_H  = 283.9  # inner content height pt = 100.1 mm
+
+HOLE_RX  =  74.8  # hole centre, relative to panel left
+HOLE_RY  =  30.2  # hole centre, relative to panel top
+HOLE_R   =   5.1  # hole radius pt
+
+SEP_Y    = 257.49 # price separator y, relative to panel top
+SEP_X0   =  12.7  # separator x start, relative to panel left
+SEP_X1   = 134.4  # separator x end
+SEP_H    =   0.5  # separator height pt
+
+# ── White overwrite zones (relative to panel TL) ─────────────────────────────
+# These cover all variable text areas so we can redraw fresh data on top.
+ZONES = [
+    ( INNER_X, 130.0, INNER_X + INNER_W, 185.0 ),  # A: size detail + grid
+    ( INNER_X, 183.0, INNER_X + INNER_W, 257.0 ),  # B: refs / barcode
+    ( INNER_X, 255.0, INNER_X + INNER_W, OUTER_H ), # C: price
+]
 
 # ── Colours ───────────────────────────────────────────────────────────────────
-NAVY   = (0.000, 0.141, 0.235)   # exact from reference fill
-GOLD   = (0.922, 0.714, 0.180)
-MAGENTA= (0.878, 0.129, 0.392)
-WHITE  = (1.0, 1.0, 1.0)
-BLACK  = (0.0, 0.0, 0.0)
-DARK   = (0.08, 0.08, 0.08)
-GREY   = (0.45, 0.45, 0.45)
-LGREY  = (0.75, 0.75, 0.75)
-DGREEN = (0.0,  0.45, 0.15)
-BORDER = (0.2,  0.2,  0.2)
+MAGENTA = (0.898, 0.023, 0.584)
+NAVY    = (0.000, 0.141, 0.235)
+GOLD    = (0.922, 0.714, 0.180)
+GREEN   = (0.451, 0.749, 0.267)
+WHITE   = (1.000, 1.000, 1.000)
+BLACK   = (0.000, 0.000, 0.000)
+DARK    = (0.080, 0.080, 0.080)
+GREY    = (0.450, 0.450, 0.450)
+LGREY   = (0.750, 0.750, 0.750)
 
-# PyMuPDF Base-14 fonts
+# ── PyMuPDF Base-14 fonts ─────────────────────────────────────────────────────
 FB = "hebo"   # Helvetica-Bold
 FR = "helv"   # Helvetica
 
-# TOK100 size range
+# ── Size range for TOK100 ─────────────────────────────────────────────────────
 TOK100_SIZES = ["4-5", "5-6", "6-7", "7-8", "8-9", "9-10"]
+CM_MAP = {"4-5":"110","5-6":"116","6-7":"122","7-8":"128","8-9":"134","9-10":"140"}
 
 
-# ── Reference zone Y positions (relative to INNER content top) ───────────────
-Z_LOGO_TOP   = 0.0      # logo / QR / hole zone start
-Z_LOGO_BOT   = 57.0     # logo / QR / hole zone end
-Z_SEP1       = 57.0     # first K I D S separator
-Z_KIDS       = 64.0     # K I D S text baseline
-Z_SEP2       = 67.0     # second K I D S separator
-Z_SIZE_TOP   = 135.0    # size detail rows start
-Z_GRID_TOP   = 157.0    # all-sizes grid start
-Z_GRID_BOT   = 180.0    # all-sizes grid end
-Z_REFS_TOP   = 182.0    # dept / SKU row
-Z_3COL_TOP   = 192.0    # 3-column section start
-Z_3COL_BOT   = 257.0    # 3-column section end (price separator)
-Z_PRICE_TOP  = 260.0    # price area start
-Z_BOTTOM     = INNER_H  # inner bottom
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
-
-# ── Helper: centred X ─────────────────────────────────────────────────────────
 def _cx(text, font, fs, area_x0, area_w):
+    """Centre text horizontally within an area."""
     tw = fitz.get_text_length(text, fontname=font, fontsize=fs)
     return area_x0 + (area_w - tw) / 2
 
 
 def _fix_currency(raw):
+    """Return a clean currency symbol string."""
     if not raw:
         return "\u20ac"
-    clean = "".join(c for c in raw if 0x20 <= ord(c) < 0x80)
-    if not clean or len(clean) < 1 or clean[0] in "?â":
+    clean = "".join(c for c in str(raw) if 0x20 <= ord(c) < 0x80)
+    if not clean or clean[0] in "?â":
         return "\u20ac"
-    return clean[:2]
+    return clean
 
 
 def _split_price(price_str):
-    p = (price_str or "0,00").strip()
+    p = str(price_str or "0,00").strip()
     m = re.match(r"^(\d+)([,.]?\d*)$", p)
     if m:
         return m.group(1), m.group(2)
@@ -111,7 +118,7 @@ def _split_price(price_str):
 
 
 def _split_barcode(bc):
-    bc = (bc or "").strip()
+    bc = str(bc or "").strip()
     if len(bc) >= 13:
         return bc[0], bc[1:7], bc[7:13]
     elif len(bc) >= 7:
@@ -119,352 +126,54 @@ def _split_barcode(bc):
     return bc, "", ""
 
 
-# ── QR Code generator ─────────────────────────────────────────────────────────
-def _make_qr_png(data: str, size_pt: float, dpi: int) -> bytes | None:
-    """Generate QR code as PNG bytes at the correct target size."""
-    if not HAS_QRCODE:
-        return None
-    px = int(size_pt * dpi / 72)
-    try:
-        qr = qrcode.QRCode(
-            version=None,
-            error_correction=qrcode.constants.ERROR_CORRECT_M,
-            box_size=max(2, px // 25),
-            border=2,
-        )
-        qr.add_data(data)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
-        img = img.resize((px, px), PILImage.LANCZOS)
-        buf = io.BytesIO()
-        img.save(buf, format="PNG")
-        return buf.getvalue()
-    except Exception:
-        return None
+def _draw_barcode_bars(page, x0, y0, w, h, barcode_str):
+    """Draw EAN-13 barcode vertical bars."""
+    digits = barcode_str[:13] if barcode_str else "0000000000000"
+    n_bars = len(digits) * 3          # rough bar count
+    bar_w  = w / n_bars
+    for i, d in enumerate(digits):
+        bx = x0 + i * bar_w * 3
+        bw = bar_w * (1.0 + int(d) % 3 * 0.4)
+        if bx + bw > x0 + w:
+            break
+        page.draw_rect(fitz.Rect(bx, y0, bx + bw, y0 + h),
+                       color=None, fill=DARK, width=0)
 
 
-# ── FSC logo (simplified geometric representation) ───────────────────────────
-def _draw_fsc(page, x0, y0, w, h):
-    """Draw a simplified FSC "MIX Board" logo placeholder."""
-    # Green border box
-    page.draw_rect(fitz.Rect(x0, y0, x0 + w, y0 + h),
-                   color=DGREEN, width=0.5)
-    # Circle (FSC tree symbol placeholder)
-    cx, cy = x0 + w/2, y0 + h*0.38
-    page.draw_circle(fitz.Point(cx, cy), w*0.22,
-                     color=DGREEN, fill=DGREEN, width=0)
-    # "FSC" text
-    fs_fsc = max(3.5, w * 0.22)
-    tw = fitz.get_text_length("FSC", fontname=FB, fontsize=fs_fsc)
-    page.insert_text(fitz.Point(cx - tw/2, y0 + h*0.70 + fs_fsc),
-                     "FSC", fontname=FB, fontsize=fs_fsc, color=DGREEN)
-    # "MIX Board" text
-    fs_mix = max(2.5, w * 0.14)
-    tw2 = fitz.get_text_length("MIX Board", fontname=FR, fontsize=fs_mix)
-    page.insert_text(fitz.Point(cx - tw2/2, y0 + h*0.88 + fs_mix),
-                     "MIX Board", fontname=FR, fontsize=fs_mix, color=DGREEN)
-
-
-# ── Triman recycling logo (simplified) ───────────────────────────────────────
-def _draw_triman(page, x0, y0, w, h):
-    """Draw a simplified Triman/recycling logo (triangle of arrows)."""
-    cx, cy = x0 + w/2, y0 + h/2
-    r = min(w, h) * 0.38
-    # Draw 3 arrowhead triangles in a circle formation
-    for i in range(3):
-        angle = math.radians(90 + i * 120)
-        ax = cx + r * math.cos(angle)
-        ay = cy + r * math.sin(angle)
-        bx = cx + r * math.cos(angle + math.radians(90))
-        by = cy + r * math.sin(angle + math.radians(90))
-        page.draw_line(fitz.Point(ax, ay), fitz.Point(bx, by),
-                       color=DARK, width=1.0)
-    # Center label
-    fs_t = max(3.0, w * 0.18)
-    tw = fitz.get_text_length("01", fontname=FB, fontsize=fs_t)
-    page.insert_text(fitz.Point(cx - tw/2, cy + fs_t/2),
-                     "01", fontname=FB, fontsize=fs_t, color=DARK)
-
-
-# ── Barcode graphic ────────────────────────────────────────────────────────────
 def _draw_barcode(page, x0, y0, w, h, barcode_str):
-    """Draw EAN-13 barcode vertical lines."""
-    n = max(len(barcode_str), 13)
-    bar_unit = w / (n * 1.8)
-    for i, d in enumerate(barcode_str):
-        lx = x0 + i * bar_unit * 1.8
-        lw = bar_unit * (1.6 if int(d) % 3 == 0 else 0.8)
-        if lx < x0 + w:
-            page.draw_line(fitz.Point(lx, y0),
-                           fitz.Point(lx, y0 + h),
-                           color=BLACK, width=lw)
+    """EAN-13 barcode — graphic bars + split digit text."""
+    bar_h = h * 0.60
+    _draw_barcode_bars(page, x0, y0, w, bar_h, barcode_str)
 
-
-# ── Main back panel renderer ──────────────────────────────────────────────────
-def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
-    """
-    Draw complete back panel at (ox, oy) = top-left of outer panel rect.
-    ox, oy are absolute page coordinates.
-    """
-    # ── Outer border ────────────────────────────────────────────────────────
-    page.draw_rect(fitz.Rect(ox, oy, ox + OUTER_W, oy + OUTER_H),
-                   color=BORDER, fill=WHITE, width=0.5)
-
-    # Helper: convert zone-Y to absolute page Y
-    iX = ox + INNER_X       # inner content left edge (abs)
-    iY = oy + INNER_Y       # inner content top edge (abs)
-    cX = iX + INNER_W / 2   # inner centre X
-    iW = INNER_W
-
-    def ay(zone_y): return iY + zone_y
-
-    # ── Section 1: LOGO / HOLE / QR ─────────────────────────────────────────
-    logo_h  = Z_LOGO_BOT - Z_LOGO_TOP   # ~57 pt
-    col_w   = iW / 3.0
-
-    # Left: FSC logo
-    _draw_fsc(page, iX, ay(Z_LOGO_TOP), col_w - 2, logo_h - 4)
-
-    # Centre: Punch hole
-    hole_cx = iX + iW / 2
-    hole_cy = ay(Z_LOGO_TOP + logo_h / 2)
-    page.draw_circle(fitz.Point(hole_cx, hole_cy), 4.5,
-                     color=LGREY, fill=WHITE, width=0.7)
-
-    # Right: QR code
-    qr_x0  = iX + col_w * 2 + 2
-    qr_y0  = ay(Z_LOGO_TOP + 6)
-    qr_size= col_w - 4   # square QR
-    barcode = str(item_data.get("barcode_number", "") or "0000000000000")
-
-    qr_png = _make_qr_png(barcode, qr_size, render_dpi)
-    if qr_png:
-        page.insert_image(
-            fitz.Rect(qr_x0, qr_y0, qr_x0 + qr_size, qr_y0 + qr_size - 6),
-            stream=qr_png, keep_proportion=True
-        )
-    else:
-        # Fallback: placeholder grid
-        page.draw_rect(fitz.Rect(qr_x0, qr_y0, qr_x0 + qr_size, qr_y0 + qr_size - 6),
-                       color=DARK, width=0.5)
-        qr_fs = 4.5
-        page.insert_text(fitz.Point(qr_x0 + 2, qr_y0 + qr_size / 2),
-                         "QR", fontname=FB, fontsize=qr_fs, color=DARK)
-
-    # Recycling text flanking the QR (very small)
-    recycle_fs = 3.5
-    page.insert_text(fitz.Point(qr_x0, ay(Z_LOGO_TOP + 1)),
-                     "SEPARATE THE WASTE",
-                     fontname=FR, fontsize=recycle_fs, color=GREY)
-    page.insert_text(fitz.Point(qr_x0, ay(Z_LOGO_BOT - 5)),
-                     "DIFFERENZIA I RIFIUTI",
-                     fontname=FR, fontsize=recycle_fs, color=GREY)
-
-    # ── Section 2: Separator lines + K I D S ────────────────────────────────
-    page.draw_line(fitz.Point(iX, ay(Z_SEP1)),
-                   fitz.Point(iX + iW, ay(Z_SEP1)),
-                   color=DARK, width=1.0)
-
-    kids_fs = 8.5
+    p1, p2, p3 = _split_barcode(barcode_str)
+    bc_txt = f"{p1}  {p2}  {p3}"
+    fs = 5.5
     page.insert_text(
-        fitz.Point(_cx("K I D S", FB, kids_fs, iX, iW), ay(Z_KIDS)),
-        "K I D S", fontname=FB, fontsize=kids_fs, color=DARK
-    )
-
-    page.draw_line(fitz.Point(iX, ay(Z_SEP2 + kids_fs * 0.3)),
-                   fitz.Point(iX + iW, ay(Z_SEP2 + kids_fs * 0.3)),
-                   color=DARK, width=1.0)
-
-    # ── Section 3: SIZE DETAILS ROW ─────────────────────────────────────────
-    sizes    = item_data.get("sizes") or {}
-    cur_yrs  = sizes.get("YEARS", "")
-    cur_cm   = sizes.get("CM", "")
-    cur_it   = sizes.get("IT", "")
-    cur_mex  = re.sub(r"\s*A$", "", sizes.get("MEX", cur_it) or "").strip()
-
-    fs_lbl = 5.5    # label font size
-    fs_val = 8.5    # value font size
-
-    half = iW / 2
-
-    # Left col: YEARS / IT
-    lx = iX + 2
-    page.insert_text(fitz.Point(lx, ay(Z_SIZE_TOP + fs_lbl)),
-                     "YEARS", fontname=FR, fontsize=fs_lbl, color=GREY)
-    page.insert_text(fitz.Point(lx + 18, ay(Z_SIZE_TOP + fs_val)),
-                     cur_yrs, fontname=FB, fontsize=fs_val, color=DARK)
-    page.insert_text(fitz.Point(lx, ay(Z_SIZE_TOP + fs_val + fs_lbl + 1)),
-                     "IT", fontname=FR, fontsize=fs_lbl, color=GREY)
-    page.insert_text(fitz.Point(lx + 18, ay(Z_SIZE_TOP + fs_val * 2 + 1)),
-                     cur_it, fontname=FB, fontsize=fs_val, color=DARK)
-
-    # Right col: CM / MEX A
-    rx = iX + half + 2
-    page.insert_text(fitz.Point(rx, ay(Z_SIZE_TOP + fs_lbl)),
-                     "CM", fontname=FR, fontsize=fs_lbl, color=GREY)
-    page.insert_text(fitz.Point(rx + 14, ay(Z_SIZE_TOP + fs_val)),
-                     cur_cm, fontname=FB, fontsize=fs_val, color=DARK)
-    page.insert_text(fitz.Point(rx, ay(Z_SIZE_TOP + fs_val + fs_lbl + 1)),
-                     "MEX", fontname=FR, fontsize=fs_lbl, color=GREY)
-    mex_str = f"{cur_mex}  A"
-    page.insert_text(fitz.Point(rx + 14, ay(Z_SIZE_TOP + fs_val * 2 + 1)),
-                     mex_str, fontname=FB, fontsize=fs_val, color=DARK)
-
-    # ── Section 4: SIZE RANGE GRID ──────────────────────────────────────────
-    fs_grid = 6.5
-    grid_y  = ay(Z_GRID_TOP)
-    col_step = iW / len(TOK100_SIZES)
-    for ci, sz in enumerate(TOK100_SIZES):
-        sx = iX + ci * col_step
-        is_cur = (sz == cur_yrs)
-        if is_cur:
-            # Black background highlight
-            hi_x0 = sx - 0.5
-            hi_x1 = sx + col_step - 0.5
-            page.draw_rect(fitz.Rect(hi_x0, grid_y - fs_grid,
-                                     hi_x1, grid_y + 2.5),
-                           color=BLACK, fill=BLACK, width=0)
-            txt_color = WHITE
-        else:
-            txt_color = DARK
-        tw = fitz.get_text_length(sz, fontname=FB if is_cur else FR,
-                                  fontsize=fs_grid)
-        page.insert_text(
-            fitz.Point(sx + (col_step - tw) / 2, grid_y),
-            sz,
-            fontname=FB if is_cur else FR,
-            fontsize=fs_grid,
-            color=txt_color
-        )
-
-    # ── Section 5: DEPT / COLOUR / SKU ROW ──────────────────────────────────
-    sub_dept = str(item_data.get("sub_department", "") or "")
-    dept     = str(item_data.get("department", "") or "")
-    sku      = str(item_data.get("sku_code", "") or "")
-    fs_ref   = 6.5
-    ref_txt  = f"{sub_dept}   {dept}   {sku}"
-    page.insert_text(
-        fitz.Point(_cx(ref_txt, FR, fs_ref, iX, iW), ay(Z_REFS_TOP + fs_ref)),
-        ref_txt, fontname=FR, fontsize=fs_ref, color=DARK
-    )
-
-    # ── Section 6: THREE-COLUMN ROW ──────────────────────────────────────────
-    c3_y0 = ay(Z_3COL_TOP)
-    c3_y1 = ay(Z_3COL_BOT)
-    c3_h  = c3_y1 - c3_y0
-    c3_w  = iW / 3.0
-
-    # Vertical dividers
-    page.draw_line(fitz.Point(iX + c3_w,     c3_y0),
-                   fitz.Point(iX + c3_w,     c3_y1), color=LGREY, width=0.3)
-    page.draw_line(fitz.Point(iX + 2 * c3_w, c3_y0),
-                   fitz.Point(iX + 2 * c3_w, c3_y1), color=LGREY, width=0.3)
-
-    # Left: Triman recycling logo
-    tri_pad = 3.0
-    _draw_triman(page,
-                 iX + tri_pad, c3_y0 + tri_pad,
-                 c3_w - 2 * tri_pad, c3_h - 2 * tri_pad)
-
-    # Middle: barcode + refs
-    bx0    = iX + c3_w + 2
-    bx1    = iX + 2 * c3_w - 2
-    bw     = bx1 - bx0
-    bc_str = str(item_data.get("barcode_number", "") or "")
-    p1, p2, p3 = _split_barcode(bc_str)
-
-    bc_bar_h = 14.0
-    bc_y0    = c3_y0 + 2
-    _draw_barcode(page, bx0, bc_y0, bw, bc_bar_h, bc_str)
-
-    fs_bc    = 6.0
-    bc_txt   = f"{p1}  {p2}  {p3}"
-    page.insert_text(
-        fitz.Point(_cx(bc_txt, FR, fs_bc, bx0, bw), bc_y0 + bc_bar_h + fs_bc),
-        bc_txt, fontname=FR, fontsize=fs_bc, color=DARK
-    )
-
-    style = str(item_data.get("style_code", "") or "")
-    cref  = str(item_data.get("commercial_ref", "") or "")
-    cur_y = bc_y0 + bc_bar_h + fs_bc + 4
-    for txt in [style, cref]:
-        if txt:
-            page.insert_text(
-                fitz.Point(_cx(txt, FR, fs_bc, bx0, bw), cur_y + fs_bc),
-                txt, fontname=FR, fontsize=fs_bc, color=GREY
-            )
-            cur_y += fs_bc + 2.5
-
-    # Right: MADE IN + address
-    rx0 = iX + 2 * c3_w + 2
-    country_raw = str(item_data.get("country_of_origin", "") or "")
-    country     = re.sub(r"^MADE\s+IN\s+", "", country_raw.upper()).strip()
-    cty_fs      = 6.5
-
-    if country:
-        made_y = c3_y0 + cty_fs * 2 + 4
-        page.insert_text(fitz.Point(rx0, made_y),
-                         "MADE IN", fontname=FR, fontsize=5.5, color=GREY)
-        page.insert_text(fitz.Point(rx0, made_y + cty_fs + 2),
-                         country, fontname=FB, fontsize=cty_fs, color=DARK)
-
-    # OVS address (tiny)
-    addr_fs = 4.0
-    ovs_addr= "OVS SpA"
-    ovs_via = "Via Terraglio 17"
-    ovs_loc = "30174 Venezia IT"
-    addr_y  = c3_y1 - addr_fs * 5
-    for aline in [ovs_addr, ovs_via, ovs_loc]:
-        page.insert_text(fitz.Point(rx0, addr_y + addr_fs),
-                         aline, fontname=FR, fontsize=addr_fs, color=LGREY)
-        addr_y += addr_fs + 1.5
-
-    # ── Section 7: PRICE ─────────────────────────────────────────────────────
-    # Separator line
-    page.draw_line(fitz.Point(iX, ay(Z_PRICE_TOP)),
-                   fitz.Point(iX + iW, ay(Z_PRICE_TOP)),
-                   color=DGREEN, width=0.7)
-
-    currency = _fix_currency(item_data.get("currency_symbol", ""))
-    price_str = str(item_data.get("selling_price", "0,00") or "0,00")
-    major, minor = _split_price(price_str)
-
-    fs_sym   = 10.0
-    fs_major = 26.0
-    fs_minor = 14.0
-
-    sym_w  = fitz.get_text_length(currency, fontname=FR, fontsize=fs_sym) + 3
-    maj_w  = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
-    min_w  = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
-    total  = sym_w + maj_w + min_w
-    px     = cX - total / 2
-
-    price_y = ay(Z_PRICE_TOP + 26)
-    page.insert_text(fitz.Point(px, price_y - fs_major * 0.45),
-                     currency, fontname=FR, fontsize=fs_sym, color=DARK)
-    page.insert_text(fitz.Point(px + sym_w, price_y),
-                     major, fontname=FB, fontsize=fs_major, color=DARK)
-    page.insert_text(fitz.Point(px + sym_w + maj_w + 1, price_y - fs_major * 0.35),
-                     minor, fontname=FR, fontsize=fs_minor, color=DARK)
-
-    # ── Qty below panel ──────────────────────────────────────────────────────
-    qty     = item_data.get("quantity", 0)
-    qty_txt = f"Qty - {qty}"
-    fs_qty  = 10.0
-    page.insert_text(
-        fitz.Point(_cx(qty_txt, FB, fs_qty, ox, OUTER_W), oy + OUTER_H + fs_qty + 3),
-        qty_txt, fontname=FB, fontsize=fs_qty, color=DARK
+        fitz.Point(_cx(bc_txt, FR, fs, x0, w), y0 + bar_h + fs + 1),
+        bc_txt, fontname=FR, fontsize=fs, color=DARK,
     )
 
 
-# ── Front panel ───────────────────────────────────────────────────────────────
+# ── Template document (cached singleton) ──────────────────────────────────────
+_template_doc: fitz.Document | None = None
+
+def _get_template_doc() -> fitz.Document | None:
+    global _template_doc
+    if _template_doc is None:
+        if os.path.exists(BACK_PANEL_TEMPLATE):
+            _template_doc = fitz.open(BACK_PANEL_TEMPLATE)
+    return _template_doc
+
+
+# ── FRONT panel ───────────────────────────────────────────────────────────────
+
 def _draw_front_panel(page, ox, oy):
-    """Navy blue front hang-tag — same geometry as back panel outer bounds."""
+    """Navy OVS front hang-tag."""
     cx = ox + OUTER_W / 2
 
-    # Outer white border rect
+    # Outer white panel (no border)
     page.draw_rect(fitz.Rect(ox, oy, ox + OUTER_W, oy + OUTER_H),
-                   color=BORDER, fill=WHITE, width=0.5)
+                   color=None, fill=WHITE, width=0)
 
     # Inner navy area
     nx0 = ox + INNER_X
@@ -472,56 +181,256 @@ def _draw_front_panel(page, ox, oy):
     nw  = INNER_W
     nh  = INNER_H
     page.draw_rect(fitz.Rect(nx0, ny0, nx0 + nw, ny0 + nh),
-                   color=NAVY, fill=NAVY, width=0)
+                   color=None, fill=NAVY, width=0)
+
+    # Magenta inner border (same as back panel — Pantone Rhodamine Red C)
+    page.draw_rect(fitz.Rect(nx0, ny0, nx0 + nw, ny0 + nh),
+                   color=MAGENTA, fill=None, width=0.8)
+
+    # Punch hole (white + magenta border)
+    page.draw_circle(fitz.Point(ox + HOLE_RX, oy + HOLE_RY), HOLE_R,
+                     color=MAGENTA, fill=WHITE, width=0.8)
+
+    # Magenta accent strip — top
+    page.draw_line(fitz.Point(nx0, ny0 + 20),
+                   fitz.Point(nx0 + nw, ny0 + 20),
+                   color=MAGENTA, width=2.0)
 
     ncx = nx0 + nw / 2
 
-    # Punch hole
-    page.draw_circle(fitz.Point(ncx, ny0 + 14), 5.0,
-                     color=WHITE, fill=WHITE, width=0)
-
-    # Magenta accent strip (top)
-    page.draw_line(fitz.Point(nx0, ny0 + 26),
-                   fitz.Point(nx0 + nw, ny0 + 26),
-                   color=MAGENTA, width=2.5)
-
-    # "OVS" (bold gold, large centred)
-    fs_ovs = 30.0
+    # "OVS" gold text
+    fs_ovs = 28.0
     ovs_y  = ny0 + nh * 0.50
     page.insert_text(
         fitz.Point(_cx("OVS", FB, fs_ovs, nx0, nw), ovs_y),
-        "OVS", fontname=FB, fontsize=fs_ovs, color=GOLD
+        "OVS", fontname=FB, fontsize=fs_ovs, color=GOLD,
     )
 
-    # "kids" (gold, smaller)
+    # "kids" gold text
     fs_kids = 12.0
     page.insert_text(
-        fitz.Point(_cx("kids", FR, fs_kids, nx0, nw), ovs_y + 14),
-        "kids", fontname=FR, fontsize=fs_kids, color=GOLD
+        fitz.Point(_cx("kids", FR, fs_kids, nx0, nw), ovs_y + 16),
+        "kids", fontname=FR, fontsize=fs_kids, color=GOLD,
     )
 
-    # Magenta accent strip (bottom)
-    page.draw_line(fitz.Point(nx0, ny0 + nh - 12),
-                   fitz.Point(nx0 + nw, ny0 + nh - 12),
-                   color=MAGENTA, width=2.5)
+    # Magenta accent strip — bottom (pink line before end of label)
+    page.draw_line(fitz.Point(nx0, ny0 + nh - 10),
+                   fitz.Point(nx0 + nw, ny0 + nh - 10),
+                   color=MAGENTA, width=2.0)
+
+
+# ── BACK panel ────────────────────────────────────────────────────────────────
+
+def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
+    """
+    Draw complete back panel at absolute page position (ox, oy).
+
+    Strategy:
+    1. Embed static template from back_panel_ref.pdf  (logos, QR, borders …)
+    2. White-overwrite the 3 variable zones
+    3. Draw variable content (size grid, barcode, price …)
+    """
+    # ── 1. Static template embed ──────────────────────────────────────────────
+    tpl = _get_template_doc()
+    tgt = fitz.Rect(ox, oy, ox + OUTER_W, oy + OUTER_H)
+
+    if tpl is not None:
+        page.show_pdf_page(tgt, tpl, 0)
+    else:
+        # Fallback: plain white panel with magenta border
+        page.draw_rect(tgt, color=None, fill=WHITE, width=0)
+        ix0, iy0 = ox + INNER_X, oy + INNER_Y
+        page.draw_rect(
+            fitz.Rect(ix0, iy0, ix0 + INNER_W, iy0 + INNER_H),
+            color=MAGENTA, fill=None, width=0.8,
+        )
+        page.draw_circle(fitz.Point(ox + HOLE_RX, oy + HOLE_RY), HOLE_R,
+                         color=MAGENTA, fill=WHITE, width=0.8)
+
+    # ── 2. White overwrite zones ──────────────────────────────────────────────
+    for x0r, y0r, x1r, y1r in ZONES:
+        page.draw_rect(
+            fitz.Rect(ox + x0r, oy + y0r, ox + x1r, oy + y1r),
+            color=None, fill=WHITE, width=0,
+        )
+
+    # After overwriting zone A we must re-draw the green separator (it spans zone boundary)
+    # and re-draw bottom portion of the magenta inner border (we erased it via zone C).
+    ix0 = ox + INNER_X
+    iy0 = oy + INNER_Y
+    ix1 = ix0 + INNER_W
+    iy1 = iy0 + INNER_H
+
+    # Restore bottom + side borders of inner content area
+    page.draw_line(fitz.Point(ix0, iy0 + INNER_H), fitz.Point(ix1, iy0 + INNER_H),
+                   color=MAGENTA, width=0.8)
+    page.draw_line(fitz.Point(ix0, iy0 + 130), fitz.Point(ix0, iy1),
+                   color=MAGENTA, width=0.8)
+    page.draw_line(fitz.Point(ix1, iy0 + 130), fitz.Point(ix1, iy1),
+                   color=MAGENTA, width=0.8)
+
+    # ── Helper: absolute page coordinates from panel-relative ─────────────────
+    def ax(rel): return ox + rel
+    def ay(rel): return oy + rel
+    icx = ix0 + INNER_W / 2  # inner centre X
+
+    # ── 3a. SIZE DETAIL ROW ───────────────────────────────────────────────────
+    sizes    = item_data.get("sizes") or {}
+    cur_yrs  = sizes.get("YEARS", "")
+    cur_it   = sizes.get("IT")  or cur_yrs
+    cur_mex  = re.sub(r"\s*A$", "", sizes.get("MEX", cur_yrs) or "").strip()
+    cur_cm   = CM_MAP.get(cur_yrs, sizes.get("CM", ""))
+    half     = INNER_W / 2
+    fs_lbl   = 5.0
+    fs_val   = 7.5
+
+    # Left col: YEARS / IT
+    lx = ix0 + 3
+    page.insert_text(fitz.Point(lx, ay(143) + fs_lbl),
+                     "YEARS", fontname=FR, fontsize=fs_lbl, color=GREY)
+    page.insert_text(fitz.Point(lx + 18, ay(143) + fs_val),
+                     cur_yrs, fontname=FB, fontsize=fs_val, color=DARK)
+    page.insert_text(fitz.Point(lx, ay(143) + fs_val + fs_lbl + 3),
+                     "IT", fontname=FR, fontsize=fs_lbl, color=GREY)
+    page.insert_text(fitz.Point(lx + 18, ay(143) + fs_val * 2 + 3),
+                     cur_it, fontname=FB, fontsize=fs_val, color=DARK)
+
+    # Right col: CM / MEX A
+    rx = ix0 + half + 3
+    page.insert_text(fitz.Point(rx, ay(143) + fs_lbl),
+                     "CM", fontname=FR, fontsize=fs_lbl, color=GREY)
+    page.insert_text(fitz.Point(rx + 14, ay(143) + fs_val),
+                     cur_cm, fontname=FB, fontsize=fs_val, color=DARK)
+    page.insert_text(fitz.Point(rx, ay(143) + fs_val + fs_lbl + 3),
+                     "MEX", fontname=FR, fontsize=fs_lbl, color=GREY)
+    page.insert_text(fitz.Point(rx + 14, ay(143) + fs_val * 2 + 3),
+                     f"{cur_mex}  A", fontname=FB, fontsize=fs_val, color=DARK)
+
+    # ── 3b. SIZE GRID ─────────────────────────────────────────────────────────
+    fs_grid  = 6.0
+    grid_y   = ay(167)         # baseline of size text
+    col_step = INNER_W / len(TOK100_SIZES)
+
+    for ci, sz in enumerate(TOK100_SIZES):
+        sx  = ix0 + ci * col_step
+        is_cur = (sz == cur_yrs)
+        if is_cur:
+            # BLACK highlight box
+            page.draw_rect(
+                fitz.Rect(sx, grid_y - fs_grid - 1, sx + col_step, grid_y + 2),
+                color=None, fill=BLACK, width=0,
+            )
+            txt_color = WHITE
+            fnt = FB
+        else:
+            txt_color = DARK
+            fnt = FR
+        tw = fitz.get_text_length(sz, fontname=fnt, fontsize=fs_grid)
+        page.insert_text(
+            fitz.Point(sx + (col_step - tw) / 2, grid_y),
+            sz, fontname=fnt, fontsize=fs_grid, color=txt_color,
+        )
+
+    # ── 3c. THREE-COLUMN SECTION ──────────────────────────────────────────────
+    # Zone B: y_rel 183–257; three equal columns
+    sub_dept = str(item_data.get("sub_department", "") or "")
+    dept     = str(item_data.get("department",     "") or "")
+    sku      = str(item_data.get("sku_code",        "") or "")
+    style    = str(item_data.get("style_code",      "") or "")
+    cref     = str(item_data.get("commercial_ref",  "") or "")
+    bc_str   = str(item_data.get("barcode_number",  "") or "")
+    qty      = item_data.get("quantity", 0)
+
+    c3w = INNER_W / 3.0   # column width ≈ 42.4 pt
+
+    # Vertical dividers
+    div_y0 = ay(183)
+    div_y1 = ay(257)
+    page.draw_line(fitz.Point(ix0 + c3w,     div_y0),
+                   fitz.Point(ix0 + c3w,     div_y1), color=LGREY, width=0.3)
+    page.draw_line(fitz.Point(ix0 + 2*c3w,   div_y0),
+                   fitz.Point(ix0 + 2*c3w,   div_y1), color=LGREY, width=0.3)
+
+    # ── Left column: sub-dept / dept / SKU codes ──────────────────────────────
+    fs_c = 5.5
+    ref_txt = f"{sub_dept}  {dept}  {sku}"
+    page.insert_text(
+        fitz.Point(_cx(ref_txt, FR, fs_c, ix0, c3w), ay(192) + fs_c),
+        ref_txt, fontname=FR, fontsize=fs_c, color=DARK,
+    )
+
+    # ── Middle column: barcode graphic + text + style + commercial ref ─────────
+    mc_x0 = ix0 + c3w + 2
+    mc_w  = c3w - 4
+    _draw_barcode(page, mc_x0, ay(194), mc_w, 20.0, bc_str)
+    for txt, y_off in [(style, 35), (cref, 46)]:
+        if txt:
+            page.insert_text(
+                fitz.Point(_cx(txt, FR, fs_c, mc_x0, mc_w), ay(194) + y_off),
+                txt, fontname=FR, fontsize=fs_c, color=GREY,
+            )
+
+    # ── Right column: OVS address (static) ────────────────────────────────────
+    rc_x0  = ix0 + 2 * c3w + 2
+    rc_fs  = 4.0
+    ovs_lines = ["OVS SpA", "Via Terraglio 17", "30174 Venezia IT"]
+    rc_y   = ay(200)
+    for line in ovs_lines:
+        page.insert_text(fitz.Point(rc_x0, rc_y + rc_fs), line,
+                         fontname=FR, fontsize=rc_fs, color=LGREY)
+        rc_y += rc_fs + 2
+
+    # ── 3d. GREEN PRICE SEPARATOR ─────────────────────────────────────────────
+    # Solid thin green line at measured position
+    page.draw_rect(
+        fitz.Rect(ax(SEP_X0), ay(SEP_Y), ax(SEP_X1), ay(SEP_Y) + SEP_H),
+        color=None, fill=GREEN, width=0,
+    )
+
+    # ── 3e. PRICE ─────────────────────────────────────────────────────────────
+    currency  = _fix_currency(item_data.get("currency_symbol", ""))
+    price_raw = str(item_data.get("selling_price", "0,00") or "0,00")
+    major, minor = _split_price(price_raw)
+
+    fs_sym   = 10.0
+    fs_major = 24.0
+    fs_minor = 13.0
+
+    sym_w  = fitz.get_text_length(currency, fontname=FR, fontsize=fs_sym) + 2
+    maj_w  = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
+    min_w  = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
+    total  = sym_w + maj_w + min_w
+    px     = icx - total / 2
+
+    price_y = ay(SEP_Y + 24)
+    page.insert_text(fitz.Point(px,           price_y - fs_major * 0.40),
+                     currency, fontname=FR, fontsize=fs_sym, color=DARK)
+    page.insert_text(fitz.Point(px + sym_w,   price_y),
+                     major,    fontname=FB, fontsize=fs_major, color=DARK)
+    page.insert_text(fitz.Point(px + sym_w + maj_w + 1, price_y - fs_major * 0.35),
+                     minor,    fontname=FR, fontsize=fs_minor, color=DARK)
+
+    # ── 4. Qty label — below the outer panel ──────────────────────────────────
+    qty_txt = f"Qty - {qty}"
+    fs_qty  = 10.0
+    page.insert_text(
+        fitz.Point(_cx(qty_txt, FB, fs_qty, ox, OUTER_W),
+                   oy + OUTER_H + fs_qty + 3),
+        qty_txt, fontname=FB, fontsize=fs_qty, color=DARK,
+    )
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
 
 def build_label_pdf(item_data: dict) -> bytes:
-    """
-    Single-item label PDF (front + back side by side).
-    Page size: (OUTER_W * 2 + 10) x (OUTER_H + 20) pt.
-    """
+    """Single-item PDF: front + back side by side."""
     pw = OUTER_W * 2 + 10
     ph = OUTER_H + 25
     doc  = fitz.open()
     page = doc.new_page(width=pw, height=ph)
-    page.draw_rect(fitz.Rect(0, 0, pw, ph), color=WHITE, fill=WHITE, width=0)
-
+    page.draw_rect(fitz.Rect(0, 0, pw, ph), color=None, fill=WHITE, width=0)
     _draw_front_panel(page, 0, 0)
     _draw_back_panel(page, OUTER_W + 10, 0, item_data)
-
     out = io.BytesIO()
     doc.save(out, garbage=4, deflate=True)
     doc.close()

@@ -1,0 +1,13 @@
+{
+  "customer": "OVS",
+  "full_name": "OVS SpA",
+  "address": ["Via Terraglio 17", "30174 Venezia IT"],
+  "templates_path": "backend/templates/OVS",
+  "known_codes": {
+    "TOK100": { "description": "Kids 100mm hang tag",    "builder": "tok100_label_builder" },
+    "TOK70":  { "description": "Kids 70mm hang tag",     "builder": null },
+    "ATS100": { "description": "Additional tag school",  "builder": null },
+    "HOKA10": { "description": "Accessories tag type 1", "builder": null },
+    "HOKA11": { "description": "Accessories tag type 2", "builder": null }
+  }
+}

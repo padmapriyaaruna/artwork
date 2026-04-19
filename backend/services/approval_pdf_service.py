@@ -25,7 +25,7 @@ from collections import defaultdict
 
 import fitz  # PyMuPDF
 
-from backend.engine.tok100_label_builder import (
+from backend.engine.customers.ovs.tok100_renderer import (
     _draw_front_panel,
     _draw_back_panel,
     OUTER_W, OUTER_H,

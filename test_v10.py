@@ -2,7 +2,7 @@
 import sys, os
 sys.path.insert(0, ".")
 
-from backend.engine.tok100_label_builder import build_label_pdf, build_label_png
+from backend.engine.customers.ovs.tok100_renderer import build_label_pdf, build_label_png
 from backend.services.approval_pdf_service import create_approval_sheet_pdf
 
 # Test data from B0854559

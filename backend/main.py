@@ -12,6 +12,7 @@ from backend.config import APP_NAME, APP_VERSION, ALLOWED_ORIGINS, _ALLOW_ALL_OR
 from backend.database import create_tables, apply_migrations, AsyncSessionLocal
 from backend.engine.template_registry import seed_default_templates
 from backend.api import orders, artwork, approvals
+from backend.routers.intake import router as intake_router
 
 
 # ── Startup / Shutdown ────────────────────────────────────────────────────────
@@ -72,6 +73,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(orders.router,    prefix="/api")
 app.include_router(artwork.router,   prefix="/api")
 app.include_router(approvals.router, prefix="/api")
+app.include_router(intake_router,    prefix="/api")
 
 
 # ── Health check ──────────────────────────────────────────────────────────────

@@ -1,0 +1,20 @@
+{
+  "customer_code": "OVS",
+  "label_type": "TOK100",
+  "page_width_pt": 150.3,
+  "page_height_pt": 305.5,
+  "renderer_module": "ovs.tok100_renderer",
+  "static_template": "backend/templates/OVS/TOK100/back_panel_ref.pdf",
+  "notes": "OVS/TOK100 uses a hard-coded renderer (customers/ovs/tok100_renderer.py) with scientifically extracted coordinates from TOK100_B0854559_1.pdf. The variable_zones below are informational; the renderer does NOT read them at runtime.",
+  "variable_zones": [
+    {"id": "years_table",    "name": "YEARS/CM/IT/MEX table",    "field_key": "sizes",            "x0": 11.5, "y0": 120.0, "x1": 138.7, "y1": 188.0, "type": "table"},
+    {"id": "size_chart",     "name": "Size chart 2x3 grid",      "field_key": "sizes",            "x0": 11.5, "y0": 163.5, "x1": 96.3,  "y1": 188.0, "type": "size_grid"},
+    {"id": "dept_codes",     "name": "Dept / Sub-dept / SKU",    "field_key": "sub_department",   "x0": 54.9, "y0": 195.0, "x1": 96.3,  "y1": 205.0, "type": "text"},
+    {"id": "barcode",        "name": "EAN-13 barcode bars",       "field_key": "barcode_number",   "x0": 54.9, "y0": 205.0, "x1": 96.3,  "y1": 225.0, "type": "barcode"},
+    {"id": "barcode_digits", "name": "Barcode digit string",      "field_key": "barcode_number",   "x0": 54.9, "y0": 225.0, "x1": 96.3,  "y1": 232.0, "type": "text"},
+    {"id": "style_code",     "name": "Style code",               "field_key": "style_code",       "x0": 54.9, "y0": 232.0, "x1": 96.3,  "y1": 241.0, "type": "text"},
+    {"id": "cref",           "name": "Commercial reference",     "field_key": "commercial_ref",   "x0": 54.9, "y0": 241.0, "x1": 96.3,  "y1": 250.0, "type": "text"},
+    {"id": "address",        "name": "Made in + OVS address",    "field_key": "country_of_origin","x0": 96.3, "y0": 188.0, "x1": 138.7, "y1": 258.0, "type": "text_rotated"},
+    {"id": "price",          "name": "Currency + price",         "field_key": "selling_price",    "x0": 11.5, "y0": 258.0, "x1": 138.7, "y1": 305.5, "type": "price"}
+  ]
+}

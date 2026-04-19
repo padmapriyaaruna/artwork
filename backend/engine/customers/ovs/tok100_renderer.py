@@ -296,44 +296,51 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     fs_lbl   = 6.5
     fs_val   = 9.0
     CELL_PAD = 4.0
-    TABLE_TOP = 138.0     # panel-relative y of top border
-    TABLE_BOT = 163.5     # panel-relative y of bottom border
-                          # Must be <= chip_box_top - 2pt clearance
-                          # chip_box_top = R1_BL - fs_gr - 1.0 = 173.3-6.5-1.0 = 165.8
-                          # TABLE_BOT=163.5 gives 2.3pt clearance gap to chip box
-    vert_x = ix0 + half   # vertical divider x
+    TABLE_TOP = 140.1     # panel-relative y of top border  (measured: 513.32-373.25)
+    TABLE_BOT = 163.1     # panel-relative y of bottom border (measured: 536.38-373.25)
+                          # TABLE_BOT=163.1 -> chip_box_top=165.8 -> 2.7pt clearance ✓
+    # Horizontal line inset — measured from actual PDF matching KIDS separator:
+    #   KIDS abs x0=609.29, ix0=593.35 → inset_L = 15.94pt from ix0
+    #   KIDS abs x1=714.89, ix1=720.55 → inset_R =  5.66pt from ix1
+    #   Same inset used for thin TABLE lines (608.97..714.58 → 15.62 / 5.97pt)
+    #   Use the KIDS values so both sets of lines are visually identical.
+    TBL_INSET_L = 15.9   # left inset from ix0 (prevents touching magenta border)
+    TBL_INSET_R =  5.7   # right inset from ix1
+    tbl_x0 = ix0 + TBL_INSET_L
+    tbl_x1 = ix1 - TBL_INSET_R
+    vert_x = ix0 + half   # vertical divider x (unchanged)
 
-    # Top horizontal line: ix0 -> ix1 (same span as KIDS lines above)
-    page.draw_line(fitz.Point(ix0, ay(TABLE_TOP)), fitz.Point(ix1, ay(TABLE_TOP)),
+    # Top horizontal line (matches KIDS separator width exactly — NOT touching border)
+    page.draw_line(fitz.Point(tbl_x0, ay(TABLE_TOP)), fitz.Point(tbl_x1, ay(TABLE_TOP)),
                    color=DARK, width=0.8)
     # Bottom horizontal line
-    page.draw_line(fitz.Point(ix0, ay(TABLE_BOT)), fitz.Point(ix1, ay(TABLE_BOT)),
+    page.draw_line(fitz.Point(tbl_x0, ay(TABLE_BOT)), fitz.Point(tbl_x1, ay(TABLE_BOT)),
                    color=DARK, width=0.8)
-    # Vertical divider (right border of left cell)
+    # Vertical divider (spans full TABLE_TOP..TABLE_BOT, centred)
     page.draw_line(fitz.Point(vert_x, ay(TABLE_TOP)), fitz.Point(vert_x, ay(TABLE_BOT)),
                    color=DARK, width=0.8)
 
     # Row 1 (YEARS / CM)  bl = 148.0 panel-relative
     bl1 = ay(148.0)
-    page.insert_text(fitz.Point(ix0 + CELL_PAD, bl1),
+    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD, bl1),
                      "YEARS", fontname=FB, fontsize=fs_lbl, color=DARK)
     page.insert_text(fitz.Point(_rx(cur_yrs, FB, fs_val, vert_x - CELL_PAD), bl1),
                      cur_yrs, fontname=FB, fontsize=fs_val, color=DARK)
     page.insert_text(fitz.Point(vert_x + CELL_PAD, bl1),
                      "CM", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(cur_cm, FB, fs_val, ix1 - CELL_PAD), bl1),
+    page.insert_text(fitz.Point(_rx(cur_cm, FB, fs_val, tbl_x1 - CELL_PAD), bl1),
                      cur_cm, fontname=FB, fontsize=fs_val, color=DARK)
 
     # Row 2 (IT / MEX)  bl = 159.1 panel-relative
     bl2 = ay(159.1)
     mex_txt = cur_mex + " A"
-    page.insert_text(fitz.Point(ix0 + CELL_PAD, bl2),
+    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD, bl2),
                      "IT", fontname=FB, fontsize=fs_lbl, color=DARK)
     page.insert_text(fitz.Point(_rx(cur_it, FB, fs_val, vert_x - CELL_PAD), bl2),
                      cur_it, fontname=FB, fontsize=fs_val, color=DARK)
     page.insert_text(fitz.Point(vert_x + CELL_PAD, bl2),
                      "MEX", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(mex_txt, FB, fs_val, ix1 - CELL_PAD), bl2),
+    page.insert_text(fitz.Point(_rx(mex_txt, FB, fs_val, tbl_x1 - CELL_PAD), bl2),
                      mex_txt, fontname=FB, fontsize=fs_val, color=DARK)
 
     # ── 6. SIZE CHART ─────────────────────────────────────────────────────────
@@ -407,12 +414,13 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     mc_x1 = ix0 + 2 * _C3     # right edge of middle column
     mc_w  = mc_x1 - mc_x0     # ~42.4 pt
 
-    # Barcode image: inset 8pt from left to fully clear the logo bleed edge.
-    # The price-tag/tag logo in the left col extends ~7pt past mc_x0.
-    # bc_x0 = mc_x0 + 8.0 places bars cleanly to the right with no overlap.
-    BC_INSET = 8.0
+    # Barcode image: inset 5pt from left to clear the logo bleed edge.
+    # Reduced from 8pt → 5pt to give barcode ~3pt more width.
+    # Left-col logos bleed ~4pt past mc_x0; 5pt inset keeps 1pt clear margin.
+    # Right side: 0.5pt margin from mc_x1. Logos on right col unaffected.
+    BC_INSET = 5.0
     bc_x0 = mc_x0 + BC_INSET
-    bc_w  = mc_w  - BC_INSET - 0.5   # ~33.9 pt
+    bc_w  = mc_w  - BC_INSET - 0.5   # ~36.9 pt (was 33.9pt)
 
     # Dept codes: centred in bc_x0..bc_x0+bc_w (aligns with bars, avoids logo)
     fs_dept  = 5.0
@@ -509,16 +517,20 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
 
     # Currency symbol size:
     # Single char (euro/pound/dollar): same as fs_major (like actual 27.67)
-    # 3-char "AED": scaled down so it visually appears as superscript-height
+    # 3-char "AED": scaled down so it visually appears at superscript height
     is_long_sym = len(currency) > 1
-    fs_sym  = fs_major * 0.65 if is_long_sym else fs_major
+    fs_sym  = fs_major * 0.60 if is_long_sym else fs_major
+
+    # Gap between symbol and price integer:
+    # EUR/GBP/USD single-char: 3.5pt (visually matches actual — was 2.5pt, slightly too tight)
+    # AED 3-char: 5.0pt (wider gap so it reads clearly at smaller size)
+    sym_gap = 5.0 if is_long_sym else 3.5
 
     MIN_raise = (fs_major - fs_minor) * CAP_H   # raise cents to cap-top
 
     icx = ix0 + INNER_W / 2   # horizontal centre
 
     sym_w   = fitz.get_text_length(currency, fontname=FB, fontsize=fs_sym)
-    sym_gap = 2.5              # gap between symbol and main integer (matches actual)
     maj_w   = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
     min_w   = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
 
@@ -526,7 +538,7 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     px      = icx - total_w / 2
     pr_y    = ay(284.5)      # main baseline (panel-relative 284.5)
 
-    # EUR symbol (same baseline as 29, same bold font)
+    # Currency symbol (same baseline as main integer, bold)
     page.insert_text(fitz.Point(px, pr_y),
                      currency, fontname=FB, fontsize=fs_sym, color=DARK)
     # Main integer

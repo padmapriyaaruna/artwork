@@ -9,9 +9,6 @@ __pycache__/
 venv/
 env/
 
-# Analysis artifacts (local only — too large for git)
-template_analysis/
-
 # Node
 node_modules/
 frontend/dist/
@@ -20,3 +17,45 @@ frontend/build/
 # OS
 .DS_Store
 Thumbs.db
+
+# ── Generated test outputs (local only, not for repo) ─────────────────────────
+# PDFs generated during testing
+test_v5_*.pdf
+test_v10_approval.pdf
+
+# PNGs generated during testing / comparison sessions
+test_v5_*.png
+test_v6_*.png
+test_v7_*.png
+test_final_*.png
+test_live_*.png
+test_v10_page0.png
+v11_*.png
+v11b_*.png
+v11c_*.png
+v12_*.png
+v12b_*.png
+v13_*.png
+v14_*.png
+v14b_*.png
+v14c_*.png
+v14d_*.png
+gen_back_panel_300dpi.png
+actual_back_panel_300dpi.png
+analysis_actual_p0.png
+analysis_gen_p0.png
+analysis_master_p0.png
+cmp_*.png
+compare_*.png
+compare_output/
+crop_*.png
+back_panel_inspect.png
+
+# Approval PDFs (large binaries, stored separately)
+approval_sheet_*.pdf
+
+# ── Analysis / debug scripts (keep source-controlled) ─────────────────────────
+# Comment out the line below if you want to EXCLUDE them from git:
+# analyse_all.py
+# precision_analysis.py
+# check_positions.py

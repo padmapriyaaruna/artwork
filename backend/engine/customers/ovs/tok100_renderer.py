@@ -107,23 +107,24 @@ def _rx(text, font, fs, x1):
     return x1 - tw
 
 def _fix_currency(raw):
-    """Convert any currency input to a renderable PDF WinAnsi symbol."""
+    """Convert any currency input to a renderable PDF WinAnsi symbol.
+
+    For AED: returns the 3-char string 'AED'. The price renderer handles
+    AED specially — it renders it as a small superscript label above the
+    price integer (not inline), because standard PDF fonts have no
+    Dirham glyph (the actual PDF uses a custom Type3 vector glyph).
+    """
     if not raw:
         return chr(128)   # default euro
     s = str(raw).strip()
-    # Unicode euro
     if "\u20ac" in s or s in ("EUR", "Euro", "euro"):
-        return chr(128)
-    # Sterling
+        return chr(128)   # € in cp1252/WinAnsi
     if "\u00a3" in s or s in ("GBP", "Sterling"):
-        return chr(163)
-    # Dollar
+        return chr(163)   # £
     if s in ("USD", "$"):
         return "$"
-    # AED — keep as-is (handled with smaller font in price section)
     if s == "AED":
-        return "AED"
-    # cp1252 single byte symbols
+        return "AED"      # handled separately in price renderer
     clean = "".join(c for c in s if 0x20 <= ord(c) < 0x80)
     if clean:
         return clean[0] if len(clean) == 1 else clean[:3]
@@ -295,52 +296,60 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
 
     fs_lbl   = 6.5
     fs_val   = 9.0
-    CELL_PAD = 4.0
-    TABLE_TOP = 140.1     # panel-relative y of top border  (measured: 513.32-373.25)
-    TABLE_BOT = 163.1     # panel-relative y of bottom border (measured: 536.38-373.25)
-                          # TABLE_BOT=163.1 -> chip_box_top=165.8 -> 2.7pt clearance ✓
-    # Horizontal line inset — measured from actual PDF matching KIDS separator:
-    #   KIDS abs x0=609.29, ix0=593.35 → inset_L = 15.94pt from ix0
-    #   KIDS abs x1=714.89, ix1=720.55 → inset_R =  5.66pt from ix1
-    #   Same inset used for thin TABLE lines (608.97..714.58 → 15.62 / 5.97pt)
-    #   Use the KIDS values so both sets of lines are visually identical.
-    TBL_INSET_L = 15.9   # left inset from ix0 (prevents touching magenta border)
-    TBL_INSET_R =  5.7   # right inset from ix1
-    tbl_x0 = ix0 + TBL_INSET_L
-    tbl_x1 = ix1 - TBL_INSET_R
-    vert_x = ix0 + half   # vertical divider x (unchanged)
+    CELL_PAD_L = 1.5    # tight left-align: labels flush with border line
+    CELL_PAD_R = 1.5    # tight right-align: values flush with border line
+    CELL_MID   = 2.0    # small gap either side of vertical divider
+    TABLE_TOP = 140.1   # panel-relative (measured: 513.32 - 373.25)
+    TABLE_BOT = 163.1   # panel-relative (measured: 536.38 - 373.25)
 
-    # Top horizontal line (matches KIDS separator width exactly — NOT touching border)
+    # Equal inset from pink border on both sides:
+    #   KIDS span = 714.89 - 609.29 = 105.60pt
+    #   Symmetric inset = (127.2 - 105.60) / 2 = 10.80pt on each side
+    #   This gives same line span as KIDS AND equal gap from both borders.
+    TBL_INSET = 10.8
+    tbl_x0 = ix0 + TBL_INSET    # left edge of table line
+    tbl_x1 = ix1 - TBL_INSET    # right edge of table line
+    vert_x  = ix0 + half         # vertical divider (centred, unchanged)
+
+    # Top line — equal distance from left and right pink border
     page.draw_line(fitz.Point(tbl_x0, ay(TABLE_TOP)), fitz.Point(tbl_x1, ay(TABLE_TOP)),
                    color=DARK, width=0.8)
-    # Bottom horizontal line
+    # Bottom line
     page.draw_line(fitz.Point(tbl_x0, ay(TABLE_BOT)), fitz.Point(tbl_x1, ay(TABLE_BOT)),
                    color=DARK, width=0.8)
-    # Vertical divider (spans full TABLE_TOP..TABLE_BOT, centred)
+    # Vertical divider
     page.draw_line(fitz.Point(vert_x, ay(TABLE_TOP)), fitz.Point(vert_x, ay(TABLE_BOT)),
                    color=DARK, width=0.8)
 
-    # Row 1 (YEARS / CM)  bl = 148.0 panel-relative
+    # Row 1: YEARS (left-aligned to tbl_x0) | value right-aligned to vert_x
+    #         CM (left-aligned to vert_x)    | value right-aligned to tbl_x1
     bl1 = ay(148.0)
-    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD, bl1),
+    # YEARS label — starts tight at tbl_x0
+    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD_L, bl1),
                      "YEARS", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(cur_yrs, FB, fs_val, vert_x - CELL_PAD), bl1),
+    # 4-5 value — right-aligned to vertical divider
+    page.insert_text(fitz.Point(_rx(cur_yrs, FB, fs_val, vert_x - CELL_MID), bl1),
                      cur_yrs, fontname=FB, fontsize=fs_val, color=DARK)
-    page.insert_text(fitz.Point(vert_x + CELL_PAD, bl1),
+    # CM label — starts tight at vertical divider
+    page.insert_text(fitz.Point(vert_x + CELL_MID, bl1),
                      "CM", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(cur_cm, FB, fs_val, tbl_x1 - CELL_PAD), bl1),
+    # 110 value — right-aligned to tbl_x1
+    page.insert_text(fitz.Point(_rx(cur_cm, FB, fs_val, tbl_x1 - CELL_PAD_R), bl1),
                      cur_cm, fontname=FB, fontsize=fs_val, color=DARK)
 
-    # Row 2 (IT / MEX)  bl = 159.1 panel-relative
+    # Row 2: IT (left-aligned to tbl_x0) | value right-aligned to vert_x
+    #         MEX (left-aligned to vert_x) | value right-aligned to tbl_x1
     bl2 = ay(159.1)
     mex_txt = cur_mex + " A"
-    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD, bl2),
+    # IT label — starts tight at tbl_x0
+    page.insert_text(fitz.Point(tbl_x0 + CELL_PAD_L, bl2),
                      "IT", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(cur_it, FB, fs_val, vert_x - CELL_PAD), bl2),
+    page.insert_text(fitz.Point(_rx(cur_it, FB, fs_val, vert_x - CELL_MID), bl2),
                      cur_it, fontname=FB, fontsize=fs_val, color=DARK)
-    page.insert_text(fitz.Point(vert_x + CELL_PAD, bl2),
+    # MEX label — starts tight at vertical divider
+    page.insert_text(fitz.Point(vert_x + CELL_MID, bl2),
                      "MEX", fontname=FB, fontsize=fs_lbl, color=DARK)
-    page.insert_text(fitz.Point(_rx(mex_txt, FB, fs_val, tbl_x1 - CELL_PAD), bl2),
+    page.insert_text(fitz.Point(_rx(mex_txt, FB, fs_val, tbl_x1 - CELL_PAD_R), bl2),
                      mex_txt, fontname=FB, fontsize=fs_val, color=DARK)
 
     # ── 6. SIZE CHART ─────────────────────────────────────────────────────────
@@ -512,41 +521,53 @@ def _draw_back_panel(page, ox, oy, item_data, render_dpi=150):
     major, minor = _split_price(price_raw)
 
     CAP_H    = 0.72
-    fs_major = 24.0         # main integer "29"  (maps to actual 27.67pt Type3)
-    fs_minor = 13.0         # cents ",95"         (maps to actual 15.1pt Type3)
+    fs_major = 24.0    # main integer (maps to actual 27.67pt Type3)
+    fs_minor = 13.0    # cents       (maps to actual 15.1pt Type3)
+    MIN_raise = (fs_major - fs_minor) * CAP_H
 
-    # Currency symbol size:
-    # Single char (euro/pound/dollar): same as fs_major (like actual 27.67)
-    # 3-char "AED": scaled down so it visually appears at superscript height
-    is_long_sym = len(currency) > 1
-    fs_sym  = fs_major * 0.60 if is_long_sym else fs_major
+    icx  = ix0 + INNER_W / 2   # horizontal centre
+    pr_y = ay(284.5)            # main baseline
 
-    # Gap between symbol and price integer:
-    # EUR/GBP/USD single-char: 3.5pt (visually matches actual — was 2.5pt, slightly too tight)
-    # AED 3-char: 5.0pt (wider gap so it reads clearly at smaller size)
-    sym_gap = 5.0 if is_long_sym else 3.5
-
-    MIN_raise = (fs_major - fs_minor) * CAP_H   # raise cents to cap-top
-
-    icx = ix0 + INNER_W / 2   # horizontal centre
-
-    sym_w   = fitz.get_text_length(currency, fontname=FB, fontsize=fs_sym)
-    maj_w   = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
-    min_w   = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
-
-    total_w = sym_w + sym_gap + maj_w + min_w
-    px      = icx - total_w / 2
-    pr_y    = ay(284.5)      # main baseline (panel-relative 284.5)
-
-    # Currency symbol (same baseline as main integer, bold)
-    page.insert_text(fitz.Point(px, pr_y),
-                     currency, fontname=FB, fontsize=fs_sym, color=DARK)
-    # Main integer
-    page.insert_text(fitz.Point(px + sym_w + sym_gap, pr_y),
-                     major, fontname=FB, fontsize=fs_major, color=DARK)
-    # Cents (raised superscript)
-    page.insert_text(fitz.Point(px + sym_w + sym_gap + maj_w, pr_y - MIN_raise),
-                     minor, fontname=FR, fontsize=fs_minor, color=DARK)
+    if currency == "AED":
+        # AED: no standard Dirham glyph in PDF base14 fonts.
+        # Actual PDF uses a custom Type3 vector '~' glyph (unrepresentable here).
+        # Render as: small 'AED' superscript label above the price integer,
+        # so it reads cleanly without cluttering the price display.
+        fs_aed  = fs_minor * 0.85      # ~11pt — superscript label size
+        maj_w   = fitz.get_text_length(major, fontname=FB, fontsize=fs_major)
+        min_w   = fitz.get_text_length(minor, fontname=FR, fontsize=fs_minor)
+        aed_w   = fitz.get_text_length("AED",  fontname=FB, fontsize=fs_aed)
+        total_w = maj_w + min_w
+        px      = icx - total_w / 2
+        # 'AED' superscript: centred above the price block, raised by fs_major*0.9
+        aed_x   = px + total_w / 2 - aed_w / 2
+        aed_y   = pr_y - fs_major * 0.88
+        page.insert_text(fitz.Point(aed_x, aed_y),
+                         "AED", fontname=FB, fontsize=fs_aed, color=DARK)
+        # Price integer + cents on main baseline
+        page.insert_text(fitz.Point(px, pr_y),
+                         major, fontname=FB, fontsize=fs_major, color=DARK)
+        page.insert_text(fitz.Point(px + maj_w, pr_y - MIN_raise),
+                         minor, fontname=FR, fontsize=fs_minor, color=DARK)
+    else:
+        # EUR / GBP / USD — single char symbol inline with price
+        # sym_gap: 5pt between symbol and integer (matches actual visual spacing)
+        sym_gap = 5.0
+        fs_sym  = fs_major    # same size as integer
+        sym_w   = fitz.get_text_length(currency, fontname=FB, fontsize=fs_sym)
+        maj_w   = fitz.get_text_length(major,    fontname=FB, fontsize=fs_major)
+        min_w   = fitz.get_text_length(minor,    fontname=FR, fontsize=fs_minor)
+        total_w = sym_w + sym_gap + maj_w + min_w
+        px      = icx - total_w / 2
+        # Currency symbol — same baseline as integer
+        page.insert_text(fitz.Point(px, pr_y),
+                         currency, fontname=FB, fontsize=fs_sym, color=DARK)
+        # Main integer
+        page.insert_text(fitz.Point(px + sym_w + sym_gap, pr_y),
+                         major, fontname=FB, fontsize=fs_major, color=DARK)
+        # Cents (raised superscript)
+        page.insert_text(fitz.Point(px + sym_w + sym_gap + maj_w, pr_y - MIN_raise),
+                         minor, fontname=FR, fontsize=fs_minor, color=DARK)
 
     # ── 11. QTY below outer panel ─────────────────────────────────────────────
     qty_txt = "Qty - " + str(item_data.get("quantity", 0))

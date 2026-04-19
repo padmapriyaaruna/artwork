@@ -22,6 +22,8 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 
+from backend.intake.auto_zone_mapper import auto_generate_zone_map
+
 TEMPLATE_BASE = Path("backend/templates")
 
 
@@ -51,24 +53,33 @@ def ingest_pdf_template(
     customer_code: str,
     label_type:    str,
     pdf_path:      Path,
+    xml_records:   list[dict] | None = None,
 ) -> dict:
     """
-    Store a customer's PDF template and create a starter zone_map.json.
+    Store a customer's PDF template and auto-generate the zone_map.json.
 
-    The zone_map.json is created with an empty variable_zones list.
-    An operator (or future AI step) must fill this in to define which
-    rectangular areas on the label are variable data vs static artwork.
+    Uses auto_zone_mapper to detect variable zones automatically via:
+      - Pass 1: Placeholder text patterns ({{field_name}}, {FIELD}, etc.)
+      - Pass 2: XML value matching (find actual values from XML in the PDF)
+      - Pass 3: Heuristic recognition (13-digit = barcode, price formats, etc.)
+
+    If xml_records is supplied, Passes 2 and 3 are also active, giving the
+    highest detection accuracy. Without xml_records, only Pass 1 + 3 run.
 
     Args:
         customer_code: e.g. "ZARA"
         label_type:    e.g. "WVN50"
         pdf_path:      Path to the uploaded template PDF.
+        xml_records:   Optional list of parsed item_data dicts from the XML
+                       (pass these for best detection accuracy).
 
     Returns:
         {
             "template_stored": str,  path to saved template.pdf
             "zone_map":        str,  path to created zone_map.json
-            "dimensions":      {"width": float, "height": float}
+            "dimensions":      {"width": float, "height": float},
+            "zones_detected":  int,
+            "confidence":      str   ("high" / "medium" / "low")
         }
     """
     folder = create_customer_folder(customer_code, label_type)
@@ -77,39 +88,31 @@ def ingest_pdf_template(
     dest_pdf = folder / "template.pdf"
     shutil.copy2(str(pdf_path), str(dest_pdf))
 
-    # Extract page dimensions for zone_map metadata
-    doc   = fitz.open(str(dest_pdf))
-    rect  = doc[0].rect
-    doc.close()
+    # Auto-detect variable zones from the template + XML records
+    zone_map = auto_generate_zone_map(
+        template_pdf_path=dest_pdf,
+        xml_records=xml_records or [],
+        customer_code=customer_code,
+        label_type=label_type,
+    )
 
-    # Starter zone_map — operators complete variable_zones
-    zone_map = {
-        "customer_code":  customer_code.upper(),
-        "label_type":     label_type.upper(),
-        "page_width_pt":  rect.width,
-        "page_height_pt": rect.height,
-        "renderer_module": "generic_pdf_renderer",
-        # variable_zones: list of dicts, each describing one variable area:
-        # {
-        #   "id":        "barcode",
-        #   "name":      "EAN-13 Barcode",
-        #   "field_key": "barcode_number",   # key in item_data
-        #   "x0": 10.0, "y0": 150.0,
-        #   "x1": 90.0, "y1": 170.0,
-        #   "type": "barcode" | "text" | "image"
-        # }
-        "variable_zones": [],
-        "static_template": str(dest_pdf),
-    }
-
+    # Persist zone_map.json
     zone_map_path = folder / "zone_map.json"
     with open(zone_map_path, "w", encoding="utf-8") as f:
         json.dump(zone_map, f, indent=2)
 
+    dims = {
+        "width":  zone_map["page_width_pt"],
+        "height": zone_map["page_height_pt"],
+    }
+    n_zones = len(zone_map["variable_zones"])
+
     return {
         "template_stored": str(dest_pdf),
         "zone_map":        str(zone_map_path),
-        "dimensions":      {"width": rect.width, "height": rect.height},
+        "dimensions":      dims,
+        "zones_detected":  n_zones,
+        "confidence":      zone_map.get("detection_confidence", "low"),
     }
 
 
@@ -119,34 +122,41 @@ def onboard_template(
     customer_code: str,
     label_type:    str,
     pdf_path:      Path,
+    xml_records:   list[dict] | None = None,
 ) -> dict:
     """
     Full first-time onboarding for a new customer template.
 
     Called from zip_intake when mode == "xml_plus_template".
+    Automatically detects variable zones from the template PDF + XML records.
 
     Args:
         customer_code: e.g. "ZARA"
         label_type:    e.g. "WVN50"
         pdf_path:      Path to the uploaded template PDF
+        xml_records:   Parsed item_data dicts from the XML (for best accuracy)
 
     Returns:
         Result dict from ingest_pdf_template.
-
-    Side effects:
-        - Creates folder backend/templates/{CUST_CODE}/{LABEL_TYPE}/
-        - Writes template.pdf and zone_map.json
-        - Prints an operator action notice
     """
-    result = ingest_pdf_template(customer_code, label_type, pdf_path)
+    result = ingest_pdf_template(customer_code, label_type, pdf_path, xml_records)
 
-    print(f"[ONBOARD] New customer template registered: {customer_code}/{label_type}")
-    print(f"  Template : {result['template_stored']}")
-    print(f"  Zone map : {result['zone_map']}")
-    print(
-        f"  ⚠ ACTION REQUIRED: Open zone_map.json and fill in "
-        f"variable_zones to define which label areas contain variable data."
-    )
+    confidence = result.get("confidence", "low")
+    n_zones    = result.get("zones_detected", 0)
+
+    print(f"[ONBOARD] Customer registered: {customer_code}/{label_type}")
+    print(f"  Template   : {result['template_stored']}")
+    print(f"  Zone map   : {result['zone_map']}")
+    print(f"  Zones found: {n_zones} (confidence: {confidence})")
+
+    if confidence == "low" or n_zones == 0:
+        print(
+            f"  ⚠ Low detection confidence — consider adding placeholder text\n"
+            f"    to the template PDF (e.g. {{{{barcode_number}}}}, {{{{selling_price}}}})\n"
+            f"    then re-upload. Or manually review: {result['zone_map']}"
+        )
+    else:
+        print(f"  ✅ Auto-detection complete — labels ready to generate.")
 
     # TODO: register in PostgreSQL (customer_templates table)
     # from backend.database import get_db

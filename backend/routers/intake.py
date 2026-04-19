@@ -81,6 +81,7 @@ async def upload_brat_zip(file: UploadFile = File(...)) -> JSONResponse:
                     customer_code=customer_code,
                     label_type=label_type,
                     pdf_path=contents["template_pdf_path"],
+                    xml_records=job_data.get("records", []),   # pass XML for value matching
                 )
             except Exception as e:
                 cleanup_job(job_id)
